@@ -10,19 +10,20 @@ namespace Vinson.UserControls
 {
     public partial class AutoComplete : UserControl
     {
-        private const string ListInfoFormat = "查:{0}条/共:{1}条";
+        private const string ListInfoFormat1 = "查:{0}条";
+        private const string ListInfoFormat2 = "共:{0}条";
         private const string NoFoundRecord = "当前不存在你所需要的记录";
 
         private ToolStripDropDown tsDropDown = null;
         private ToolStripControlHost tsCH = null;
         private AutoCompleteList_I lstCtrl = null;
         private ToolTip toolTip1 = new ToolTip();
-        private DateTime StartTime = DateTime.Now;
-        private DateTime EndTime = DateTime.Now;
+        //private DateTime StartTime = DateTime.Now;
+        //private DateTime EndTime = DateTime.Now;
 
         public delegate void SelectedValueHandler(AutoCompleteValue e);
         public event SelectedValueHandler OnSelected;
-        public event EventHandler GetFocus;
+        public event EventHandler OnFocus;
 
         #region Property
         private List<AutoCompleteValue> _dataList = new List<AutoCompleteValue>();
@@ -65,6 +66,12 @@ namespace Vinson.UserControls
         private int _SearchRecordCount = 0;
         public int SearchRecordCount
         { get { return _SearchRecordCount; } }
+        private bool _ButtonVisible = true;
+        public bool ButtonVisible
+        {
+            get { return _ButtonVisible; }
+            set { _ButtonVisible = value; }
+        }
         #endregion
 
         public AutoComplete()
@@ -89,18 +96,25 @@ namespace Vinson.UserControls
                 tsDropDown.Items.Add(tsCH);
             }
         }
+        private void AutoComplete_Load(object sender, EventArgs e)
+        {
+            btnSelect.Visible = ButtonVisible;
+        }
 
         #region Events
         private void btnSelect_Click(object sender, EventArgs e)
         {
+            if (OnFocus != null)
+                OnFocus(sender, e);
+            else
+                DataBind();
 
-            DataBind();
             ShowList();
         }
         private void txtValue_Enter(object sender, EventArgs e)
         {
-            if (GetFocus != null)
-                GetFocus(sender, e);
+            if (OnFocus != null)
+                OnFocus(sender, e);
         }
         private void txtValue_KeyDown(object sender, KeyEventArgs e)
         {
@@ -111,13 +125,7 @@ namespace Vinson.UserControls
                 else
                     SearchPrimaryColumn(txtValue.Text);
 
-                if (TotalRecoudCount != 0 && SearchRecordCount != 0)
-                    ShowList();
-                else
-                {
-                    toolTip1.ToolTipIcon = ToolTipIcon.None;
-                    toolTip1.Show(NoFoundRecord, this.txtValue, this.txtValue.Location.X, this.txtValue.Location.Y + this.txtValue.Height, 5000);
-                }
+                ShowList();
             }
         }
         private void lstCtrl_SelectedValue(AutoCompleteValue e)
@@ -146,7 +154,7 @@ namespace Vinson.UserControls
             this.Cursor = System.Windows.Forms.Cursors.AppStarting;
             try
             {
-                StartTime = DateTime.Now;
+                //StartTime = DateTime.Now;
                 _TotalRecordCount = DataList.Count;
                 _SearchRecordCount = _TotalRecordCount;
                 lstCtrl.DataList = DataList;
@@ -162,8 +170,21 @@ namespace Vinson.UserControls
         #region Private Functions
         private void ShowList()
         {
-            tsDropDown.Show(this, 0, this.Height);
-            lstCtrl.SetListFocus();
+            if (TotalRecoudCount != 0 && SearchRecordCount != 0)
+            {
+                if (tsDropDown != null)
+                {
+                    lstCtrl.Width = tsDropDown.Width;
+                    //lstCtrl.Height = tsDropDown.Height;
+                    tsDropDown.Show(this, 0, this.Height);
+                    lstCtrl.SetListFocus();
+                }
+            }
+            else
+            {
+                toolTip1.ToolTipIcon = ToolTipIcon.None;
+                toolTip1.Show(NoFoundRecord, this.txtValue, this.txtValue.Location.X, this.txtValue.Location.Y + this.txtValue.Height, 5000);
+            }
         }
         private void CloseList()
         {
@@ -185,19 +206,18 @@ namespace Vinson.UserControls
         }
         private void SearchPrimaryColumn(string value)
         {
-            StartTime = DateTime.Now;
+            //StartTime = DateTime.Now;
             AutoCompleteCommon.SearchValue = value;
             SearchDataBind(DataList.FindAll(AutoCompleteCommon.SearchPrimaryValue));
         }
         private void SetFootText()
         {
-            EndTime = DateTime.Now;
-            TimeSpan ts = EndTime - StartTime;
-            lstCtrl.FootText = string.Format(ListInfoFormat, SearchRecordCount, TotalRecoudCount);
-            lstCtrl.FootTimeText = (ts.TotalMilliseconds / 1000).ToString("N");
+            //EndTime = DateTime.Now;
+            //TimeSpan ts = EndTime - StartTime;
+            lstCtrl.FootText1 = string.Format(ListInfoFormat1, SearchRecordCount);
+            lstCtrl.FootText2 = string.Format(ListInfoFormat2, TotalRecoudCount);
+            //lstCtrl.FootTimeText = (ts.TotalMilliseconds / 1000).ToString("N");
         }
         #endregion
-
-
     }
 }

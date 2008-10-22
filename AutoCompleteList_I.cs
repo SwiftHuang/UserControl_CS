@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Vinson.UserControls
 {
-    public partial class AutoCompleteList_I : UserControl
+    internal partial class AutoCompleteList_I : UserControl
     {
         private bool _isAlreadyCreateColumns = false;
         public delegate void SelectedValueHandler(AutoCompleteValue e);
@@ -46,15 +46,15 @@ namespace Vinson.UserControls
             get { return _secColumnName; }
             set { _secColumnName = value; }
         }
-        public string FootText
+        public string FootText1
         {
-            get { return this.lblFootInfo.Text; }
-            set { lblFootInfo.Text = value; }
+            get { return this.lblFootInfo1.Text; }
+            set { lblFootInfo1.Text = value; }
         }
-        public string FootTimeText
+        public string FootText2
         {
-            get { return lblTimeInfo.Text; }
-            set { lblTimeInfo.Text = value; }
+            get { return lblFootInfo2.Text; }
+            set { lblFootInfo2.Text = value; }
         }
         #endregion
 

@@ -28,31 +28,34 @@ namespace Vinson.UserControls
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnSelect = new System.Windows.Forms.Button();
             this.txtValue = new System.Windows.Forms.TextBox();
+            this.btnSelect = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // btnSelect
-            // 
-            this.btnSelect.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSelect.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSelect.Location = new System.Drawing.Point(176, 0);
-            this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(24, 21);
-            this.btnSelect.TabIndex = 0;
-            this.btnSelect.Text = "O";
-            this.btnSelect.UseVisualStyleBackColor = true;
-            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
             // txtValue
             // 
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtValue.Location = new System.Drawing.Point(0, 0);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(176, 21);
-            this.txtValue.TabIndex = 1;
+            this.txtValue.Size = new System.Drawing.Size(97, 21);
+            this.txtValue.TabIndex = 0;
             this.txtValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtValue_KeyDown);
             this.txtValue.Enter += new System.EventHandler(this.txtValue_Enter);
+            // 
+            // btnSelect
+            // 
+            this.btnSelect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSelect.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSelect.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSelect.Image = global::Vinson.UserControls.Properties.Resources.page_search;
+            this.btnSelect.Location = new System.Drawing.Point(97, 0);
+            this.btnSelect.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(23, 21);
+            this.btnSelect.TabIndex = 1;
+            this.btnSelect.TabStop = false;
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
             // AutoComplete
             // 
@@ -61,7 +64,8 @@ namespace Vinson.UserControls
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.btnSelect);
             this.Name = "AutoComplete";
-            this.Size = new System.Drawing.Size(200, 21);
+            this.Size = new System.Drawing.Size(120, 21);
+            this.Load += new System.EventHandler(this.AutoComplete_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
