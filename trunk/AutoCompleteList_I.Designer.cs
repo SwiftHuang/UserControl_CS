@@ -28,14 +28,13 @@ namespace Vinson.UserControls
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgList = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblFootInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblTimeInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblFootInfo1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblFootInfo2 = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgList)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -46,8 +45,8 @@ namespace Vinson.UserControls
             this.dgList.AllowUserToDeleteRows = false;
             this.dgList.AllowUserToResizeColumns = false;
             this.dgList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
-            this.dgList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.AliceBlue;
+            this.dgList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -67,7 +66,7 @@ namespace Vinson.UserControls
             this.dgList.RowTemplate.Height = 21;
             this.dgList.RowTemplate.ReadOnly = true;
             this.dgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgList.Size = new System.Drawing.Size(211, 184);
+            this.dgList.Size = new System.Drawing.Size(211, 182);
             this.dgList.TabIndex = 0;
             this.dgList.TabStop = false;
             this.dgList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgList_CellClick);
@@ -92,32 +91,28 @@ namespace Vinson.UserControls
             this.statusStrip1.AutoSize = false;
             this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblFootInfo,
-            this.toolStripStatusLabel2,
-            this.lblTimeInfo});
+            this.lblFootInfo1,
+            this.lblFootInfo2});
             this.statusStrip1.Location = new System.Drawing.Point(0, 182);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(211, 20);
+            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // lblFootInfo
+            // lblFootInfo1
             // 
-            this.lblFootInfo.Name = "lblFootInfo";
-            this.lblFootInfo.Size = new System.Drawing.Size(59, 15);
-            this.lblFootInfo.Text = "lblFootInfo";
+            this.lblFootInfo1.Name = "lblFootInfo1";
+            this.lblFootInfo1.Size = new System.Drawing.Size(59, 15);
+            this.lblFootInfo1.Text = "lblFootInfo";
             // 
-            // toolStripStatusLabel2
+            // lblFootInfo2
             // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(78, 15);
-            this.toolStripStatusLabel2.Spring = true;
-            // 
-            // lblTimeInfo
-            // 
-            this.lblTimeInfo.Name = "lblTimeInfo";
-            this.lblTimeInfo.Size = new System.Drawing.Size(59, 15);
-            this.lblTimeInfo.Text = "lblTimeInfo";
+            this.lblFootInfo2.Name = "lblFootInfo2";
+            this.lblFootInfo2.Size = new System.Drawing.Size(106, 15);
+            this.lblFootInfo2.Spring = true;
+            this.lblFootInfo2.Text = "lblTimeInfo";
+            this.lblFootInfo2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // AutoCompleteList_I
             // 
@@ -140,9 +135,8 @@ namespace Vinson.UserControls
         private System.Windows.Forms.DataGridView dgList;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.ToolStripStatusLabel lblFootInfo;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.ToolStripStatusLabel lblTimeInfo;
+        private System.Windows.Forms.ToolStripStatusLabel lblFootInfo1;
+        private System.Windows.Forms.ToolStripStatusLabel lblFootInfo2;
         private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }

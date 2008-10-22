@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Vinson-UserControl")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("DELL")]
+[assembly: AssemblyCompany("Vinson Huang")]
 [assembly: AssemblyProduct("Vinson-UserControl")]
-[assembly: AssemblyCopyright("Copyright © DELL 2008")]
+[assembly: AssemblyCopyright("Copyright © Vinson Huang 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
