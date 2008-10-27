@@ -13,7 +13,9 @@ namespace Vinson.UserControls
         private const string ListInfoFormat1 = "查:{0}条";
         private const string ListInfoFormat2 = "共:{0}条";
         private const string NoFoundRecord = "当前不存在你所需要的记录";
+        private const string AutoCompleteInfo = "按回车可以进行模糊查找,查找过程中请注意区分英文大小写";
 
+        private bool _isDisplayInfo = false;
         private ToolStripDropDown tsDropDown = null;
         private ToolStripControlHost tsCH = null;
         private AutoCompleteList_I lstCtrl = null;
@@ -49,16 +51,29 @@ namespace Vinson.UserControls
             set { lstCtrl.SecondColumnName = value; }
         }
         private string _SelectedValue = string.Empty;
+        [BrowsableAttribute(false)]
         public string SelectedValue
         {
-            get { return _SelectedValue; }
+            get
+            {
+                if (this.txtValue.Text == string.Empty)
+                    return EmptyValue;
+                else
+                    return _SelectedValue;
+            }
             set { _SelectedValue = value; }
         }
         private string _SelectedText = string.Empty;
+        [BrowsableAttribute(false)]
         public string SelectedText
         {
             get { return _SelectedText; }
             set { _SelectedText = value; }
+        }
+        public override string Text
+        {
+            get { return txtValue.Text; }
+            set { txtValue.Text = value; }
         }
         private int _TotalRecordCount = 0;
         public int TotalRecoudCount
@@ -72,6 +87,15 @@ namespace Vinson.UserControls
             get { return _ButtonVisible; }
             set { _ButtonVisible = value; }
         }
+        private string _emptyValue = string.Empty;
+        /// <summary>
+        /// 如果TextBox.Text为空时,SelectedValue的值.
+        /// </summary>
+        public string EmptyValue
+        {
+            get { return _emptyValue; }
+            set { _emptyValue = value; }
+        }
         #endregion
 
         public AutoComplete()
@@ -79,7 +103,7 @@ namespace Vinson.UserControls
             InitializeComponent();
             if (!DesignMode)
             {
-                Size MinSize = new Size(150, 150);
+                Size MinSize = new Size(100, 150);
                 lstCtrl = new AutoCompleteList_I();
                 lstCtrl.MinimumSize = MinSize;
                 //lstCtrl.MaximumSize = MaxSize;
@@ -98,6 +122,7 @@ namespace Vinson.UserControls
         }
         private void AutoComplete_Load(object sender, EventArgs e)
         {
+            tsDropDown.Width = this.Width;
             btnSelect.Visible = ButtonVisible;
         }
 
@@ -113,6 +138,13 @@ namespace Vinson.UserControls
         }
         private void txtValue_Enter(object sender, EventArgs e)
         {
+            if (!_isDisplayInfo)
+            {
+                _isDisplayInfo = true;
+                toolTip1.ToolTipIcon = ToolTipIcon.Info;
+                toolTip1.ToolTipTitle = "提示信息";
+                toolTip1.Show(AutoCompleteInfo, this.txtValue, this.txtValue.Location.X, this.txtValue.Location.Y + this.txtValue.Height, 3000);
+            }
             if (OnFocus != null)
                 OnFocus(sender, e);
         }
@@ -164,6 +196,16 @@ namespace Vinson.UserControls
             catch (Exception e)
             { throw e; }
             finally { this.Cursor = System.Windows.Forms.Cursors.Default; }
+        }
+        public void Clear()
+        {
+            SelectedText = string.Empty;
+            SelectedValue = EmptyValue;
+            txtValue.Text = string.Empty;
+        }
+        public void Focus()
+        {
+            txtValue.Focus();
         }
         #endregion
 
