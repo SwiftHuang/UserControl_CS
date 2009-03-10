@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Vinson.UserControls
+namespace hwj.UserControls
 {
     internal partial class AutoCompleteList_I : UserControl
     {

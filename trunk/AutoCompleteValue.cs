@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vinson.UserControls
+namespace hwj.UserControls
 {
     [Serializable]
     public class AutoCompleteValue
