@@ -1,4 +1,4 @@
-namespace Vinson.UserControls
+namespace hwj.UserControls
 {
     partial class AutoComplete
     {
@@ -47,7 +47,7 @@ namespace Vinson.UserControls
             this.btnSelect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnSelect.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSelect.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSelect.Image = global::Vinson.UserControls.Properties.Resources.page_search;
+            this.btnSelect.Image = global::hwj.UserControls.Properties.Resources.page_search;
             this.btnSelect.Location = new System.Drawing.Point(97, 0);
             this.btnSelect.Margin = new System.Windows.Forms.Padding(0);
             this.btnSelect.Name = "btnSelect";

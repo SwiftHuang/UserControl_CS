@@ -1,4 +1,4 @@
-namespace Vinson.UserControls
+namespace hwj.UserControls
 {
     partial class AutoCompleteList_I
     {
