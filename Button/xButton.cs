@@ -12,7 +12,13 @@ namespace hwj.UserControls
         {
             
         }
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            CursorFromClick = Cursors.WaitCursor;
+        }
         #region Property
+        [DefaultValue(typeof(Cursors), "WaitCursor")]
         public Cursor CursorFromClick { get; set; }
         #endregion
         private Cursor _CurrCursor;
