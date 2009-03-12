@@ -96,6 +96,7 @@ namespace hwj.UserControls
             get { return _emptyValue; }
             set { _emptyValue = value; }
         }
+        public int MaxLength { get; set; }
         #endregion
 
         public AutoComplete()
@@ -124,6 +125,7 @@ namespace hwj.UserControls
         {
             tsDropDown.Width = this.Width;
             btnSelect.Visible = ButtonVisible;
+            txtValue.MaxLength = MaxLength;
         }
 
         #region Events
