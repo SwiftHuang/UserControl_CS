@@ -205,7 +205,7 @@ namespace hwj.UserControls
             SelectedValue = EmptyValue;
             txtValue.Text = string.Empty;
         }
-        public void Focus()
+        public new void Focus()
         {
             txtValue.Focus();
         }
