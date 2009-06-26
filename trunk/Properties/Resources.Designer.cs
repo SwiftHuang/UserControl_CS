@@ -60,10 +60,55 @@ namespace hwj.UserControls.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        internal static string Information {
+            get {
+                return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [{0}] is invalid email.
+        /// </summary>
+        internal static string InvalidEmail {
+            get {
+                return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [{0}] is invalid numberic.
+        /// </summary>
+        internal static string InvalidNumberic {
+            get {
+                return ResourceManager.GetString("InvalidNumberic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record not found..
+        /// </summary>
+        internal static string NoRecord {
+            get {
+                return ResourceManager.GetString("NoRecord", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap page_search {
             get {
                 object obj = ResourceManager.GetObject("page_search", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return {0} Records.
+        /// </summary>
+        internal static string ReturnRecord {
+            get {
+                return ResourceManager.GetString("ReturnRecord", resourceCulture);
             }
         }
     }
