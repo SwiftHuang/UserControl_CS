@@ -13,16 +13,22 @@ namespace hwj.UserControls.CommonControls
         Email,
         Numberic,
     }
-    public class xTextBox : TextBox
+    public class xTextBox : TextBox, ICommonControls
     {
+        private System.Drawing.Color oldBackColor;
+        [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
-        public bool ContentCheck { get; set; }
-        public ContentType ContentType { get; set; }
+        [DefaultValue(false)]
         public bool IsRequired { get; set; }
+        [DefaultValue(false)]
+        public bool ContentCheck { get; set; }
+        [DefaultValue(ContentType.None)]
+        public ContentType ContentType { get; set; }
         private ToolTip toolTip = new ToolTip();
 
         public xTextBox()
         {
+            oldBackColor = this.BackColor;
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             EnterEqualTab = true;
             ContentCheck = false;
@@ -35,10 +41,10 @@ namespace hwj.UserControls.CommonControls
                 Text = "0.00";
                 TextAlign = HorizontalAlignment.Right;
             }
+            if (IsRequired)
+                this.BackColor = Common.RequiredBackColor;
             base.OnCreateControl();
         }
-
-
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (EnterEqualTab && e.KeyCode == Keys.Enter)
@@ -73,7 +79,15 @@ namespace hwj.UserControls.CommonControls
                         break;
                 }
             }
+            if (IsRequired)
+            {
+                if (string.IsNullOrEmpty(this.Text))
+                    this.BackColor = Common.RequiredBackColor;
+                else
+                    this.BackColor = oldBackColor;
+            }
             base.OnValidating(e);
         }
     }
+
 }

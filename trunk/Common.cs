@@ -9,6 +9,7 @@ namespace hwj.UserControls
 {
     public class Common
     {
+        #region ToolTip Function
         private static ToolTip toolTip = new ToolTip();
         public static void ShowToolTipInfo(ToolTip toolTip1, Control control, string text)
         {
@@ -17,10 +18,13 @@ namespace hwj.UserControls
             toolTip.ToolTipTitle = Properties.Resources.Information;
             toolTip.Show(text, control, 0, control.Height, 5000);
         }
+        #endregion
 
+        #region Verify Controls
+        public static Color RequiredBackColor = Color.FromArgb(255, 223, 223);
         public static bool InvalidVerify(Control control)
         {
-            return InvalidVerify(control, Color.FromArgb(255, 223, 223), Color.White);
+            return InvalidVerify(control, RequiredBackColor, Color.White);
         }
         public static bool InvalidVerify(Control control, Color requiredColor, Color normalColor)
         {
@@ -58,5 +62,6 @@ namespace hwj.UserControls
             }
             return false;
         }
+        #endregion
     }
 }

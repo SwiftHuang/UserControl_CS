@@ -11,7 +11,7 @@ namespace hwj.UserControls.CommonControls
 
         public xButton()
         {
-            
+
         }
         protected override void OnCreateControl()
         {
