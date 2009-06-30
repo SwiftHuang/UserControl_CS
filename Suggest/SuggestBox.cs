@@ -6,15 +6,35 @@ using System.Windows.Forms;
 
 namespace hwj.UserControls.Suggest
 {
-    public partial class SuggestBox : UserControl
+    public partial class SuggestBox : UserControl, CommonControls.ICommonControls
     {
+        private System.Drawing.Color oldBackColor;
         private int selectIndex = 0;
         private bool textChange = false;
-        private bool IsShowed = false;
+        private bool IsShowed
+        {
+            get
+            {
+                if (tsDropDown != null && tsDropDown.Visible)
+                    return true;
+                else
+                    return false;
+            }
+        }
         private ToolStripDropDown tsDropDown = null;
         private ToolStripControlHost tsCH = null;
         private SuggestView ListControl = null;
         private ToolTip toolTip = new ToolTip();
+        private int RecordCount
+        {
+            get
+            {
+                if (ListControl != null && ListControl.DataList != null)
+                    return ListControl.DataList.Count;
+                else
+                    return 0;
+            }
+        }
 
         public delegate void SelectedValueHandler(SuggestValue e);
         public event SelectedValueHandler OnSelected;
@@ -22,9 +42,11 @@ namespace hwj.UserControls.Suggest
         public event EventHandler DataBinding;
 
         #region Property
+        [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
+        [DefaultValue(false)]
         public bool IsRequired { get; set; }
-        public Color BackColor
+        public new Color BackColor
         {
             get { return txtValue.BackColor; }
             set { txtValue.BackColor = value; }
@@ -71,22 +93,8 @@ namespace hwj.UserControls.Suggest
             get { return txtValue.Text; }
             set { txtValue.Text = value; }
         }
-        public int RecordCount
-        {
-            get
-            {
-                if (ListControl != null && ListControl.DataList != null)
-                    return ListControl.DataList.Count;
-                else
-                    return 0;
-            }
-        }
-        private bool _ButtonVisible = true;
-        public bool ButtonVisible
-        {
-            get { return _ButtonVisible; }
-            set { _ButtonVisible = value; }
-        }
+        [DefaultValue(true), Browsable(true)]
+        public bool ButtonVisible { get; set; }
         private string _emptyValue = string.Empty;
         /// <summary>
         /// 如果TextBox.Text为空时,SelectedValue的值.
@@ -103,6 +111,9 @@ namespace hwj.UserControls.Suggest
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             InitializeComponent();
+            ButtonVisible = true;
+            txtValue.EnterEqualTab = false;
+            oldBackColor = this.txtValue.BackColor;
             EnterEqualTab = true;
             if (!DesignMode)
             {
@@ -120,18 +131,20 @@ namespace hwj.UserControls.Suggest
                 tsCH.Dock = DockStyle.Fill;
 
                 tsDropDown = new ToolStripDropDown();
-                tsDropDown.Closed += new ToolStripDropDownClosedEventHandler(tsDropDown_Closed);
                 tsDropDown.Padding = new Padding(0);
                 tsDropDown.DropShadowEnabled = true;
                 tsDropDown.Items.Add(tsCH);
                 tsDropDown.AutoClose = false;
             }
         }
-        private void SuggestBox_Load(object sender, EventArgs e)
+        protected override void OnCreateControl()
         {
             tsDropDown.Width = this.Width;
             btnSelect.Visible = ButtonVisible;
             txtValue.MaxLength = MaxLength;
+            if (IsRequired)
+                this.txtValue.BackColor = Common.RequiredBackColor;
+            base.OnCreateControl();
         }
 
         #region Events
@@ -139,9 +152,7 @@ namespace hwj.UserControls.Suggest
         {
             if (OnFocus != null)
                 OnFocus(sender, e);
-            else
-                DataBind(sender, e);
-            ShowList();
+            ShowList(sender, e);
         }
         private void lstCtrl_SelectedValue(SuggestValue e)
         {
@@ -161,11 +172,7 @@ namespace hwj.UserControls.Suggest
             if (OnSelected != null)
                 OnSelected(e);
         }
-        void tsDropDown_Closed(object sender, ToolStripDropDownClosedEventArgs e)
-        {
-            IsShowed = false;
-        }
-        void ParentForm_Move(object sender, EventArgs e)
+        private void ParentForm_Move(object sender, EventArgs e)
         {
             CloseList(true);
         }
@@ -182,32 +189,43 @@ namespace hwj.UserControls.Suggest
             {
                 if (e.KeyCode == Keys.Enter)
                 {
-                    if (!textChange && IsShowed)
+                    if (IsShowed)
                     {
                         ListControl.SetSelectedValue(selectIndex);
                         selectIndex = 0;
-                        if (EnterEqualTab)
-                            SendKeys.Send("{Tab}");
                         return;
                     }
-                    DataBind(sender, e);
-                    textChange = false;
-                    ShowList();
+                    else
+                    {
+                        if (EnterEqualTab)
+                            SendKeys.Send("{Tab}");
+                    }
                 }
-                else if (e.KeyCode == Keys.Up)
+                else if (e.KeyCode == Keys.Down)
+                {
+                    if (IsShowed)
+                    {
+                        if (textChange)
+                            ShowList(sender, e);
+                        else
+                        {
+                            if (selectIndex < RecordCount - 1)
+                                selectIndex++;
+                            ListControl.SelectIndex(selectIndex);
+                            e.Handled = true;
+                        }
+                    }
+                    else
+                        ShowList(sender, e);
+                }
+                else if (e.KeyCode == Keys.Up && IsShowed)
                 {
                     if (selectIndex > 0)
                         selectIndex--;
                     ListControl.SelectIndex(selectIndex);
                     e.Handled = true;
                 }
-                else if (e.KeyCode == Keys.Down)
-                {
-                    if (selectIndex < RecordCount - 1)
-                        selectIndex++;
-                    ListControl.SelectIndex(selectIndex);
-                    e.Handled = true;
-                }
+
             }
             catch
             {
@@ -225,6 +243,18 @@ namespace hwj.UserControls.Suggest
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
             textChange = true;
+        }
+        private void txtValue_Validating(object sender, CancelEventArgs e)
+        {
+            if (_SelectedText != this.txtValue.Text)
+                Clear();
+            if (IsRequired)
+            {
+                if (string.IsNullOrEmpty(this.Text))
+                    this.BackColor = Common.RequiredBackColor;
+                else
+                    this.BackColor = oldBackColor;
+            }
         }
         #endregion
         #endregion
@@ -260,8 +290,10 @@ namespace hwj.UserControls.Suggest
         #endregion
 
         #region Private Functions
-        private void ShowList()
+        private void ShowList(object sender, EventArgs e)
         {
+            DataBind(sender, e);
+            textChange = false;
             selectIndex = 0;
             if (RecordCount > 0)
             {
@@ -269,7 +301,6 @@ namespace hwj.UserControls.Suggest
                 {
                     if (this.ParentForm != null)
                         this.ParentForm.Move += new EventHandler(ParentForm_Move);
-                    IsShowed = true;
                     ListControl.IsEnterList = false;
                     ListControl.Width = tsDropDown.Width;
                     tsDropDown.Show(this, 0, this.Height);
@@ -306,5 +337,6 @@ namespace hwj.UserControls.Suggest
             ListControl.FootInfoText = string.Format(Properties.Resources.ReturnRecord, RecordCount);
         }
         #endregion
+
     }
 }

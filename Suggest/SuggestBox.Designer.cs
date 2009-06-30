@@ -28,7 +28,7 @@ namespace hwj.UserControls.Suggest
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtValue = new System.Windows.Forms.TextBox();
+            this.txtValue = new hwj.UserControls.CommonControls.xTextBox();
             this.btnSelect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -42,6 +42,7 @@ namespace hwj.UserControls.Suggest
             this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
             this.txtValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtValue_KeyDown);
             this.txtValue.Enter += new System.EventHandler(this.txtValue_Enter);
+            this.txtValue.Validating += new System.ComponentModel.CancelEventHandler(this.txtValue_Validating);
             // 
             // btnSelect
             // 
@@ -66,7 +67,6 @@ namespace hwj.UserControls.Suggest
             this.Controls.Add(this.btnSelect);
             this.Name = "SuggestBox";
             this.Size = new System.Drawing.Size(120, 21);
-            this.Load += new System.EventHandler(this.SuggestBox_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -75,6 +75,6 @@ namespace hwj.UserControls.Suggest
         #endregion
 
         private System.Windows.Forms.Button btnSelect;
-        private System.Windows.Forms.TextBox txtValue;
+        private CommonControls.xTextBox txtValue;
     }
 }
