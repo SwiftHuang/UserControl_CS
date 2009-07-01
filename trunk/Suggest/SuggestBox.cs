@@ -24,7 +24,6 @@ namespace hwj.UserControls.Suggest
         private ToolStripDropDown tsDropDown = null;
         private ToolStripControlHost tsCH = null;
         private SuggestView ListControl = null;
-        private ToolTip toolTip = new ToolTip();
         private int RecordCount
         {
             get
@@ -46,6 +45,7 @@ namespace hwj.UserControls.Suggest
         public bool EnterEqualTab { get; set; }
         [DefaultValue(false)]
         public bool IsRequired { get; set; }
+        [DefaultValue(typeof(SystemColors), "Window")]
         public new Color BackColor
         {
             get { return txtValue.BackColor; }
@@ -74,7 +74,7 @@ namespace hwj.UserControls.Suggest
         {
             get
             {
-                if (this.txtValue.Text == string.Empty)
+                if (string.IsNullOrEmpty(this.txtValue.Text))
                     return EmptyValue;
                 else
                     return _SelectedValue;
@@ -104,7 +104,18 @@ namespace hwj.UserControls.Suggest
             get { return _emptyValue; }
             set { _emptyValue = value; }
         }
-        public int MaxLength { get; set; }
+        public int MaxLength
+        {
+            get { return txtValue.MaxLength; }
+            set { txtValue.MaxLength = value; }
+        }
+        public enum DisplayMemberType
+        {
+            Primary,
+            Second,
+        }
+        [DefaultValue(DisplayMemberType.Primary)]
+        public DisplayMemberType DisplayMember { get; set; }
         #endregion
 
         public SuggestBox()
@@ -144,6 +155,8 @@ namespace hwj.UserControls.Suggest
             txtValue.MaxLength = MaxLength;
             if (IsRequired)
                 this.txtValue.BackColor = Common.RequiredBackColor;
+            else
+                this.txtValue.BackColor = SystemColors.Window;
             base.OnCreateControl();
         }
 
@@ -159,7 +172,10 @@ namespace hwj.UserControls.Suggest
             if (e != null)
             {
                 this.SelectedValue = e.Key;
-                this.SelectedText = e.PrimaryValue;
+                if (DisplayMember == DisplayMemberType.Primary)
+                    this.SelectedText = e.PrimaryValue;
+                else if (DisplayMember == DisplayMemberType.Second)
+                    this.SelectedText = e.SecondValue;
             }
             else
             {
@@ -201,22 +217,12 @@ namespace hwj.UserControls.Suggest
                             SendKeys.Send("{Tab}");
                     }
                 }
-                else if (e.KeyCode == Keys.Down)
+                else if (e.KeyCode == Keys.Down && IsShowed)
                 {
-                    if (IsShowed)
-                    {
-                        if (textChange)
-                            ShowList(sender, e);
-                        else
-                        {
-                            if (selectIndex < RecordCount - 1)
-                                selectIndex++;
-                            ListControl.SelectIndex(selectIndex);
-                            e.Handled = true;
-                        }
-                    }
-                    else
-                        ShowList(sender, e);
+                    if (selectIndex < RecordCount - 1)
+                        selectIndex++;
+                    ListControl.SelectIndex(selectIndex);
+                    e.Handled = true;
                 }
                 else if (e.KeyCode == Keys.Up && IsShowed)
                 {
@@ -243,6 +249,7 @@ namespace hwj.UserControls.Suggest
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
             textChange = true;
+            ShowList(sender, e);
         }
         private void txtValue_Validating(object sender, CancelEventArgs e)
         {
@@ -272,7 +279,7 @@ namespace hwj.UserControls.Suggest
                 if (txtValue.Text == string.Empty)
                     ListControl.DataList = DataList;
                 else
-                    ListControl.DataList = SearchPrimaryColumn(txtValue.Text);
+                    ListControl.DataList = SearchValue(txtValue.Text);
             }
             ListControl.DataBind();
             SetFootText();
@@ -310,7 +317,7 @@ namespace hwj.UserControls.Suggest
             else
             {
                 CloseList(true);
-                Common.ShowToolTipInfo(toolTip, this, Properties.Resources.NoRecord);
+                Common.ShowToolTipInfo(this, Properties.Resources.NoRecord);
             }
         }
         private void CloseList(bool nocheck)
@@ -322,12 +329,13 @@ namespace hwj.UserControls.Suggest
             else if (!ListControl.IsEnterList)
                 tsDropDown.Close();
         }
-        private SuggestList SearchPrimaryColumn(string value)
+        private SuggestList SearchValue(string value)
         {
+            string v = value.ToUpper();
             SuggestList lst = new SuggestList();
             foreach (SuggestValue s in DataList)
             {
-                if (s.Key.IndexOf(value) != -1)
+                if (s.PrimaryValue.ToUpper().IndexOf(v) != -1 || (SecondColumnMode && s.SecondValue.ToUpper().IndexOf(v) != -1))
                     lst.Add(s);
             }
             return lst;

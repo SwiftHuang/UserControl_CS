@@ -41,6 +41,7 @@ namespace hwj.UserControls.Suggest
         public void DataBind()
         {
             CreateColumns();
+            dgList.DataSource = null;
             dgList.DataSource = DataList;
         }
         public void SelectIndex(int index)

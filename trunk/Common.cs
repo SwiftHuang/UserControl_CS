@@ -11,12 +11,16 @@ namespace hwj.UserControls
     {
         #region ToolTip Function
         private static ToolTip toolTip = new ToolTip();
+        public static void ShowToolTipInfo(Control control, string text)
+        {
+            ShowToolTipInfo(toolTip, control, text);
+        }
         public static void ShowToolTipInfo(ToolTip toolTip1, Control control, string text)
         {
             //toolTip.IsBalloon = true;
             toolTip.ToolTipIcon = ToolTipIcon.Info;
             toolTip.ToolTipTitle = Properties.Resources.Information;
-            toolTip.Show(text, control, 0, control.Height, 5000);
+            toolTip.Show(text, control, 0, control.Height, 1500);
         }
         #endregion
 

@@ -28,7 +28,7 @@ namespace hwj.UserControls.Suggest
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgList = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,8 +44,8 @@ namespace hwj.UserControls.Suggest
             this.dgList.AllowUserToDeleteRows = false;
             this.dgList.AllowUserToResizeColumns = false;
             this.dgList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.dgList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.dgList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -86,10 +86,7 @@ namespace hwj.UserControls.Suggest
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.statusStrip1.AutoSize = false;
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblFootInfo2});
             this.statusStrip1.Location = new System.Drawing.Point(0, 182);
@@ -101,8 +98,12 @@ namespace hwj.UserControls.Suggest
             // 
             // lblFootInfo2
             // 
+            this.lblFootInfo2.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.lblFootInfo2.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.lblFootInfo2.Name = "lblFootInfo2";
-            this.lblFootInfo2.Size = new System.Drawing.Size(196, 15);
+            this.lblFootInfo2.Size = new System.Drawing.Size(165, 15);
             this.lblFootInfo2.Spring = true;
             this.lblFootInfo2.Text = "lblTimeInfo";
             this.lblFootInfo2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
