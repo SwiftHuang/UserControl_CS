@@ -59,7 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonControls\xDataGridView.cs">
+    <Compile Include="DataList\xDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataList\xDataGridViewCalendarColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataList\xDataGridViewNumbericColumn.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CommonControls\xDateTimePicker.cs">

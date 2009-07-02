@@ -24,7 +24,8 @@ namespace hwj.UserControls.CommonControls
         public bool ContentCheck { get; set; }
         [DefaultValue(ContentType.None)]
         public ContentType ContentType { get; set; }
-        private ToolTip toolTip = new ToolTip();
+        [DefaultValue("")]
+        public string Format { get; set; }
 
         public xTextBox()
         {
@@ -38,12 +39,37 @@ namespace hwj.UserControls.CommonControls
         {
             if (ContentType == ContentType.Numberic)
             {
-                Text = "0.00";
+                if (Text == string.Empty)
+                    Text = "0.00";
                 TextAlign = HorizontalAlignment.Right;
             }
             if (IsRequired)
                 this.BackColor = Common.RequiredBackColor;
             base.OnCreateControl();
+        }
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            if (ContentType == ContentType.Numberic)
+            {
+                if (e.KeyChar == '.')
+                {
+                    if (this.Text.IndexOf(e.KeyChar) != -1)
+                        e.Handled = true;
+                    return;
+                }
+                else if (e.KeyChar == '-')
+                {
+                    if (this.Text.IndexOf(e.KeyChar) != -1)
+                        this.Text = this.Text.Replace("-", "");
+                    else
+                        this.Text = this.Text.Insert(0, "-");
+                    e.Handled = true;
+                    return;
+                }
+                if (!(Char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
+                    e.Handled = true;
+            }
+            base.OnKeyPress(e);
         }
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -62,18 +88,20 @@ namespace hwj.UserControls.CommonControls
                     case ContentType.Email:
                         if (!CommonLibrary.Utility.EmailHelper.isValidEmail(this.Text))
                         {
-                            Common.ShowToolTipInfo(toolTip, this, string.Format(Properties.Resources.InvalidEmail, this.Text));
+                            Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
                             this.Text = string.Empty;
                             e.Cancel = true;
                         }
                         break;
                     case ContentType.Numberic:
-                        if (!CommonLibrary.Utility.NumberHelper.IsNumeric(this.Text))
+                        if (!CommonLibrary.Utility.NumberHelper.IsNumeric(this.Text.Replace(",", "")))
                         {
-                            Common.ShowToolTipInfo(toolTip, this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
-                            this.Text = "0.00";
+                            Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
+                            this.Text = "0";
                             e.Cancel = true;
                         }
+                        if (!string.IsNullOrEmpty(Format))
+                            this.Text = decimal.Parse(this.Text).ToString(Format);
                         break;
                     default:
                         break;
