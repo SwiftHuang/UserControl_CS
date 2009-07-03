@@ -35,10 +35,12 @@ namespace hwj.UserControls.Suggest
             // txtValue
             // 
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtValue.Format = null;
             this.txtValue.Location = new System.Drawing.Point(0, 0);
             this.txtValue.Name = "txtValue";
             this.txtValue.Size = new System.Drawing.Size(97, 21);
             this.txtValue.TabIndex = 0;
+            this.txtValue.DoubleClick += new System.EventHandler(this.txtValue_DoubleClick);
             this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
             this.txtValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtValue_KeyDown);
             this.txtValue.Enter += new System.EventHandler(this.txtValue_Enter);
