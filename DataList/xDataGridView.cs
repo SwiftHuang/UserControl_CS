@@ -52,17 +52,18 @@ namespace hwj.UserControls.DataList
             if (keyData == Keys.Enter && !CurrentCell.ReadOnly)
             {
                 PressEnter = true;
-                this.ProcessTabKey(keyData);
+                SendKeys.Send("{Tab}");
+                return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
         protected override void OnCellEnter(DataGridViewCellEventArgs e)
         {
             DataGridViewCell cell = this[e.ColumnIndex, e.RowIndex];
-            if (!cell.ReadOnly)
-                PressEnter = false;
             if (PressEnter && cell.ReadOnly)
                 SendKeys.Send("{Tab}");
+            else
+                PressEnter = false;
             base.OnCellEnter(e);
         }
         protected override void OnScroll(ScrollEventArgs e)
@@ -90,7 +91,7 @@ namespace hwj.UserControls.DataList
         protected override void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
         {
             if (e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.ReadOnly && e.Column.Name != ColName)
-                e.Column.DefaultCellStyle.BackColor = System.Drawing.Color.Gainsboro;
+                e.Column.DefaultCellStyle.BackColor = System.Drawing.Color.WhiteSmoke;
             base.OnColumnStateChanged(e);
         }
         protected override void OnDataBindingComplete(DataGridViewBindingCompleteEventArgs e)
@@ -107,6 +108,7 @@ namespace hwj.UserControls.DataList
             base.OnBindingContextChanged(e);
         }
 
+        #region Private Function
         private const string ColName = "_colRowNum";
         private void CreateRowNum()
         {
@@ -192,7 +194,7 @@ namespace hwj.UserControls.DataList
                 if (r.Cells[cloumn.Index].Value != null)
                 {
                     tmp = r.Cells[cloumn.Index].Value.ToString().Replace(",", "");
-                    if (CommonLibrary.Utility.NumberHelper.IsNumeric(tmp))
+                    if (CommonLibrary.Object.NumberHelper.IsNumeric(tmp))
                         d += decimal.Parse(tmp);
                 }
             }
@@ -209,10 +211,15 @@ namespace hwj.UserControls.DataList
         }
         private void AddRows()
         {
+            bool allowAddRows = this.AllowUserToAddRows;
+            if (!allowAddRows)
+                this.AllowUserToAddRows = true;
             for (int i = 1; i < DisplayRows; i++)
             {
                 this.Rows.AddCopy(0);
             }
+            this.AllowUserToAddRows = allowAddRows;
         }
+        #endregion
     }
 }

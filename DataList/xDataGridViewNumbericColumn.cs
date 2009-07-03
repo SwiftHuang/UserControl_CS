@@ -93,6 +93,7 @@ namespace hwj.UserControls.DataList
             this.Format = "###,##0.00";
             this.ContentType = ContentType.Numberic;
             this.ContentCheck = false;
+            this.EnterEqualTab = false;
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlFormattedValue 

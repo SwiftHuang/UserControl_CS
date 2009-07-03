@@ -136,4 +136,7 @@
   <data name="ReturnRecord" xml:space="preserve">
     <value>返回{0}条记录</value>
   </data>
+  <data name="ErrorInfo" xml:space="preserve">
+    <value>错误信息</value>
+  </data>
 </root>

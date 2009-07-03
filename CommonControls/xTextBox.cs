@@ -86,7 +86,7 @@ namespace hwj.UserControls.CommonControls
                     case ContentType.None:
                         break;
                     case ContentType.Email:
-                        if (!CommonLibrary.Utility.EmailHelper.isValidEmail(this.Text))
+                        if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
                         {
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
                             this.Text = string.Empty;
@@ -94,7 +94,7 @@ namespace hwj.UserControls.CommonControls
                         }
                         break;
                     case ContentType.Numberic:
-                        if (!CommonLibrary.Utility.NumberHelper.IsNumeric(this.Text.Replace(",", "")))
+                        if (!CommonLibrary.Object.NumberHelper.IsNumeric(this.Text.Replace(",", "")))
                         {
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
                             this.Text = "0";

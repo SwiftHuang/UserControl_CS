@@ -39,6 +39,7 @@ namespace hwj.UserControls.Suggest
         public event SelectedValueHandler OnSelected;
         public event EventHandler OnFocus;
         public event EventHandler DataBinding;
+        public event EventHandler DoubleClick;
 
         #region Property
         [DefaultValue(true)]
@@ -248,8 +249,17 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
-            textChange = true;
-            ShowList(sender, e);
+            try
+            {
+                this.Cursor = Cursors.AppStarting;
+                textChange = true;
+                ShowList(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Common.ShowToolTipError(this, ex.Message);
+            }
+            finally { this.Cursor = Cursors.Default; }
         }
         private void txtValue_Validating(object sender, CancelEventArgs e)
         {
@@ -261,6 +271,23 @@ namespace hwj.UserControls.Suggest
                     this.BackColor = Common.RequiredBackColor;
                 else
                     this.BackColor = oldBackColor;
+            }
+        }
+        private void txtValue_DoubleClick(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.AppStarting;
+            try
+            {
+                if (DoubleClick != null)
+                    DoubleClick(sender, e);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
         }
         #endregion
