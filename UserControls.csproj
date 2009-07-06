@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>hwj.UserControls</RootNamespace>
-    <AssemblyName>UserControls</AssemblyName>
+    <AssemblyName>hwj.UserControls</AssemblyName>
     <Win32Resource>
     </Win32Resource>
     <ApplicationIcon>
@@ -144,7 +144,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CommonLibrary\CommonLibrary\CommonLibrary.csproj">
+    <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj">
       <Project>{700126CB-2266-4639-AC78-1060D5E38C96}</Project>
       <Name>CommonLibrary</Name>
     </ProjectReference>
