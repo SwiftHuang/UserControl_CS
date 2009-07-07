@@ -117,6 +117,11 @@ namespace hwj.UserControls.Suggest
         }
         [DefaultValue(DisplayMemberType.Primary)]
         public DisplayMemberType DisplayMember { get; set; }
+        /// <summary>
+        /// 返回最大记录数
+        /// </summary>
+        [Description("返回最大记录数"), DefaultValue(0)]
+        public int MaxRecords { get; set; }
         #endregion
 
         public SuggestBox()
@@ -309,7 +314,7 @@ namespace hwj.UserControls.Suggest
                     ListControl.DataList = SearchValue(txtValue.Text);
             }
             ListControl.DataBind();
-            SetFootText();
+            //SetFootText();
         }
         public void Clear()
         {
@@ -364,13 +369,15 @@ namespace hwj.UserControls.Suggest
             {
                 if (s.PrimaryValue.ToUpper().IndexOf(v) != -1 || (SecondColumnMode && s.SecondValue.ToUpper().IndexOf(v) != -1))
                     lst.Add(s);
+                if (MaxRecords != 0 && lst.Count == MaxRecords)
+                    break;
             }
             return lst;
         }
-        private void SetFootText()
-        {
-            ListControl.FootInfoText = string.Format(Properties.Resources.ReturnRecord, RecordCount);
-        }
+        //private void SetFootText()
+        //{
+        //    ListControl.FootInfoText = string.Format(Properties.Resources.ReturnRecord, RecordCount);
+        //}
         #endregion
 
     }

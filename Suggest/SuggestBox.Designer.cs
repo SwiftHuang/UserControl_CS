@@ -29,7 +29,7 @@ namespace hwj.UserControls.Suggest
         private void InitializeComponent()
         {
             this.txtValue = new hwj.UserControls.CommonControls.xTextBox();
-            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnSelect = new hwj.UserControls.CommonControls.xButton();
             this.SuspendLayout();
             // 
             // txtValue
@@ -76,7 +76,7 @@ namespace hwj.UserControls.Suggest
 
         #endregion
 
-        private System.Windows.Forms.Button btnSelect;
+        private CommonControls.xButton btnSelect;
         private CommonControls.xTextBox txtValue;
     }
 }

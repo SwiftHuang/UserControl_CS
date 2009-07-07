@@ -113,7 +113,7 @@ namespace hwj.UserControls.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 返回{0}条记录.
+        ///   Looks up a localized string similar to {0}条记录.
         /// </summary>
         internal static string ReturnRecord {
             get {
