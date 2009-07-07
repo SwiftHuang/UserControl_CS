@@ -30,11 +30,6 @@ namespace hwj.UserControls.Suggest
         public bool SecondColumnMode { get; set; }
         public string PrimaryColumnName { get; set; }
         public string SecondColumnName { get; set; }
-        public string FootInfoText
-        {
-            get { return lblFootInfo2.Text; }
-            set { lblFootInfo2.Text = value; }
-        }
         #endregion
 
         #region Public Functions
