@@ -139,4 +139,7 @@
   <data name="ErrorInfo" xml:space="preserve">
     <value>错误信息</value>
   </data>
+  <data name="PageRecordCount" xml:space="preserve">
+    <value>共{0}条记录</value>
+  </data>
 </root>
