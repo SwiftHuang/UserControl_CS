@@ -132,6 +132,9 @@
   <data name="NoRecord" xml:space="preserve">
     <value>当前找不到你所需要的记录</value>
   </data>
+  <data name="PageRecordCount" xml:space="preserve">
+    <value>共{0}条记录</value>
+  </data>
   <data name="ReturnRecord" xml:space="preserve">
     <value>返回{0}条记录</value>
   </data>
