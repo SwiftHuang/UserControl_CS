@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace hwj.UserControls.DataList
 {
@@ -10,7 +11,7 @@ namespace hwj.UserControls.DataList
         public bool RowNum { get; set; }
         public bool FooterVisible { get; set; }
         public List<string> SumColumnName { get; set; }
-        public int DisplayRows { get; set; }
+        public UInt64 DisplayRows { get; set; }
         #endregion
 
         public xDataGridView()
@@ -19,6 +20,7 @@ namespace hwj.UserControls.DataList
             RowHeadersVisible = false;
             FooterVisible = false;
             DisplayRows = 0;
+            BackgroundColor = SystemColors.Window;
         }
 
         protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
@@ -98,14 +100,27 @@ namespace hwj.UserControls.DataList
         {
             base.OnDataBindingComplete(e);
             CreateTotal();
-            foreach (string c in SumColumnName)
-            {
-                CalculateTotal(this.Columns[c]);
-            }
+            RefreshTotal();
+            //if (this.Rows.Count == 0)
+            //{
+            //    this.DataSource = null;
+            //    AddRows();
+            //}
         }
         protected override void OnBindingContextChanged(EventArgs e)
         {
             base.OnBindingContextChanged(e);
+        }
+
+        /// <summary>
+        /// 重新计算结果
+        /// </summary>
+        public void RefreshTotal()
+        {
+            foreach (string c in SumColumnName)
+            {
+                CalculateTotal(this.Columns[c]);
+            }
         }
 
         #region Private Function
@@ -214,7 +229,7 @@ namespace hwj.UserControls.DataList
             bool allowAddRows = this.AllowUserToAddRows;
             if (!allowAddRows)
                 this.AllowUserToAddRows = true;
-            for (int i = 1; i < DisplayRows; i++)
+            for (UInt64 i = 1; i < DisplayRows; i++)
             {
                 this.Rows.AddCopy(0);
             }

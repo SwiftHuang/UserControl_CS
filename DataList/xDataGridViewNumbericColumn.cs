@@ -92,7 +92,7 @@ namespace hwj.UserControls.DataList
             //this.Format = DateTimePickerFormat.Short;
             this.Format = "###,##0.00";
             this.ContentType = ContentType.Numberic;
-            this.ContentCheck = false;
+            this.ShowContentError = false;
             this.EnterEqualTab = false;
         }
 
@@ -102,7 +102,7 @@ namespace hwj.UserControls.DataList
         {
             get
             {
-                if (!string.IsNullOrEmpty(this.Text))
+                if (!string.IsNullOrEmpty(this.Text) && this.IsNumberic())
                 {
                     decimal v = decimal.Parse(this.Text);
                     if (v == 0)
@@ -110,7 +110,8 @@ namespace hwj.UserControls.DataList
                     else
                         return v.ToString(this.Format);
                 }
-                return this.Text;
+                else
+                    return string.Empty;
             }
             set
             {
@@ -156,20 +157,16 @@ namespace hwj.UserControls.DataList
         public bool EditingControlWantsInputKey(Keys key, bool dataGridViewWantsInputKey)
         {
             // Let the DateTimePicker handle the keys listed.
-            //switch (key & Keys.KeyCode)
-            //{
-            //    case Keys.Left:
-            //    case Keys.Up:
-            //    case Keys.Down:
-            //    case Keys.Right:
-            //    case Keys.Home:
-            //    case Keys.End:
-            //    case Keys.PageDown:
-            //    case Keys.PageUp:
-            //        return true;
-            //    default:
-            return !dataGridViewWantsInputKey;
-            //}
+            switch (key & Keys.KeyCode)
+            {
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.Home:
+                case Keys.End:
+                    return true;
+                default:
+                    return !dataGridViewWantsInputKey;
+            }
         }
 
         // Implements the IDataGridViewEditingControl.PrepareEditingControlForEdit 

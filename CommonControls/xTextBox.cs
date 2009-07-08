@@ -20,8 +20,11 @@ namespace hwj.UserControls.CommonControls
         public bool EnterEqualTab { get; set; }
         [DefaultValue(false)]
         public bool IsRequired { get; set; }
-        [DefaultValue(false)]
-        public bool ContentCheck { get; set; }
+        /// <summary>
+        /// "是否显示验证错误信息(只有ContentType不为None时有效)"
+        /// </summary>
+        [DefaultValue(true), Description("是否显示验证错误信息(只有ContentType不为None时有效)")]
+        public bool ShowContentError { get; set; }
         [DefaultValue(ContentType.None)]
         public ContentType ContentType { get; set; }
         [DefaultValue("")]
@@ -32,7 +35,7 @@ namespace hwj.UserControls.CommonControls
             oldBackColor = this.BackColor;
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             EnterEqualTab = true;
-            ContentCheck = false;
+            ShowContentError = true;
             IsRequired = false;
         }
         protected override void OnCreateControl()
@@ -62,7 +65,10 @@ namespace hwj.UserControls.CommonControls
                     if (this.Text.IndexOf(e.KeyChar) != -1)
                         this.Text = this.Text.Replace("-", "");
                     else
+                    {
                         this.Text = this.Text.Insert(0, "-");
+                        SelectionStart = 1;
+                    }
                     e.Handled = true;
                     return;
                 }
@@ -75,37 +81,44 @@ namespace hwj.UserControls.CommonControls
         {
             if (EnterEqualTab && e.KeyCode == Keys.Enter)
                 SendKeys.Send("{Tab}");
+            if (IsNegatives() && e.KeyCode == Keys.Left && SelectionStart == 1)
+                e.Handled = true;
             base.OnKeyDown(e);
+        }
+        protected override void OnClick(EventArgs e)
+        {
+            if (IsNegatives() && SelectionStart == 0)
+                SelectionStart = 1;
+            base.OnClick(e);
         }
         protected override void OnValidating(CancelEventArgs e)
         {
-            if (ContentCheck)
+            switch (ContentType)
             {
-                switch (ContentType)
-                {
-                    case ContentType.None:
-                        break;
-                    case ContentType.Email:
-                        if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
-                        {
+                case ContentType.None:
+                    break;
+                case ContentType.Email:
+                    if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
+                    {
+                        if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
-                            this.Text = string.Empty;
-                            e.Cancel = true;
-                        }
-                        break;
-                    case ContentType.Numberic:
-                        if (!CommonLibrary.Object.NumberHelper.IsNumeric(this.Text.Replace(",", "")))
-                        {
+                        this.Text = string.Empty;
+                        e.Cancel = true;
+                    }
+                    break;
+                case ContentType.Numberic:
+                    if (!IsNumberic())
+                    {
+                        if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
-                            this.Text = "0";
-                            e.Cancel = true;
-                        }
-                        if (!string.IsNullOrEmpty(Format))
-                            this.Text = decimal.Parse(this.Text).ToString(Format);
-                        break;
-                    default:
-                        break;
-                }
+                        this.Text = "0";
+                        e.Cancel = true;
+                    }
+                    if (!string.IsNullOrEmpty(Format))
+                        this.Text = decimal.Parse(this.Text).ToString(Format);
+                    break;
+                default:
+                    break;
             }
             if (IsRequired)
             {
@@ -115,6 +128,21 @@ namespace hwj.UserControls.CommonControls
                     this.BackColor = oldBackColor;
             }
             base.OnValidating(e);
+        }
+
+        internal bool IsNumberic()
+        {
+            if (this.Text.Trim() == "-" || !CommonLibrary.Object.NumberHelper.IsNumeric(this.Text.Replace(",", "")))
+                return false;
+            else
+                return true;
+        }
+        private bool IsNegatives()
+        {
+            if (ContentType == ContentType.Numberic && this.Text.IndexOf('-') != -1)
+                return true;
+            else
+                return false;
         }
     }
 
