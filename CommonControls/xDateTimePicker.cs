@@ -8,14 +8,9 @@ namespace hwj.UserControls.CommonControls
 {
     public class xDateTimePicker : DateTimePicker, ICommonControls
     {
-        public enum DateTimeTypes
-        {
-            None,
-            CN,
-            HK,
-        }
-        [DefaultValue(DateTimeTypes.None)]
-        public DateTimeTypes DateTimeType { get; set; }
+
+        [DefaultValue(Enums.DateFormat.None)]
+        public Enums.DateFormat DateFormat { get; set; }
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
         [DefaultValue(false)]
@@ -30,17 +25,17 @@ namespace hwj.UserControls.CommonControls
         {
             if (IsRequired)
                 this.BackColor = Common.RequiredBackColor;
-            switch (DateTimeType)
+            switch (DateFormat)
             {
-                case DateTimeTypes.None:
+                case Enums.DateFormat.None:
                     break;
-                case DateTimeTypes.CN:
+                case Enums.DateFormat.Date:
                     this.Format = DateTimePickerFormat.Custom;
-                    this.CustomFormat = "yyyy-MM-dd";
+                    this.CustomFormat = Common.Format_Date;
                     break;
-                case DateTimeTypes.HK:
+                case Enums.DateFormat.DateTime:
                     this.Format = DateTimePickerFormat.Custom;
-                    this.CustomFormat = "dd/MM/yyyy";
+                    this.CustomFormat = Common.Format_DateTime;
                     break;
                 default:
                     break;

@@ -1,6 +1,6 @@
 ﻿namespace hwj.UserControls.DataList
 {
-    partial class Page
+    partial class DataListPage
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Page));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataListPage));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolBtnFirst = new System.Windows.Forms.ToolStripButton();
             this.toolLblTotal = new System.Windows.Forms.ToolStripLabel();
@@ -109,8 +109,8 @@
             // toolLblPage
             // 
             this.toolLblPage.Name = "toolLblPage";
-            this.toolLblPage.Size = new System.Drawing.Size(29, 22);
-            this.toolLblPage.Text = "/100";
+            this.toolLblPage.Size = new System.Drawing.Size(17, 22);
+            this.toolLblPage.Text = "/1";
             this.toolLblPage.ToolTipText = "总页数";
             // 
             // toolBtnNext
@@ -175,12 +175,12 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // Page
+            // DataListPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.toolStrip1);
-            this.Name = "Page";
+            this.Name = "DataListPage";
             this.Size = new System.Drawing.Size(629, 25);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

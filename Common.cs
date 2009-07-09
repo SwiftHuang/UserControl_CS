@@ -9,6 +9,10 @@ namespace hwj.UserControls
 {
     public class Common
     {
+        public static string Format_Date = "yyyy-MM-dd";
+        public static string Format_DateTime = "yyyy-MM-dd hh:mm:ss";
+        public static string Format_Numberic = "###,##0.00";
+
         #region ToolTip Function
         private static ToolTip toolTip = new ToolTip();
         public static void ShowToolTipInfo(Control control, string text)

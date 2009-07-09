@@ -9,7 +9,8 @@ using System.Windows.Forms;
 
 namespace hwj.UserControls.DataList
 {
-    public partial class Page : UserControl
+    [DefaultEvent("PageIndexChangedHandler")]
+    public partial class DataListPage : UserControl
     {
         #region Property
         private const string pagefmt = "/{0}";
@@ -71,8 +72,9 @@ namespace hwj.UserControls.DataList
         public delegate void PageIndexChangedHandler(int pageIndex, int pageSize);
         public event PageIndexChangedHandler PageIndexChanged;
 
-        public Page()
+        public DataListPage()
         {
+            this.Dock = DockStyle.Bottom;
             InitializeComponent();
             toolCboPageSize.SelectedItem = "500";
             toolTxtIndex.Text = "1";
@@ -119,6 +121,19 @@ namespace hwj.UserControls.DataList
         }
         #endregion
 
+        /// <summary>
+        /// 执行分页事件
+        /// </summary>
+        /// <param name="pageIndex">页数</param>
+        public void PerformPageChange(int pageIndex)
+        {
+            PerformPageChange(pageIndex, PageSize);
+        }
+        /// <summary>
+        /// 执行分页事件
+        /// </summary>
+        /// <param name="pageIndex">页数</param>
+        /// <param name="pageSize">每页记录数</param>
         public void PerformPageChange(int pageIndex, int pageSize)
         {
             if (!HandlePageChange)
@@ -136,7 +151,7 @@ namespace hwj.UserControls.DataList
         {
             if (PageSize != 0)
                 PageNum = RecordCount / PageSize + (RecordCount % PageSize > 0 ? 1 : 0);
-            if (PageNum == 0)
+            if (PageNum == 0 || RecordCount == 0)
                 PageNum = 1;
             toolLblPage.Text = string.Format(pagefmt, PageNum);
             if (PageIndex <= 1)

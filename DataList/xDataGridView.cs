@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace hwj.UserControls.DataList
 {
