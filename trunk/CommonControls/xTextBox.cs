@@ -48,6 +48,8 @@ namespace hwj.UserControls.CommonControls
             }
             if (IsRequired)
                 this.BackColor = Common.RequiredBackColor;
+            else
+                this.BackColor = System.Drawing.SystemColors.Window;
             base.OnCreateControl();
         }
         protected override void OnKeyPress(KeyPressEventArgs e)

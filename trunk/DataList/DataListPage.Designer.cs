@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataListPage));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolChkSelectAll = new hwj.UserControls.ToolStrip.ToolStripCheckedBox();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnFirst = new System.Windows.Forms.ToolStripButton();
             this.toolLblTotal = new System.Windows.Forms.ToolStripLabel();
             this.toolBtnPrev = new System.Windows.Forms.ToolStripButton();
@@ -50,6 +53,9 @@
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator3,
+            this.toolChkSelectAll,
+            this.toolStripSeparator4,
             this.toolBtnFirst,
             this.toolLblTotal,
             this.toolBtnPrev,
@@ -67,6 +73,34 @@
             this.toolStrip1.Size = new System.Drawing.Size(629, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolChkSelectAll
+            // 
+            this.toolChkSelectAll.AutoSize = false;
+            // 
+            // toolChkSelectAll
+            // 
+            this.toolChkSelectAll.CheckBox.AccessibleName = "toolChkSelectAll";
+            this.toolChkSelectAll.CheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolChkSelectAll.CheckBox.Location = new System.Drawing.Point(6, 2);
+            this.toolChkSelectAll.CheckBox.Name = "toolStripCheckedBox1";
+            this.toolChkSelectAll.CheckBox.Size = new System.Drawing.Size(48, 20);
+            this.toolChkSelectAll.CheckBox.TabIndex = 2;
+            this.toolChkSelectAll.CheckBox.Text = "全选";
+            this.toolChkSelectAll.Name = "toolChkSelectAll";
+            this.toolChkSelectAll.Size = new System.Drawing.Size(48, 20);
+            this.toolChkSelectAll.Text = "全选";
+            this.toolChkSelectAll.CheckedChanged += new System.EventHandler(this.toolChkSelectAll_CheckedChanged);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // toolBtnFirst
             // 
@@ -204,5 +238,8 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolLblPage;
+        private hwj.UserControls.ToolStrip.ToolStripCheckedBox toolChkSelectAll;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
