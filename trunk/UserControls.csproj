@@ -64,11 +64,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataList\Page.cs">
+    <Compile Include="DataList\DataListPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DataList\Page.Designer.cs">
-      <DependentUpon>Page.cs</DependentUpon>
+    <Compile Include="DataList\DataListPage.Designer.cs">
+      <DependentUpon>DataListPage.cs</DependentUpon>
     </Compile>
     <Compile Include="DataList\xDataGridView.cs">
       <SubType>Component</SubType>
@@ -90,6 +90,7 @@
     </Compile>
     <Compile Include="Common.cs" />
     <Compile Include="CommonControls\ICommonControls.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Suggest\SuggestBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,8 +114,8 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataList\Page.resx">
-      <DependentUpon>Page.cs</DependentUpon>
+    <EmbeddedResource Include="DataList\DataListPage.resx">
+      <DependentUpon>DataListPage.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.zh-cn.resx">

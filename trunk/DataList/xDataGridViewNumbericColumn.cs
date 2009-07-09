@@ -10,7 +10,7 @@ namespace hwj.UserControls.DataList
             : base(new xDataGridViewNumbericCell())
         {
             this.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.DefaultCellStyle.Format = "###,##0.00";
+            this.DefaultCellStyle.Format = Common.Format_Numberic;
         }
 
         public override DataGridViewCell CellTemplate
@@ -25,7 +25,7 @@ namespace hwj.UserControls.DataList
                 if (value != null &&
                     !value.GetType().IsAssignableFrom(typeof(xDataGridViewNumbericCell)))
                 {
-                    throw new InvalidCastException("Must be a CalendarCell");
+                    throw new InvalidCastException("Must be a NumbericCell");
                 }
                 base.CellTemplate = value;
             }
@@ -39,7 +39,7 @@ namespace hwj.UserControls.DataList
             : base()
         {
             this.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.Style.Format = "###,##0.00";
+            this.Style.Format = Common.Format_Numberic;
         }
 
         public override void InitializeEditingControl(int rowIndex, object
@@ -90,7 +90,7 @@ namespace hwj.UserControls.DataList
         public xDataGridViewNumbericCellEdittingControl()
         {
             //this.Format = DateTimePickerFormat.Short;
-            this.Format = "###,##0.00";
+            this.Format = Common.Format_Numberic;
             this.ContentType = ContentType.Numberic;
             this.ShowContentError = false;
             this.EnterEqualTab = false;
