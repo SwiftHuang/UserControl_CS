@@ -67,6 +67,8 @@ namespace hwj.UserControls.DataList
         /// 总页数
         /// </summary>
         public int PageNum { get; private set; }
+        public DataGridView DataGridView { get; set; }
+        public DataGridViewColumn CheckBoxColumn { get; set; }
         #endregion
 
         public delegate void PageIndexChangedHandler(int pageIndex, int pageSize);
@@ -181,5 +183,19 @@ namespace hwj.UserControls.DataList
             if (!(Char.IsNumber(e.KeyChar)))
                 e.Handled = true;
         }
+
+        private void toolChkSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (DataGridView != null && CheckBoxColumn != null)
+            {
+                foreach (DataGridViewRow r in DataGridView.Rows)
+                {
+                    r.Cells[CheckBoxColumn.Name].Value = toolChkSelectAll.CheckBox.Checked;
+                }
+            }
+        }
+
+
+
     }
 }
