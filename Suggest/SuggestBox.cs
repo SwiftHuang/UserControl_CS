@@ -37,6 +37,7 @@ namespace hwj.UserControls.Suggest
 
         public delegate void SelectedValueHandler(SuggestValue e);
         public event SelectedValueHandler OnSelected;
+        public event EventHandler SelectedValueChnaged;
         public event EventHandler OnFocus;
         public event EventHandler DataBinding;
         public event EventHandler DoubleClick;
@@ -80,14 +81,28 @@ namespace hwj.UserControls.Suggest
                 else
                     return _SelectedValue;
             }
-            set { _SelectedValue = value; }
+            set
+            {
+                if (DataList != null)
+                {
+                    _SelectedText = GetMatchText(value);
+                    txtValue.Text = _SelectedText;
+                }
+                SetSelectedValue(value);
+            }
         }
         private string _SelectedText = string.Empty;
         [BrowsableAttribute(false)]
         public string SelectedText
         {
             get { return _SelectedText; }
-            set { _SelectedText = value; }
+            set
+            {
+                if (DataList != null)
+                    SetSelectedValue(GetMatchValue(value));
+                _SelectedText = value;
+                txtValue.Text = value;
+            }
         }
         public override string Text
         {
@@ -122,12 +137,24 @@ namespace hwj.UserControls.Suggest
         /// </summary>
         [Description("返回最大记录数"), DefaultValue(0)]
         public int MaxRecords { get; set; }
+
+        public enum SuggextBoxStyle
+        {
+            DropDownList,
+            Suggest,
+        }
+        /// <summary>
+        /// 获取或设置SuggestBox Dropdown的显示方式
+        /// </summary>
+        [DefaultValue(SuggextBoxStyle.Suggest), Description("获取或设置SuggestBox Dropdown的显示方式")]
+        public SuggextBoxStyle DropDownStyle { get; set; }
         #endregion
 
         public SuggestBox()
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             InitializeComponent();
+            DropDownStyle = SuggextBoxStyle.Suggest;
             ButtonVisible = true;
             txtValue.EnterEqualTab = false;
             oldBackColor = this.txtValue.BackColor;
@@ -159,10 +186,19 @@ namespace hwj.UserControls.Suggest
             tsDropDown.Width = this.Width;
             btnSelect.Visible = ButtonVisible;
             txtValue.MaxLength = MaxLength;
-            if (IsRequired)
-                this.txtValue.BackColor = Common.RequiredBackColor;
+            this.txtValue.BackColor = SystemColors.Window;
+
+            if (DropDownStyle == SuggextBoxStyle.DropDownList)
+            {
+                txtValue.ReadOnly = true;
+                //txtValue.Enabled = false;
+            }
             else
-                this.txtValue.BackColor = SystemColors.Window;
+            {
+                txtValue.ReadOnly = false;
+                if (IsRequired)
+                    this.txtValue.BackColor = Common.RequiredBackColor;
+            }
             base.OnCreateControl();
         }
 
@@ -177,18 +213,20 @@ namespace hwj.UserControls.Suggest
         {
             if (e != null)
             {
-                this.SelectedValue = e.Key;
                 if (DisplayMember == DisplayMemberType.Primary)
-                    this.SelectedText = e.PrimaryValue;
+                    _SelectedText = e.PrimaryValue;
                 else if (DisplayMember == DisplayMemberType.Second)
-                    this.SelectedText = e.SecondValue;
+                    _SelectedText = e.SecondValue;
+                this.txtValue.Text = this.SelectedText;
+                SetSelectedValue(e.Key);
             }
             else
             {
-                this.SelectedValue = string.Empty;
-                this.SelectedText = string.Empty;
+                _SelectedText = string.Empty;
+                this.txtValue.Text = this.SelectedText;
+                SetSelectedValue(EmptyValue);
             }
-            this.txtValue.Text = this.SelectedText;
+
             CloseList(true);
 
             if (OnSelected != null)
@@ -295,6 +333,11 @@ namespace hwj.UserControls.Suggest
                 this.Cursor = Cursors.Default;
             }
         }
+        private void txtValue_Click(object sender, EventArgs e)
+        {
+            if (DropDownStyle == SuggextBoxStyle.DropDownList)
+                ShowList(sender, e);
+        }
         #endregion
         #endregion
 
@@ -310,17 +353,19 @@ namespace hwj.UserControls.Suggest
             {
                 if (txtValue.Text == string.Empty)
                     ListControl.DataList = DataList;
-                else
+                else if (DropDownStyle == SuggextBoxStyle.Suggest)
                     ListControl.DataList = SearchValue(txtValue.Text);
+                else
+                    ListControl.DataList = DataList;
             }
             ListControl.DataBind();
             //SetFootText();
         }
         public void Clear()
         {
-            SelectedText = string.Empty;
-            SelectedValue = EmptyValue;
+            _SelectedText = string.Empty;
             txtValue.Text = string.Empty;
+            SetSelectedValue(EmptyValue);
         }
         public new void Focus()
         {
@@ -360,6 +405,8 @@ namespace hwj.UserControls.Suggest
                 tsDropDown.Close();
             else if (!ListControl.IsEnterList)
                 tsDropDown.Close();
+            if (DropDownStyle == SuggextBoxStyle.DropDownList)
+                txtValue.SelectAll();
         }
         private SuggestList SearchValue(string value)
         {
@@ -373,6 +420,37 @@ namespace hwj.UserControls.Suggest
                     break;
             }
             return lst;
+        }
+        private string GetMatchText(string value)
+        {
+            foreach (SuggestValue s in DataList)
+            {
+                if (s.Key == value)
+                {
+                    if (DisplayMember == DisplayMemberType.Primary)
+                        return s.PrimaryValue;
+                    else if (DisplayMember == DisplayMemberType.Second)
+                        return s.SecondValue;
+                }
+            }
+            return string.Empty;
+        }
+        private string GetMatchValue(string text)
+        {
+            foreach (SuggestValue s in DataList)
+            {
+                if (DisplayMember == DisplayMemberType.Primary && s.PrimaryValue == text)
+                    return s.Key;
+                else if (DisplayMember == DisplayMemberType.Second && s.SecondValue == text)
+                    return s.Key;
+            }
+            return string.Empty;
+        }
+        private void SetSelectedValue(string value)
+        {
+            if (_SelectedValue != value && SelectedValueChnaged != null)
+                SelectedValueChnaged(this, new EventArgs());
+            _SelectedValue = value;
         }
         //private void SetFootText()
         //{

@@ -38,6 +38,7 @@ namespace hwj.UserControls.DataList
         public xDataGridViewNumbericCell()
             : base()
         {
+            this.MaxInputLength = 15;
             this.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
             this.Style.Format = Common.Format_Numberic;
         }
@@ -94,6 +95,7 @@ namespace hwj.UserControls.DataList
             this.ContentType = ContentType.Numberic;
             this.ShowContentError = false;
             this.EnterEqualTab = false;
+            this.MaxLength = 18;
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlFormattedValue 

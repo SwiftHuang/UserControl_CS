@@ -9,20 +9,39 @@ namespace hwj.UserControls.DataList
     public class xDataGridView : System.Windows.Forms.DataGridView
     {
         #region Property
-        public bool RowNum { get; set; }
-        public bool FooterVisible { get; set; }
+        /// <summary>
+        /// 显示行序列
+        /// </summary>
+        [Description("显示行序列")]
+        public bool RowSeqVisible { get; set; }
+        /// <summary>
+        /// 显示行尾
+        /// </summary>
+        [Description("显示行尾")]
+        public bool RowFooterVisible { get; set; }
+        /// <summary>
+        /// 获取或设置需要求和的列名
+        /// </summary>
+        [Browsable(false), Description("获取或设置需要求和的列名")]
         public List<string> SumColumnName { get; set; }
-        public UInt64 DisplayRows { get; set; }
+        /// <summary>
+        /// 获取或设置显示行数
+        /// </summary>
+        [Description("获取或设置显示行数")]
+        public int DisplayRows { get; set; }
         #endregion
 
         public xDataGridView()
         {
             SumColumnName = new List<string>();
             RowHeadersVisible = false;
-            FooterVisible = false;
+            RowFooterVisible = false;
             DisplayRows = 0;
             BackgroundColor = SystemColors.Window;
         }
+
+        public delegate void RowFooterValueChangedHandler(DataGridViewColumn column, string value);
+        public event RowFooterValueChangedHandler RowFooterValueChanged;
 
         protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
         {
@@ -37,7 +56,7 @@ namespace hwj.UserControls.DataList
         {
             if (!DesignMode)
             {
-                CreateRowNum();
+                CreateRowSeq();
                 AddRows();
             }
             CreateTotal();
@@ -45,8 +64,8 @@ namespace hwj.UserControls.DataList
         }
         protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
         {
-            if (RowNum && this.Rows[e.RowIndex].Cells[ColName].Value == null)
-                this.Rows[e.RowIndex].Cells[ColName].Value = e.RowIndex + 1;
+            if (RowSeqVisible && this.Rows[e.RowIndex].Cells[ColSeqName].Value == null)
+                this.Rows[e.RowIndex].Cells[ColSeqName].Value = e.RowIndex + 1;
             base.OnRowPostPaint(e);
         }
         private bool PressEnter = false;
@@ -93,7 +112,7 @@ namespace hwj.UserControls.DataList
         }
         protected override void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
         {
-            if (e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.ReadOnly && e.Column.Name != ColName)
+            if (e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.ReadOnly && e.Column.Name != ColSeqName)
                 e.Column.DefaultCellStyle.BackColor = System.Drawing.Color.WhiteSmoke;
             base.OnColumnStateChanged(e);
         }
@@ -101,7 +120,7 @@ namespace hwj.UserControls.DataList
         {
             base.OnDataBindingComplete(e);
             CreateTotal();
-            RefreshTotal();
+            RefreshRowFooter();
             //if (this.Rows.Count == 0)
             //{
             //    this.DataSource = null;
@@ -112,23 +131,42 @@ namespace hwj.UserControls.DataList
         {
             base.OnBindingContextChanged(e);
         }
-
-        /// <summary>
-        /// 重新计算结果
-        /// </summary>
-        public void RefreshTotal()
+        protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e)
         {
-            foreach (string c in SumColumnName)
-            {
-                CalculateTotal(this.Columns[c]);
-            }
+            base.OnRowsAdded(e);
+            RefreshRowSeq();
         }
 
-        #region Private Function
-        private const string ColName = "_colRowNum";
-        private void CreateRowNum()
+        #region Public Function
+        /// <summary>
+        /// 刷新行尾
+        /// </summary>
+        public void RefreshRowFooter()
         {
-            if (RowNum && this.Columns[ColName] == null)
+            if (SumColumnName != null && SumColumnName.Count > 0)
+            {
+                foreach (string c in SumColumnName)
+                {
+                    CalculateTotal(this.Columns[c]);
+                }
+            }
+        }
+        /// <summary>
+        /// 获取行尾对应的列值
+        /// </summary>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        public string GetFooterValue(DataGridViewColumn column)
+        {
+            return this.Controls[LblName + column.DisplayIndex].Text;
+        }
+        #endregion
+
+        #region Private Function
+        private const string ColSeqName = "__colRowSeq";
+        private void CreateRowSeq()
+        {
+            if (RowSeqVisible && this.Columns[ColSeqName] == null)
             {
                 this.RowHeadersVisible = false;
                 DataGridViewCellStyle cellStyle = new DataGridViewCellStyle();
@@ -142,18 +180,29 @@ namespace hwj.UserControls.DataList
                 colNum.Frozen = true;
                 colNum.Visible = true;
                 colNum.ReadOnly = true;
-                colNum.Name = ColName;
+                colNum.Name = ColSeqName;
                 colNum.HeaderText = "";
                 colNum.DefaultCellStyle = cellStyle;
                 colNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
                 this.Columns.Insert(0, colNum);
             }
         }
+        private void RefreshRowSeq()
+        {
+            if (!DesignMode && RowSeqVisible)
+            {
+                foreach (DataGridViewRow r in this.Rows)
+                {
+                    if (r.Index >= 0)
+                        r.Cells[ColSeqName].Value = r.Index + 1;
+                }
+            }
+        }
         private const string LblName = "lblTot_";
         private bool isCreateTotal = false;
         private void CreateTotal()
         {
-            if (!FooterVisible) return;
+            if (!RowFooterVisible) return;
             int i = 1;
             int top = this.Height - this.RowTemplate.Height;
             isCreateTotal = true;
@@ -201,27 +250,32 @@ namespace hwj.UserControls.DataList
                 }
             }
         }
-        private void CalculateTotal(DataGridViewColumn cloumn)
+        private void CalculateTotal(DataGridViewColumn column)
         {
             decimal d = 0;
             string tmp = string.Empty;
             foreach (DataGridViewRow r in this.Rows)
             {
-                if (r.Cells[cloumn.Index].Value != null)
+                if (r.Cells[column.Index].Value != null)
                 {
-                    tmp = r.Cells[cloumn.Index].Value.ToString().Replace(",", "");
+                    tmp = r.Cells[column.Index].Value.ToString().Replace(",", "");
                     if (CommonLibrary.Object.NumberHelper.IsNumeric(tmp))
                         d += decimal.Parse(tmp);
                 }
             }
-            this.Controls[LblName + cloumn.DisplayIndex].Text = d.ToString(cloumn.DefaultCellStyle.Format);
+            this.Controls[LblName + column.DisplayIndex].Text = d.ToString(column.DefaultCellStyle.Format);
+            if (RowFooterValueChanged != null)
+                RowFooterValueChanged(column, GetFooterValue(column));
         }
         private bool IsSumColumn(DataGridViewColumn col)
         {
-            foreach (string s in SumColumnName)
+            if (SumColumnName != null && SumColumnName.Count > 0)
             {
-                if (s == col.Name)
-                    return true;
+                foreach (string c in SumColumnName)
+                {
+                    if (c == col.Name)
+                        return true;
+                }
             }
             return false;
         }
@@ -230,7 +284,7 @@ namespace hwj.UserControls.DataList
             bool allowAddRows = this.AllowUserToAddRows;
             if (!allowAddRows)
                 this.AllowUserToAddRows = true;
-            for (UInt64 i = 1; i < DisplayRows; i++)
+            for (int i = 1; i < DisplayRows; i++)
             {
                 this.Rows.AddCopy(0);
             }
