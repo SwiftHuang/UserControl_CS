@@ -34,6 +34,7 @@ namespace hwj.UserControls.Suggest
             // 
             // txtValue
             // 
+            this.txtValue.BackColor = System.Drawing.SystemColors.Window;
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtValue.Format = null;
             this.txtValue.Location = new System.Drawing.Point(0, 0);
@@ -42,6 +43,7 @@ namespace hwj.UserControls.Suggest
             this.txtValue.TabIndex = 0;
             this.txtValue.DoubleClick += new System.EventHandler(this.txtValue_DoubleClick);
             this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
+            this.txtValue.Click += new System.EventHandler(this.txtValue_Click);
             this.txtValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtValue_KeyDown);
             this.txtValue.Enter += new System.EventHandler(this.txtValue_Enter);
             this.txtValue.Validating += new System.ComponentModel.CancelEventHandler(this.txtValue_Validating);
@@ -50,6 +52,7 @@ namespace hwj.UserControls.Suggest
             // 
             this.btnSelect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnSelect.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSelect.CursorFromClick = System.Windows.Forms.Cursors.WaitCursor;
             this.btnSelect.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSelect.Image = global::hwj.UserControls.Properties.Resources.page_search;
             this.btnSelect.Location = new System.Drawing.Point(97, 0);

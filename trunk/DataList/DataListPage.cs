@@ -67,8 +67,34 @@ namespace hwj.UserControls.DataList
         /// 总页数
         /// </summary>
         public int PageNum { get; private set; }
+
+        #region Select All(CheckBox)
+        private bool _SelectAllVisible = false;
+        /// <summary>
+        /// 显示全选CheckBox
+        /// </summary>
+        [Category("Select All(CheckBox)"), Description("显示全选CheckBox"), DefaultValue(false)]
+        public bool SelectAllVisible
+        {
+            get { return _SelectAllVisible; }
+            set
+            {
+                _SelectAllVisible = value;
+                toolChkSelectAll.Visible = value;
+                toolSeparatorSelAll.Visible = value;
+            }
+        }
+        /// <summary>
+        /// 设置CheckBox列所在的DataGridView
+        /// </summary>
+        [Category("Select All(CheckBox)"), Description("设置CheckBox列所在的DataGridView")]
         public DataGridView DataGridView { get; set; }
+        /// <summary>
+        /// 设置CheckBox列
+        /// </summary>
+        [Category("Select All(CheckBox)"), Description("设置CheckBox列")]
         public DataGridViewColumn CheckBoxColumn { get; set; }
+        #endregion
         #endregion
 
         public delegate void PageIndexChangedHandler(int pageIndex, int pageSize);
@@ -76,9 +102,13 @@ namespace hwj.UserControls.DataList
 
         public DataListPage()
         {
+            this.Enabled = false;
             this.Dock = DockStyle.Bottom;
             InitializeComponent();
             toolCboPageSize.SelectedItem = "500";
+            SelectAllVisible = false;
+            CheckBoxColumn = null;
+            DataGridView = null;
             toolTxtIndex.Text = "1";
             RecordCount = 0;
             PageNum = 1;
@@ -151,6 +181,8 @@ namespace hwj.UserControls.DataList
         }
         private void RefreshStatus()
         {
+            this.Enabled = true;
+            toolChkSelectAll.CheckBox.Checked = false;
             if (PageSize != 0)
                 PageNum = RecordCount / PageSize + (RecordCount % PageSize > 0 ? 1 : 0);
             if (PageNum == 0 || RecordCount == 0)
@@ -186,7 +218,7 @@ namespace hwj.UserControls.DataList
 
         private void toolChkSelectAll_CheckedChanged(object sender, EventArgs e)
         {
-            if (DataGridView != null && CheckBoxColumn != null)
+            if (SelectAllVisible && DataGridView != null && CheckBoxColumn != null)
             {
                 foreach (DataGridViewRow r in DataGridView.Rows)
                 {
