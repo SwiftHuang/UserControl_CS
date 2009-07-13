@@ -43,6 +43,7 @@ namespace hwj.UserControls.DataList
         public delegate void RowFooterValueChangedHandler(DataGridViewColumn column, string value);
         public event RowFooterValueChangedHandler RowFooterValueChanged;
 
+        #region Protected Function
         protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
         {
             if (!DesignMode)
@@ -136,6 +137,12 @@ namespace hwj.UserControls.DataList
             base.OnRowsAdded(e);
             RefreshRowSeq();
         }
+        protected override void OnCellValueChanged(DataGridViewCellEventArgs e)
+        {
+            VerifyInfo.ValueIsChanged = true;
+            base.OnCellValueChanged(e);
+        }
+        #endregion
 
         #region Public Function
         /// <summary>

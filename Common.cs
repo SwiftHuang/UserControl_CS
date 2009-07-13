@@ -82,6 +82,47 @@ namespace hwj.UserControls
             }
             return false;
         }
+
         #endregion
+
+        //#region Value is changed
+        //public static bool ControlsValueIsChanged(Control control)
+        //{
+        //    foreach (Control c in control.Controls)
+        //    {
+        //        if (IsControlValueChanged(c))
+        //            return true;
+        //    }
+        //    return false;
+        //}
+        //private static bool IsControlValueChanged(Control control)
+        //{
+        //    if (control.GetType().Name == typeof(xTextBox).Name)
+        //    {
+        //        xTextBox t = control as xTextBox;
+        //        if (t != null && t.ValueIsChanged)
+        //            return true;
+        //    }
+        //    if (control.GetType().Name == typeof(xComboBox).Name)
+        //    {
+        //        xComboBox c = control as xComboBox;
+        //        if (c != null && c.ValueIsChanged)
+        //            return true;
+        //    }
+        //    if (control.GetType().Name == typeof(xDateTimePicker).Name)
+        //    {
+        //        xDateTimePicker d = control as xDateTimePicker;
+        //        if (d != null && d.ValueIsChanged)
+        //            return true;
+        //    }
+        //    if (control.GetType().Name == typeof(xDateTimePicker).Name)
+        //    {
+        //        xDateTimePicker dg = control as xDateTimePicker;
+        //        if (dg != null && dg.ValueIsChanged)
+        //            return true;
+        //    }
+        //    return false;
+        //}
+        //#endregion
     }
 }

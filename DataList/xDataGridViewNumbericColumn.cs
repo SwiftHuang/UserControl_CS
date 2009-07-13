@@ -104,9 +104,9 @@ namespace hwj.UserControls.DataList
         {
             get
             {
-                if (!string.IsNullOrEmpty(this.Text) && this.IsNumberic())
+                decimal v = 0;
+                if (!string.IsNullOrEmpty(this.Text) && decimal.TryParse(this.Text, out v))
                 {
-                    decimal v = decimal.Parse(this.Text);
                     if (v == 0)
                         return string.Empty;
                     else

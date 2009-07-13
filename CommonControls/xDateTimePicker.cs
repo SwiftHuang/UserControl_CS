@@ -8,19 +8,21 @@ namespace hwj.UserControls.CommonControls
 {
     public class xDateTimePicker : DateTimePicker, ICommonControls
     {
-
+        #region Property
         [DefaultValue(Enums.DateFormat.None)]
         public Enums.DateFormat DateFormat { get; set; }
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
         [DefaultValue(false)]
         public bool IsRequired { get; set; }
+        #endregion
 
         public xDateTimePicker()
         {
             EnterEqualTab = true;
             IsRequired = false;
         }
+
         protected override void OnCreateControl()
         {
             if (IsRequired)
@@ -49,6 +51,11 @@ namespace hwj.UserControls.CommonControls
             if (EnterEqualTab && e.KeyCode == Keys.Enter)
                 SendKeys.Send("{Tab}");
             base.OnKeyDown(e);
+        }
+        protected override void OnValueChanged(EventArgs eventargs)
+        {
+            VerifyInfo.ValueIsChanged = true;
+            base.OnValueChanged(eventargs);
         }
     }
 }
