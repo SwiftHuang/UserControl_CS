@@ -15,10 +15,14 @@ namespace hwj.UserControls.CommonControls
     }
     public class xTextBox : TextBox, ICommonControls
     {
+        #region Property
         private System.Drawing.Color oldBackColor;
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
-        [DefaultValue(false)]
+        /// <summary>
+        /// 获取或设置为必填控件
+        /// </summary>
+        [DefaultValue(false), Description("获取或设置为必填控件")]
         public bool IsRequired { get; set; }
         /// <summary>
         /// "是否显示验证错误信息(只有ContentType不为None时有效)"
@@ -30,13 +34,16 @@ namespace hwj.UserControls.CommonControls
         [DefaultValue("")]
         public string Format { get; set; }
 
+        #endregion
+
         public xTextBox()
         {
             oldBackColor = this.BackColor;
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
-            EnterEqualTab = true;
             ShowContentError = true;
+
             IsRequired = false;
+            EnterEqualTab = true;
         }
         protected override void OnCreateControl()
         {
@@ -46,10 +53,7 @@ namespace hwj.UserControls.CommonControls
                     Text = "0.00";
                 TextAlign = HorizontalAlignment.Right;
             }
-            if (IsRequired)
-                this.BackColor = Common.RequiredBackColor;
-            else
-                this.BackColor = System.Drawing.SystemColors.Window;
+            SetRequiredStatus(IsRequired);
             base.OnCreateControl();
         }
         protected override void OnKeyPress(KeyPressEventArgs e)
@@ -109,15 +113,15 @@ namespace hwj.UserControls.CommonControls
                     }
                     break;
                 case ContentType.Numberic:
-                    if (!IsNumberic())
+                    decimal v = 0;
+                    if (!decimal.TryParse(this.Text, out v))
                     {
                         if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
-                        this.Text = "0";
                         e.Cancel = true;
                     }
                     if (!string.IsNullOrEmpty(Format))
-                        this.Text = decimal.Parse(this.Text).ToString(Format);
+                        this.Text = v.ToString(Format);
                     break;
                 default:
                     break;
@@ -125,19 +129,29 @@ namespace hwj.UserControls.CommonControls
             if (IsRequired)
             {
                 if (string.IsNullOrEmpty(this.Text))
-                    this.BackColor = Common.RequiredBackColor;
+                    SetRequiredStatus(true);
                 else
-                    this.BackColor = oldBackColor;
+                    SetRequiredStatus(false);
             }
             base.OnValidating(e);
         }
-
-        internal bool IsNumberic()
+        protected override void OnTextChanged(EventArgs e)
         {
-            if (this.Text.Trim() == "-" || !CommonLibrary.Object.NumberHelper.IsNumeric(this.Text.Replace(",", "")))
-                return false;
+            VerifyInfo.ValueIsChanged = true;
+            base.OnTextChanged(e);
+        }
+        private void SetRequiredStatus(bool isRequired)
+        {
+            if (isRequired)
+            {
+                VerifyInfo.AddRequiredControl(this);
+                this.BackColor = Common.RequiredBackColor;
+            }
             else
-                return true;
+            {
+                VerifyInfo.RemoveRequiredControl(this);
+                this.BackColor = System.Drawing.SystemColors.Window;
+            }
         }
         private bool IsNegatives()
         {

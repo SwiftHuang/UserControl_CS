@@ -35,12 +35,14 @@ namespace hwj.UserControls.Suggest
             }
         }
 
+        #region Event Object
         public delegate void SelectedValueHandler(SuggestValue e);
         public event SelectedValueHandler OnSelected;
         public event EventHandler SelectedValueChnaged;
         public event EventHandler OnFocus;
         public event EventHandler DataBinding;
         public event EventHandler DoubleClick;
+        #endregion
 
         #region Property
         [DefaultValue(true)]
@@ -148,6 +150,7 @@ namespace hwj.UserControls.Suggest
         /// </summary>
         [DefaultValue(SuggextBoxStyle.Suggest), Description("获取或设置SuggestBox Dropdown的显示方式")]
         public SuggextBoxStyle DropDownStyle { get; set; }
+
         #endregion
 
         public SuggestBox()
@@ -158,7 +161,10 @@ namespace hwj.UserControls.Suggest
             ButtonVisible = true;
             txtValue.EnterEqualTab = false;
             oldBackColor = this.txtValue.BackColor;
+
+            IsRequired = false;
             EnterEqualTab = true;
+
             if (!DesignMode)
             {
                 DataList = new SuggestList();
@@ -295,6 +301,7 @@ namespace hwj.UserControls.Suggest
             try
             {
                 this.Cursor = Cursors.AppStarting;
+                VerifyInfo.ValueIsChanged = true;
                 textChange = true;
                 ShowList(sender, e);
             }

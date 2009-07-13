@@ -34,5 +34,10 @@ namespace hwj.UserControls.CommonControls
                 SendKeys.Send("{Tab}");
             base.OnKeyDown(e);
         }
+        protected override void OnSelectedIndexChanged(EventArgs e)
+        {
+            VerifyInfo.ValueIsChanged = true;
+            base.OnSelectedIndexChanged(e);
+        }
     }
 }
