@@ -3,14 +3,15 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.Suggest
 {
-    public partial class SuggestBox : UserControl, CommonControls.ICommonControls
+    public partial class SuggestBox : UserControl, IEnterEqualTab, IRequired, IValueChanged
     {
-        private System.Drawing.Color oldBackColor;
         private int selectIndex = 0;
         private bool textChange = false;
+        private bool IsLoad = false;
         private bool IsShowed
         {
             get
@@ -47,16 +48,35 @@ namespace hwj.UserControls.Suggest
         #region Property
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
+
+        /// <summary>
+        /// 设置引发hwj.UserControls.ValueChanged事件的对象
+        /// </summary>
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
+        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
+
+        public Function.Verify.RequiredHandle RequiredHandle { get; set; }
+
         [DefaultValue(false)]
-        public bool IsRequired { get; set; }
+        public bool IsRequired
+        {
+            get { return txtValue.IsRequired; }
+            set { txtValue.IsRequired = value; }
+        }
+
+        [Browsable(false)]
+        public System.Drawing.Color OldBackColor { get; set; }
+
         [DefaultValue(typeof(SystemColors), "Window")]
         public new Color BackColor
         {
             get { return txtValue.BackColor; }
             set { txtValue.BackColor = value; }
         }
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]//Hidden = 0
         public SuggestList DataList { get; set; }
+
         public bool SecondColumnMode
         {
             get { return ListControl.SecondColumnMode; }
@@ -160,10 +180,12 @@ namespace hwj.UserControls.Suggest
             DropDownStyle = SuggextBoxStyle.Suggest;
             ButtonVisible = true;
             txtValue.EnterEqualTab = false;
-            oldBackColor = this.txtValue.BackColor;
+            IsLoad = false;
 
+            OldBackColor = this.txtValue.OldBackColor;
             IsRequired = false;
             EnterEqualTab = true;
+            ValueChangedHandle = Common.ValueChanged;
 
             if (!DesignMode)
             {
@@ -187,6 +209,7 @@ namespace hwj.UserControls.Suggest
                 tsDropDown.AutoClose = false;
             }
         }
+
         protected override void OnCreateControl()
         {
             tsDropDown.Width = this.Width;
@@ -207,7 +230,11 @@ namespace hwj.UserControls.Suggest
             }
             base.OnCreateControl();
         }
-
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            IsLoad = true;
+        }
         #region Events
         private void btnSelect_Click(object sender, EventArgs e)
         {
@@ -298,10 +325,13 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
+            if (!IsLoad) return;
+            this.Cursor = Cursors.AppStarting;
             try
             {
-                this.Cursor = Cursors.AppStarting;
-                VerifyInfo.ValueIsChanged = true;
+                if (ValueChangedHandle != null)
+                    ValueChangedHandle.IsChanged = true;
+
                 textChange = true;
                 ShowList(sender, e);
             }
@@ -320,7 +350,7 @@ namespace hwj.UserControls.Suggest
                 if (string.IsNullOrEmpty(this.Text))
                     this.BackColor = Common.RequiredBackColor;
                 else
-                    this.BackColor = oldBackColor;
+                    this.BackColor = OldBackColor;
             }
         }
         private void txtValue_DoubleClick(object sender, EventArgs e)

@@ -13,6 +13,9 @@ namespace hwj.UserControls
         public static string Format_DateTime = "yyyy-MM-dd hh:mm:ss";
         public static string Format_Numberic = "###,##0.00";
 
+        public static Function.Verify.ValueChangedHandle ValueChanged { get; set; }
+        public static Function.Verify.RequiredHandle Required { get; set; }
+
         #region ToolTip Function
         private static ToolTip toolTip = new ToolTip();
         public static void ShowToolTipInfo(Control control, string text)
@@ -42,87 +45,48 @@ namespace hwj.UserControls
 
         #region Verify Controls
         public static Color RequiredBackColor = Color.FromArgb(255, 223, 223);
-        public static bool InvalidVerify(Control control)
-        {
-            return InvalidVerify(control, RequiredBackColor, Color.White);
-        }
-        public static bool InvalidVerify(Control control, Color requiredColor, Color normalColor)
-        {
-            bool pass = true;
-            foreach (Control c in control.Controls)
-            {
-                if (isRequiredControl(c, requiredColor, normalColor))
-                    pass = false;
-            }
-            return !pass;
-        }
-        private static bool isRequiredControl(Control control, Color requiredColor, Color normalColor)
-        {
-            if (control.GetType().Name == typeof(xTextBox).Name)
-            {
-                xTextBox t = control as xTextBox;
-                if (t != null && t.IsRequired && t.Text == string.Empty)
-                {
-                    t.BackColor = requiredColor;
-                    return true;
-                }
-                else
-                    t.BackColor = normalColor;
-            }
-            else if (control.GetType().Name == typeof(Suggest.SuggestBox).Name)
-            {
-                Suggest.SuggestBox s = control as Suggest.SuggestBox;
-                if (s != null && s.IsRequired && s.Text == string.Empty)
-                {
-                    s.BackColor = requiredColor;
-                    return true;
-                }
-                else
-                    s.BackColor = normalColor;
-            }
-            return false;
-        }
-
-        #endregion
-
-        //#region Value is changed
-        //public static bool ControlsValueIsChanged(Control control)
+        //public static bool InvalidVerify(Control control)
         //{
+        //    return InvalidVerify(control, RequiredBackColor, Color.White);
+        //}
+        //public static bool InvalidVerify(Control control, Color requiredColor, Color normalColor)
+        //{
+        //    bool pass = true;
         //    foreach (Control c in control.Controls)
         //    {
-        //        if (IsControlValueChanged(c))
-        //            return true;
+        //        if (isRequiredControl(c, requiredColor, normalColor))
+        //            pass = false;
         //    }
-        //    return false;
+        //    return !pass;
         //}
-        //private static bool IsControlValueChanged(Control control)
+        //private static bool isRequiredControl(Control control, Color requiredColor, Color normalColor)
         //{
         //    if (control.GetType().Name == typeof(xTextBox).Name)
         //    {
         //        xTextBox t = control as xTextBox;
-        //        if (t != null && t.ValueIsChanged)
+        //        if (t != null && t.IsRequired && t.Text == string.Empty)
+        //        {
+        //            t.BackColor = requiredColor;
         //            return true;
+        //        }
+        //        else
+        //            t.BackColor = normalColor;
         //    }
-        //    if (control.GetType().Name == typeof(xComboBox).Name)
+        //    else if (control.GetType().Name == typeof(Suggest.SuggestBox).Name)
         //    {
-        //        xComboBox c = control as xComboBox;
-        //        if (c != null && c.ValueIsChanged)
+        //        Suggest.SuggestBox s = control as Suggest.SuggestBox;
+        //        if (s != null && s.IsRequired && s.Text == string.Empty)
+        //        {
+        //            s.BackColor = requiredColor;
         //            return true;
-        //    }
-        //    if (control.GetType().Name == typeof(xDateTimePicker).Name)
-        //    {
-        //        xDateTimePicker d = control as xDateTimePicker;
-        //        if (d != null && d.ValueIsChanged)
-        //            return true;
-        //    }
-        //    if (control.GetType().Name == typeof(xDateTimePicker).Name)
-        //    {
-        //        xDateTimePicker dg = control as xDateTimePicker;
-        //        if (dg != null && dg.ValueIsChanged)
-        //            return true;
+        //        }
+        //        else
+        //            s.BackColor = normalColor;
         //    }
         //    return false;
         //}
-        //#endregion
+
+        #endregion
+
     }
 }

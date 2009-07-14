@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Threading;
+using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls
 {
@@ -13,24 +14,39 @@ namespace hwj.UserControls.CommonControls
         Email,
         Numberic,
     }
-    public class xTextBox : TextBox, ICommonControls
+
+    public class xTextBox : TextBox, IEnterEqualTab, IRequired, IValueChanged
     {
         #region Property
-        private System.Drawing.Color oldBackColor;
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
+
         /// <summary>
         /// 获取或设置为必填控件
         /// </summary>
         [DefaultValue(false), Description("获取或设置为必填控件")]
         public bool IsRequired { get; set; }
+
+        [Browsable(false)]
+        public System.Drawing.Color OldBackColor { get; set; }
+
+        /// <summary>
+        /// 设置引发hwj.UserControls.ValueChanged事件的对象
+        /// </summary>
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
+        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
+
+        public Function.Verify.RequiredHandle RequiredHandle { get; set; }
+
         /// <summary>
         /// "是否显示验证错误信息(只有ContentType不为None时有效)"
         /// </summary>
         [DefaultValue(true), Description("是否显示验证错误信息(只有ContentType不为None时有效)")]
         public bool ShowContentError { get; set; }
+
         [DefaultValue(ContentType.None)]
         public ContentType ContentType { get; set; }
+
         [DefaultValue("")]
         public string Format { get; set; }
 
@@ -38,13 +54,15 @@ namespace hwj.UserControls.CommonControls
 
         public xTextBox()
         {
-            oldBackColor = this.BackColor;
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;
 
+            OldBackColor = this.BackColor;
             IsRequired = false;
             EnterEqualTab = true;
         }
+
+        #region Override Function
         protected override void OnCreateControl()
         {
             if (ContentType == ContentType.Numberic)
@@ -53,8 +71,11 @@ namespace hwj.UserControls.CommonControls
                     Text = "0.00";
                 TextAlign = HorizontalAlignment.Right;
             }
-            SetRequiredStatus(IsRequired);
             base.OnCreateControl();
+            RequiredHandle = Common.Required;
+            ValueChangedHandle = Common.ValueChanged;
+
+            SetRequiredStatus(IsRequired);
         }
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
@@ -137,20 +158,27 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnTextChanged(EventArgs e)
         {
-            VerifyInfo.ValueIsChanged = true;
+            if (ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
             base.OnTextChanged(e);
         }
+        #endregion
+
+        #region Private Function
         private void SetRequiredStatus(bool isRequired)
         {
+            if (DesignMode) return;
             if (isRequired)
             {
-                VerifyInfo.AddRequiredControl(this);
+                if (RequiredHandle != null)
+                    RequiredHandle.Add(this);
                 this.BackColor = Common.RequiredBackColor;
             }
             else
             {
-                VerifyInfo.RemoveRequiredControl(this);
-                this.BackColor = System.Drawing.SystemColors.Window;
+                if (RequiredHandle != null)
+                    RequiredHandle.Remove(this);
+                this.BackColor = this.OldBackColor;
             }
         }
         private bool IsNegatives()
@@ -160,6 +188,8 @@ namespace hwj.UserControls.CommonControls
             else
                 return false;
         }
+        #endregion
+
     }
 
 }

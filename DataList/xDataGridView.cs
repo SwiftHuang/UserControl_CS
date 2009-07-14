@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
+using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.DataList
 {
-    public class xDataGridView : System.Windows.Forms.DataGridView
+    public class xDataGridView : System.Windows.Forms.DataGridView, IValueChanged
     {
         #region Property
         /// <summary>
@@ -29,6 +30,11 @@ namespace hwj.UserControls.DataList
         /// </summary>
         [Description("获取或设置显示行数")]
         public int DisplayRows { get; set; }
+        /// <summary>
+        /// 设置引发hwj.UserControls.ValueChanged事件的对象
+        /// </summary>
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
+        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
         #endregion
 
         public xDataGridView()
@@ -38,6 +44,7 @@ namespace hwj.UserControls.DataList
             RowFooterVisible = false;
             DisplayRows = 0;
             BackgroundColor = SystemColors.Window;
+            ValueChangedHandle = Common.ValueChanged;
         }
 
         public delegate void RowFooterValueChangedHandler(DataGridViewColumn column, string value);
@@ -139,7 +146,8 @@ namespace hwj.UserControls.DataList
         }
         protected override void OnCellValueChanged(DataGridViewCellEventArgs e)
         {
-            VerifyInfo.ValueIsChanged = true;
+            if (ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
             base.OnCellValueChanged(e);
         }
         #endregion

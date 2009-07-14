@@ -3,32 +3,33 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
+using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls
 {
-    public class xDateTimePicker : DateTimePicker, ICommonControls
+    public class xDateTimePicker : DateTimePicker, IEnterEqualTab, IValueChanged
     {
         #region Property
         [DefaultValue(Enums.DateFormat.None)]
         public Enums.DateFormat DateFormat { get; set; }
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
-        [DefaultValue(false)]
-        public bool IsRequired { get; set; }
+        /// <summary>
+        /// 设置引发hwj.UserControls.ValueChanged事件的对象
+        /// </summary>
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
+        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
         #endregion
 
         public xDateTimePicker()
         {
             EnterEqualTab = true;
-            IsRequired = false;
+            ValueChangedHandle = Common.ValueChanged;
         }
 
+        #region Override Function
         protected override void OnCreateControl()
         {
-            if (IsRequired)
-                this.BackColor = Common.RequiredBackColor;
-            else
-                this.BackColor = System.Drawing.SystemColors.Window;
             switch (DateFormat)
             {
                 case Enums.DateFormat.None:
@@ -54,8 +55,10 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnValueChanged(EventArgs eventargs)
         {
-            VerifyInfo.ValueIsChanged = true;
+            if (ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
             base.OnValueChanged(eventargs);
         }
+        #endregion
     }
 }
