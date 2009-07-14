@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
+using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls
 {
-    public class xComboBox : ComboBox, ICommonControls
+    public class xComboBox : ComboBox, IEnterEqualTab, IValueChanged
     {
-        #region ICommonControls 成员
-        public bool IsRequired { get; set; }
+        #region Property
+        [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
+        /// <summary>
+        /// 设置引发hwj.UserControls.ValueChanged事件的对象
+        /// </summary>
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
+        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
         #endregion
 
         public xComboBox()
         {
-            IsRequired = false;
             EnterEqualTab = true;
+            ValueChangedHandle = Common.ValueChanged;
         }
 
+        #region Override Function
         protected override void OnCreateControl()
         {
-            if (IsRequired)
-                this.BackColor = Common.RequiredBackColor;
-            else
-                this.BackColor = System.Drawing.SystemColors.Window;
             base.OnCreateControl();
         }
 
@@ -36,8 +39,16 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
-            VerifyInfo.ValueIsChanged = true;
+            if (ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
             base.OnSelectedIndexChanged(e);
         }
+        protected override void OnTextChanged(EventArgs e)
+        {
+            if (ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
+            base.OnTextChanged(e);
+        }
+        #endregion
     }
 }

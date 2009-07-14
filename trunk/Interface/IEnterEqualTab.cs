@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace hwj.UserControls.CommonControls
+namespace hwj.UserControls.Interface
 {
-    interface ICommonControls
+    interface IEnterEqualTab
     {
-        bool IsRequired { get; set; }
         bool EnterEqualTab { get; set; }
     }
 }
