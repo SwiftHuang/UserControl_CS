@@ -31,9 +31,9 @@ namespace hwj.UserControls.CommonControls
             {
                 base.OnClick(e);
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
             finally
             {

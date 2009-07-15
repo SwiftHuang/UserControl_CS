@@ -32,24 +32,37 @@ namespace hwj.UserControls.Function.Verify
 
         public ValueChangedHandle()
         {
-            Initialize();
+            Enabled = false;
+            _IsChanged = false;
+            if (Common.ValueChanged != null)
+                Common.ValueChanged = null;
+            Common.ValueChanged = this;
         }
-
-        /// <summary>
-        /// 初始化控件值的改变状态
-        /// </summary>
-        public void Initialize()
+        public void SetCheckObject()
+        {
+            Common.ValueChanged = this;
+        }
+        public void ClearCheckObject()
         {
             Enabled = true;
-            IsChanged = false;
+            Common.ValueChanged = null;
         }
-        /// <summary>
-        /// 销毁控件值的改变状态(不需要运用ValueChanged判断的时候，请销毁该状态来提高控件性能)
-        /// </summary>
-        public void Dispose()
-        {
-            Enabled = false;
-            _IsChanged = true;
-        }
+        ///// <summary>
+        ///// 初始化控件值的改变状态
+        ///// </summary>
+        //public void Initialize()
+        //{
+        //    Enabled = true;
+        //    IsChanged = false;
+        //    Common.ValueChanged = this;
+        //}
+        ///// <summary>
+        ///// 销毁控件值的改变状态(不需要运用ValueChanged判断的时候，请销毁该状态来提高控件性能)
+        ///// </summary>
+        //public void Enabled()
+        //{
+        //    Enabled = false;
+        //    _IsChanged = true;
+        //}
     }
 }

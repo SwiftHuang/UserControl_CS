@@ -15,7 +15,7 @@ namespace hwj.UserControls.CommonControls
         Numberic,
     }
 
-    public class xTextBox : TextBox, IEnterEqualTab, IRequired, IValueChanged
+    public class xTextBox : TextBox, IEnterEqualTab
     {
         #region Property
         [DefaultValue(true)]
@@ -33,10 +33,9 @@ namespace hwj.UserControls.CommonControls
         /// <summary>
         /// 设置引发hwj.UserControls.ValueChanged事件的对象
         /// </summary>
-        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
-        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
-
-        public Function.Verify.RequiredHandle RequiredHandle { get; set; }
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
+        protected internal Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
+        protected Function.Verify.RequiredHandle RequiredHandle { get; set; }
 
         /// <summary>
         /// "是否显示验证错误信息(只有ContentType不为None时有效)"
@@ -75,7 +74,7 @@ namespace hwj.UserControls.CommonControls
             RequiredHandle = Common.Required;
             ValueChangedHandle = Common.ValueChanged;
 
-            SetRequiredStatus(IsRequired);
+            SetRequiredStatus();
         }
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
@@ -147,28 +146,24 @@ namespace hwj.UserControls.CommonControls
                 default:
                     break;
             }
-            if (IsRequired)
-            {
-                if (string.IsNullOrEmpty(this.Text))
-                    SetRequiredStatus(true);
-                else
-                    SetRequiredStatus(false);
-            }
+            SetRequiredStatus();
+
             base.OnValidating(e);
         }
         protected override void OnTextChanged(EventArgs e)
         {
-            if (ValueChangedHandle != null)
+            if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnTextChanged(e);
+            SetRequiredStatus();
         }
         #endregion
 
         #region Private Function
-        private void SetRequiredStatus(bool isRequired)
+        private void SetRequiredStatus()
         {
             if (DesignMode) return;
-            if (isRequired)
+            if (IsRequired && string.IsNullOrEmpty(this.Text))
             {
                 if (RequiredHandle != null)
                     RequiredHandle.Add(this);

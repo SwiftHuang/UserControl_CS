@@ -7,7 +7,7 @@ using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.DataList
 {
-    public class xDataGridView : System.Windows.Forms.DataGridView, IValueChanged
+    public class xDataGridView : System.Windows.Forms.DataGridView
     {
         #region Property
         /// <summary>
@@ -33,8 +33,8 @@ namespace hwj.UserControls.DataList
         /// <summary>
         /// 设置引发hwj.UserControls.ValueChanged事件的对象
         /// </summary>
-        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
-        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
+        protected Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
         #endregion
 
         public xDataGridView()

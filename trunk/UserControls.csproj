@@ -95,10 +95,8 @@
     <Compile Include="Function\Verify\RequiredHandle.cs" />
     <Compile Include="Function\Verify\RequiredInfo.cs" />
     <Compile Include="Function\Verify\ValueChangedHandle.cs" />
-    <Compile Include="Interface\IRequired.cs" />
     <Compile Include="Interface\IEnterEqualTab.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Interface\IValueChanged.cs" />
     <Compile Include="Suggest\SuggestBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
