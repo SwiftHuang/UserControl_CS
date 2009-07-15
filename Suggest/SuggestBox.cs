@@ -7,11 +7,10 @@ using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.Suggest
 {
-    public partial class SuggestBox : UserControl, IEnterEqualTab, IRequired, IValueChanged
+    public partial class SuggestBox : UserControl, IEnterEqualTab
     {
         private int selectIndex = 0;
         private bool textChange = false;
-        private bool IsLoad = false;
         private bool IsShowed
         {
             get
@@ -46,16 +45,23 @@ namespace hwj.UserControls.Suggest
         #endregion
 
         #region Property
+        private bool _ReadOnly = false;
+        [DefaultValue(false)]
+        public bool ReadOnly
+        {
+            get { return _ReadOnly; }
+            set
+            {
+                _ReadOnly = value;
+                txtValue.ReadOnly = ReadOnly;
+                btnSelect.Visible = !ReadOnly;
+            }
+        }
+
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
 
-        /// <summary>
-        /// 设置引发hwj.UserControls.ValueChanged事件的对象
-        /// </summary>
-        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
-        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
-
-        public Function.Verify.RequiredHandle RequiredHandle { get; set; }
+        protected Function.Verify.RequiredHandle RequiredHandle { get; set; }
 
         [DefaultValue(false)]
         public bool IsRequired
@@ -180,12 +186,11 @@ namespace hwj.UserControls.Suggest
             DropDownStyle = SuggextBoxStyle.Suggest;
             ButtonVisible = true;
             txtValue.EnterEqualTab = false;
-            IsLoad = false;
+            _ReadOnly = false;
 
             OldBackColor = this.txtValue.OldBackColor;
             IsRequired = false;
             EnterEqualTab = true;
-            ValueChangedHandle = Common.ValueChanged;
 
             if (!DesignMode)
             {
@@ -229,11 +234,9 @@ namespace hwj.UserControls.Suggest
                     this.txtValue.BackColor = Common.RequiredBackColor;
             }
             base.OnCreateControl();
-        }
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            IsLoad = true;
+
+            txtValue.ReadOnly = ReadOnly;
+            btnSelect.Visible = !ReadOnly;
         }
         #region Events
         private void btnSelect_Click(object sender, EventArgs e)
@@ -325,13 +328,12 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
-            if (!IsLoad) return;
+            if (!(txtValue.Focused || IsShowed) || ReadOnly) return;
             this.Cursor = Cursors.AppStarting;
             try
             {
-                if (ValueChangedHandle != null)
-                    ValueChangedHandle.IsChanged = true;
-
+                if (txtValue.ValueChangedHandle != null)
+                    txtValue.ValueChangedHandle.IsChanged = true;
                 textChange = true;
                 ShowList(sender, e);
             }
@@ -343,6 +345,7 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_Validating(object sender, CancelEventArgs e)
         {
+            if (ReadOnly) return;
             if (_SelectedText != this.txtValue.Text)
                 Clear();
             if (IsRequired)
@@ -355,6 +358,7 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_DoubleClick(object sender, EventArgs e)
         {
+            if (ReadOnly) return;
             this.Cursor = Cursors.AppStarting;
             try
             {
@@ -413,6 +417,7 @@ namespace hwj.UserControls.Suggest
         #region Private Functions
         private void ShowList(object sender, EventArgs e)
         {
+            if (ReadOnly) return;
             DataBind(sender, e);
             textChange = false;
             selectIndex = 0;

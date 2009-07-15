@@ -21,11 +21,6 @@
             the contents of this method with the code editor.
             </summary>
         </member>
-        <member name="P:hwj.UserControls.Interface.IValueChanged.ValueChangedHandle">
-            <summary>
-            设置引发hwj.UserControls.ValueChanged事件的对象
-            </summary>
-        </member>
         <member name="P:hwj.UserControls.CommonControls.xTextBox.IsRequired">
             <summary>
             获取或设置为必填控件
@@ -111,6 +106,33 @@
             设置CheckBox列
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Function.Verify.ValueChangedHandle.IsChanged">
+            <summary>
+            获取是否有控件的值发生改变
+            </summary>
+        </member>
+        <member name="F:hwj.UserControls.Function.Verify.RequiredHandle.RequiredControls">
+            <summary>
+            获取或设置必填的控件名称
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Function.Verify.RequiredHandle.Add(System.Windows.Forms.Control)">
+            <summary>
+            添加必填控件
+            </summary>
+            <param name="control"></param>
+        </member>
+        <member name="M:hwj.UserControls.Function.Verify.RequiredHandle.Remove(System.Windows.Forms.Control)">
+            <summary>
+            移除必填控件
+            </summary>
+            <param name="control"></param>
+        </member>
+        <member name="P:hwj.UserControls.Function.Verify.RequiredHandle.HasRequired">
+            <summary>
+            获取是否存在没完整填写的控件
+            </summary>
+        </member>
         <member name="F:hwj.UserControls.Suggest.SuggestBox.components">
             <summary> 
             Required designer variable.
@@ -126,11 +148,6 @@
             <summary> 
             Required method for Designer support - do not modify 
             the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.Suggest.SuggestBox.ValueChangedHandle">
-            <summary>
-            设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
         <member name="P:hwj.UserControls.Suggest.SuggestBox.EmptyValue">
@@ -239,43 +256,6 @@
         <member name="P:hwj.UserControls.CommonControls.xComboBox.ValueChangedHandle">
             <summary>
             设置引发hwj.UserControls.ValueChanged事件的对象
-            </summary>
-        </member>
-        <member name="M:hwj.UserControls.Function.Verify.ValueChangedHandle.Initialize">
-            <summary>
-            初始化控件值的改变状态
-            </summary>
-        </member>
-        <member name="M:hwj.UserControls.Function.Verify.ValueChangedHandle.Dispose">
-            <summary>
-            销毁控件值的改变状态(不需要运用ValueChanged判断的时候，请销毁该状态来提高控件性能)
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.Function.Verify.ValueChangedHandle.IsChanged">
-            <summary>
-            获取是否有控件的值发生改变
-            </summary>
-        </member>
-        <member name="F:hwj.UserControls.Function.Verify.RequiredHandle.RequiredControls">
-            <summary>
-            获取或设置必填的控件名称
-            </summary>
-        </member>
-        <member name="M:hwj.UserControls.Function.Verify.RequiredHandle.Add(System.Windows.Forms.Control)">
-            <summary>
-            添加必填控件
-            </summary>
-            <param name="control"></param>
-        </member>
-        <member name="M:hwj.UserControls.Function.Verify.RequiredHandle.Remove(System.Windows.Forms.Control)">
-            <summary>
-            移除必填控件
-            </summary>
-            <param name="control"></param>
-        </member>
-        <member name="P:hwj.UserControls.Function.Verify.RequiredHandle.HasRequired">
-            <summary>
-            获取是否存在没完整填写的控件
             </summary>
         </member>
     </members>

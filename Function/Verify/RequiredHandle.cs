@@ -34,22 +34,19 @@ namespace hwj.UserControls.Function.Verify
         public RequiredHandle()
         {
             RequiredControls = new List<RequiredInfo>();
+            if (Common.Required != null)
+                Common.Required = null;
+            Common.Required = this;
         }
 
-        ///// <summary>
-        ///// 初始化必填控件状态
-        ///// </summary>
-        //public void Initialize()
-        //{
-        //    RequiredControls = new List<RequiredInfo>();
-        //}
-        ///// <summary>
-        ///// 销毁必填控件状态(不需要运用HasRequired判断的时候，请销毁该状态来提高控件性能)
-        ///// </summary>
-        //public void Dispose()
-        //{
-        //    RequiredControls = null;
-        //}
+        public void SetCheckObject()
+        {
+            Common.Required = this;
+        }
+        public void ClearCheckObject()
+        {
+            Common.Required = null;
+        }
         /// <summary>
         /// 添加必填控件
         /// </summary>

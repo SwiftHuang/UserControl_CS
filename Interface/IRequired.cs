@@ -8,6 +8,6 @@ namespace hwj.UserControls.Interface
     {
         bool IsRequired { get; set; }
         System.Drawing.Color OldBackColor { get; set; }
-        Function.Verify.RequiredHandle RequiredHandle { get; set; }
+        Function.Verify.RequiredHandle RequiredHandle { get; }
     }
 }

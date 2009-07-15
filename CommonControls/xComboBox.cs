@@ -7,7 +7,7 @@ using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls
 {
-    public class xComboBox : ComboBox, IEnterEqualTab, IValueChanged
+    public class xComboBox : ComboBox, IEnterEqualTab
     {
         #region Property
         [DefaultValue(true)]
@@ -15,8 +15,8 @@ namespace hwj.UserControls.CommonControls
         /// <summary>
         /// 设置引发hwj.UserControls.ValueChanged事件的对象
         /// </summary>
-        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
-        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
+        protected Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
         #endregion
 
         public xComboBox()
@@ -39,13 +39,13 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
-            if (ValueChangedHandle != null)
+            if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnSelectedIndexChanged(e);
         }
         protected override void OnTextChanged(EventArgs e)
         {
-            if (ValueChangedHandle != null)
+            if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnTextChanged(e);
         }

@@ -7,7 +7,7 @@ using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls
 {
-    public class xDateTimePicker : DateTimePicker, IEnterEqualTab, IValueChanged
+    public class xDateTimePicker : DateTimePicker, IEnterEqualTab
     {
         #region Property
         [DefaultValue(Enums.DateFormat.None)]
@@ -17,8 +17,8 @@ namespace hwj.UserControls.CommonControls
         /// <summary>
         /// 设置引发hwj.UserControls.ValueChanged事件的对象
         /// </summary>
-        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象")]
-        public Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
+        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
+        protected Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
         #endregion
 
         public xDateTimePicker()
@@ -55,7 +55,7 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnValueChanged(EventArgs eventargs)
         {
-            if (ValueChangedHandle != null)
+            if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnValueChanged(eventargs);
         }
