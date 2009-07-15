@@ -121,7 +121,7 @@ namespace hwj.UserControls.DataList
         protected override void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
         {
             if (e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.ReadOnly && e.Column.Name != ColSeqName)
-                e.Column.DefaultCellStyle.BackColor = System.Drawing.Color.WhiteSmoke;
+                e.Column.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(239, 237, 237);//(224, 224, 226);// System.Drawing.Color.WhiteSmoke;
             base.OnColumnStateChanged(e);
         }
         protected override void OnDataBindingComplete(DataGridViewBindingCompleteEventArgs e)
@@ -185,9 +185,9 @@ namespace hwj.UserControls.DataList
             {
                 this.RowHeadersVisible = false;
                 DataGridViewCellStyle cellStyle = new DataGridViewCellStyle();
-                cellStyle.SelectionBackColor = System.Drawing.SystemColors.Control;
-                cellStyle.BackColor = System.Drawing.SystemColors.Control;
-                cellStyle.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+                cellStyle.SelectionBackColor = ColumnHeadersDefaultCellStyle.SelectionBackColor;
+                cellStyle.BackColor = ColumnHeadersDefaultCellStyle.BackColor;
+                cellStyle.SelectionForeColor = ColumnHeadersDefaultCellStyle.SelectionForeColor;
                 cellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                 DataGridViewTextBoxColumn colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
