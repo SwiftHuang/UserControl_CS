@@ -94,6 +94,18 @@ namespace hwj.UserControls.DataList
         /// </summary>
         [Category("Select All(CheckBox)"), Description("设置CheckBox列")]
         public DataGridViewColumn CheckBoxColumn { get; set; }
+
+        [Category("Select All(CheckBox)")]
+        public bool SelectChecked { get; set; }
+        //{
+        //    get { return toolChkSelectAll.CheckBox.Checked; }
+        //    set
+        //    {
+        //        if (toolChkSelectAll != null)
+        //            toolChkSelectAll.CheckBox.Checked = value;
+        //    }
+        //}
+
         #endregion
         #endregion
 
@@ -104,6 +116,7 @@ namespace hwj.UserControls.DataList
         {
             this.Enabled = false;
             this.Dock = DockStyle.Bottom;
+            SelectChecked = false;
             InitializeComponent();
             toolCboPageSize.SelectedItem = "500";
             SelectAllVisible = false;
@@ -181,8 +194,9 @@ namespace hwj.UserControls.DataList
         }
         private void RefreshStatus()
         {
+            if (DesignMode) return;
             this.Enabled = true;
-            toolChkSelectAll.CheckBox.Checked = false;
+            //toolChkSelectAll.CheckBox.Checked = Checked;
             if (PageSize != 0)
                 PageNum = RecordCount / PageSize + (RecordCount % PageSize > 0 ? 1 : 0);
             if (PageNum == 0 || RecordCount == 0)
@@ -208,6 +222,7 @@ namespace hwj.UserControls.DataList
                 toolBtnNext.Enabled = true;
                 toolBtnLast.Enabled = true;
             }
+            toolChkSelectAll_CheckedChanged(null, null);
         }
 
         private void toolTxtIndex_KeyPress(object sender, KeyPressEventArgs e)
@@ -218,16 +233,14 @@ namespace hwj.UserControls.DataList
 
         private void toolChkSelectAll_CheckedChanged(object sender, EventArgs e)
         {
-            if (SelectAllVisible && DataGridView != null && CheckBoxColumn != null)
+            if (SelectAllVisible && toolChkSelectAll != null && DataGridView != null && CheckBoxColumn != null && DataGridView.Rows.Count > 0)
             {
                 foreach (DataGridViewRow r in DataGridView.Rows)
                 {
                     r.Cells[CheckBoxColumn.Name].Value = toolChkSelectAll.CheckBox.Checked;
                 }
             }
+            SelectChecked = toolChkSelectAll.CheckBox.Checked;
         }
-
-
-
     }
 }

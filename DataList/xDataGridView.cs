@@ -121,7 +121,7 @@ namespace hwj.UserControls.DataList
         protected override void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
         {
             if (e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.ReadOnly && e.Column.Name != ColSeqName)
-                e.Column.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(239, 237, 237);//(224, 224, 226);// System.Drawing.Color.WhiteSmoke;
+                e.Column.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);//(224, 224, 226);// System.Drawing.Color.WhiteSmoke;
             base.OnColumnStateChanged(e);
         }
         protected override void OnDataBindingComplete(DataGridViewBindingCompleteEventArgs e)
