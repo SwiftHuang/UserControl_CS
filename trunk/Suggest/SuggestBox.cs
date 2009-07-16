@@ -38,10 +38,12 @@ namespace hwj.UserControls.Suggest
         #region Event Object
         public delegate void SelectedValueHandler(SuggestValue e);
         public event SelectedValueHandler OnSelected;
-        public event EventHandler SelectedValueChnaged;
+        public event EventHandler SelectedValueChanged;
         public event EventHandler OnFocus;
         public event EventHandler DataBinding;
         public event EventHandler DoubleClick;
+        public event EventHandler ButtonClick;
+        public event KeyEventHandler KeyDown;
         #endregion
 
         #region Property
@@ -241,9 +243,14 @@ namespace hwj.UserControls.Suggest
         #region Events
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            if (OnFocus != null)
-                OnFocus(sender, e);
-            ShowList(sender, e);
+            if (ButtonClick == null)
+            {
+                if (OnFocus != null)
+                    OnFocus(sender, e);
+                ShowList(sender, e);
+            }
+            else
+                ButtonClick(sender, e);
         }
         private void lstCtrl_SelectedValue(SuggestValue e)
         {
@@ -311,7 +318,8 @@ namespace hwj.UserControls.Suggest
                     ListControl.SelectIndex(selectIndex);
                     e.Handled = true;
                 }
-
+                if (KeyDown != null)
+                    KeyDown(sender, e);
             }
             catch
             {
@@ -490,8 +498,11 @@ namespace hwj.UserControls.Suggest
         }
         private void SetSelectedValue(string value)
         {
-            if (_SelectedValue != value && SelectedValueChnaged != null)
-                SelectedValueChnaged(this, new EventArgs());
+            if (_SelectedValue != value && SelectedValueChanged != null)
+            {
+                _SelectedValue = value;
+                SelectedValueChanged(this, new EventArgs());
+            }
             _SelectedValue = value;
         }
         //private void SetFootText()
