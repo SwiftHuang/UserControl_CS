@@ -178,6 +178,8 @@ namespace hwj.UserControls.Suggest
         /// </summary>
         [DefaultValue(SuggextBoxStyle.Suggest), Description("获取或设置SuggestBox Dropdown的显示方式")]
         public SuggextBoxStyle DropDownStyle { get; set; }
+        [DefaultValue(true)]
+        public bool ShowToolTip { get; set; }
 
         #endregion
 
@@ -189,6 +191,7 @@ namespace hwj.UserControls.Suggest
             ButtonVisible = true;
             txtValue.EnterEqualTab = false;
             _ReadOnly = false;
+            ShowToolTip = true;
 
             OldBackColor = this.txtValue.OldBackColor;
             IsRequired = false;
@@ -224,22 +227,23 @@ namespace hwj.UserControls.Suggest
             txtValue.MaxLength = MaxLength;
             this.txtValue.BackColor = SystemColors.Window;
 
+            base.OnCreateControl();
+
             if (DropDownStyle == SuggextBoxStyle.DropDownList)
             {
                 txtValue.ReadOnly = true;
-                //txtValue.Enabled = false;
             }
             else
             {
                 txtValue.ReadOnly = false;
                 if (IsRequired)
                     this.txtValue.BackColor = Common.RequiredBackColor;
+                txtValue.ReadOnly = ReadOnly;
+                btnSelect.Visible = !ReadOnly;
             }
-            base.OnCreateControl();
 
-            txtValue.ReadOnly = ReadOnly;
-            btnSelect.Visible = !ReadOnly;
         }
+
         #region Events
         private void btnSelect_Click(object sender, EventArgs e)
         {
@@ -444,7 +448,8 @@ namespace hwj.UserControls.Suggest
             else
             {
                 CloseList(true);
-                Common.ShowToolTipInfo(this, Properties.Resources.NoRecord);
+                if (ShowToolTip)
+                    Common.ShowToolTipInfo(this, Properties.Resources.NoRecord);
             }
         }
         private void CloseList(bool nocheck)

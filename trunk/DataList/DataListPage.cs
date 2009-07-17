@@ -96,15 +96,15 @@ namespace hwj.UserControls.DataList
         public DataGridViewColumn CheckBoxColumn { get; set; }
 
         [Category("Select All(CheckBox)")]
-        public bool SelectChecked { get; set; }
-        //{
-        //    get { return toolChkSelectAll.CheckBox.Checked; }
-        //    set
-        //    {
-        //        if (toolChkSelectAll != null)
-        //            toolChkSelectAll.CheckBox.Checked = value;
-        //    }
-        //}
+        public bool SelectChecked
+        {
+            get { return toolChkSelectAll.CheckBox.Checked; }
+            set
+            {
+                if (toolChkSelectAll != null)
+                    toolChkSelectAll.CheckBox.Checked = value;
+            }
+        }
 
         #endregion
         #endregion
@@ -116,8 +116,8 @@ namespace hwj.UserControls.DataList
         {
             this.Enabled = false;
             this.Dock = DockStyle.Bottom;
-            SelectChecked = false;
             InitializeComponent();
+            SelectChecked = false;
             toolCboPageSize.SelectedItem = "500";
             SelectAllVisible = false;
             CheckBoxColumn = null;
@@ -240,7 +240,6 @@ namespace hwj.UserControls.DataList
                     r.Cells[CheckBoxColumn.Name].Value = toolChkSelectAll.CheckBox.Checked;
                 }
             }
-            SelectChecked = toolChkSelectAll.CheckBox.Checked;
         }
     }
 }

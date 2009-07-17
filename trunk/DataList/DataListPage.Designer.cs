@@ -81,7 +81,6 @@
             // 
             // toolChkSelectAll
             // 
-            this.toolChkSelectAll.AutoSize = false;
             this.toolChkSelectAll.BackColor = System.Drawing.Color.Transparent;
             // 
             // toolChkSelectAll
@@ -89,15 +88,16 @@
             this.toolChkSelectAll.CheckBox.AccessibleName = "toolChkSelectAll";
             this.toolChkSelectAll.CheckBox.BackColor = System.Drawing.Color.Transparent;
             this.toolChkSelectAll.CheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolChkSelectAll.CheckBox.Location = new System.Drawing.Point(6, 2);
+            this.toolChkSelectAll.CheckBox.Location = new System.Drawing.Point(6, 1);
             this.toolChkSelectAll.CheckBox.Name = "toolStripCheckedBox1";
-            this.toolChkSelectAll.CheckBox.Size = new System.Drawing.Size(48, 20);
+            this.toolChkSelectAll.CheckBox.Size = new System.Drawing.Size(72, 22);
             this.toolChkSelectAll.CheckBox.TabIndex = 2;
-            this.toolChkSelectAll.CheckBox.Text = "全选";
+            this.toolChkSelectAll.CheckBox.Text = "全选(页)";
             this.toolChkSelectAll.CheckBox.UseVisualStyleBackColor = false;
             this.toolChkSelectAll.Name = "toolChkSelectAll";
-            this.toolChkSelectAll.Size = new System.Drawing.Size(48, 20);
-            this.toolChkSelectAll.Text = "全选";
+            this.toolChkSelectAll.Size = new System.Drawing.Size(72, 22);
+            this.toolChkSelectAll.Text = "全选(页)";
+            this.toolChkSelectAll.ToolTipText = "全选当前页";
             this.toolChkSelectAll.CheckedChanged += new System.EventHandler(this.toolChkSelectAll_CheckedChanged);
             // 
             // toolSeparatorSelAll
