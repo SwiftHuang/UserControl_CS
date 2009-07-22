@@ -217,7 +217,7 @@ namespace hwj.UserControls.DataList
         private bool isCreateTotal = false;
         private void CreateTotal()
         {
-            if (!RowFooterVisible) return;
+            if (!RowFooterVisible || this.Rows.Count == 0) return;
             int i = 1;
             int top = this.Height - this.RowTemplate.Height;
             isCreateTotal = true;
