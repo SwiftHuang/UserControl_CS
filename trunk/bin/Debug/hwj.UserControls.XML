@@ -133,6 +133,18 @@
             获取是否存在没完整填写的控件
             </summary>
         </member>
+        <member name="M:hwj.UserControls.Suggest.SuggestBox.SetSelectedValue(System.String)">
+            <summary>
+            设置SelectedValue,不触发任何处理
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.SuggestBox.SetSelectedText(System.String)">
+            <summary>
+            设置SelectedText,不触发任何处理
+            </summary>
+            <param name="text"></param>
+        </member>
         <member name="F:hwj.UserControls.Suggest.SuggestBox.components">
             <summary> 
             Required designer variable.

@@ -21,7 +21,7 @@ namespace hwj.UserControls.DataList
             }
             set
             {
-                // Ensure that the cell used for the template is a CalendarCell.
+                // Ensure that the cell used for the template is a Numberic Cell.
                 if (value != null &&
                     !value.GetType().IsAssignableFrom(typeof(xDataGridViewNumbericCell)))
                 {
@@ -136,22 +136,14 @@ namespace hwj.UserControls.DataList
         public void ApplyCellStyleToEditingControl(DataGridViewCellStyle dataGridViewCellStyle)
         {
             this.Font = dataGridViewCellStyle.Font;
-            //this.CalendarForeColor = dataGridViewCellStyle.ForeColor;
-            //this.CalendarMonthBackground = dataGridViewCellStyle.BackColor;
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlRowIndex 
         // property.
         public int EditingControlRowIndex
         {
-            get
-            {
-                return rowIndex;
-            }
-            set
-            {
-                rowIndex = value;
-            }
+            get { return rowIndex; }
+            set { rowIndex = value; }
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlWantsInputKey 
@@ -182,48 +174,30 @@ namespace hwj.UserControls.DataList
         // .RepositionEditingControlOnValueChange property.
         public bool RepositionEditingControlOnValueChange
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         // Implements the IDataGridViewEditingControl
         // .EditingControlDataGridView property.
         public DataGridView EditingControlDataGridView
         {
-            get
-            {
-                return dataGridView;
-            }
-            set
-            {
-                dataGridView = value;
-            }
+            get { return dataGridView; }
+            set { dataGridView = value; }
         }
 
         // Implements the IDataGridViewEditingControl
         // .EditingControlValueChanged property.
         public bool EditingControlValueChanged
         {
-            get
-            {
-                return valueChanged;
-            }
-            set
-            {
-                valueChanged = value;
-            }
+            get { return valueChanged; }
+            set { valueChanged = value; }
         }
 
         // Implements the IDataGridViewEditingControl
         // .EditingPanelCursor property.
         public Cursor EditingPanelCursor
         {
-            get
-            {
-                return base.Cursor;
-            }
+            get { return base.Cursor; }
         }
 
         protected override void OnTextChanged(EventArgs e)
