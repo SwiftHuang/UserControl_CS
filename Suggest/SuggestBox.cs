@@ -130,8 +130,7 @@ namespace hwj.UserControls.Suggest
             {
                 if (DataList != null)
                     SetSelectedValue(GetMatchValue(value));
-                _SelectedText = value;
-                txtValue.Text = value;
+                SetSelectedText(value);
             }
         }
         public override string Text
@@ -424,6 +423,28 @@ namespace hwj.UserControls.Suggest
         {
             txtValue.Focus();
         }
+        /// <summary>
+        /// 设置SelectedValue,不触发任何处理
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetSelectedValue(string value)
+        {
+            if (_SelectedValue != value && SelectedValueChanged != null)
+            {
+                _SelectedValue = value;
+                SelectedValueChanged(this, new EventArgs());
+            }
+            _SelectedValue = value;
+        }
+        /// <summary>
+        /// 设置SelectedText,不触发任何处理
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetSelectedText(string text)
+        {
+            _SelectedText = text;
+            txtValue.Text = text;
+        }
         #endregion
 
         #region Private Functions
@@ -500,15 +521,6 @@ namespace hwj.UserControls.Suggest
                     return s.Key;
             }
             return string.Empty;
-        }
-        private void SetSelectedValue(string value)
-        {
-            if (_SelectedValue != value && SelectedValueChanged != null)
-            {
-                _SelectedValue = value;
-                SelectedValueChanged(this, new EventArgs());
-            }
-            _SelectedValue = value;
         }
         //private void SetFootText()
         //{
