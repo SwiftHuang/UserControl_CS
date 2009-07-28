@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.ComponentModel;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls

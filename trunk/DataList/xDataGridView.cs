@@ -51,15 +51,7 @@ namespace hwj.UserControls.DataList
         public event RowFooterValueChangedHandler RowFooterValueChanged;
 
         #region Protected Function
-        protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
-        {
-            if (!DesignMode)
-            {
-                if (isCreateTotal)
-                    CreateTotal();
-            }
-            base.OnColumnWidthChanged(e);
-        }
+
         protected override void OnCreateControl()
         {
             if (!DesignMode)
@@ -69,32 +61,6 @@ namespace hwj.UserControls.DataList
             }
             CreateTotal();
             base.OnCreateControl();
-        }
-        protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
-        {
-            if (RowSeqVisible && this.Rows[e.RowIndex].Cells[ColSeqName].Value == null)
-                this.Rows[e.RowIndex].Cells[ColSeqName].Value = e.RowIndex + 1;
-            base.OnRowPostPaint(e);
-        }
-        private bool PressEnter = false;
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Enter && !CurrentCell.ReadOnly)
-            {
-                PressEnter = true;
-                SendKeys.Send("{Tab}");
-                return true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-        protected override void OnCellEnter(DataGridViewCellEventArgs e)
-        {
-            DataGridViewCell cell = this[e.ColumnIndex, e.RowIndex];
-            if (PressEnter && cell.ReadOnly)
-                SendKeys.Send("{Tab}");
-            else
-                PressEnter = false;
-            base.OnCellEnter(e);
         }
         protected override void OnScroll(ScrollEventArgs e)
         {
@@ -112,30 +78,6 @@ namespace hwj.UserControls.DataList
             }
             base.OnScroll(e);
         }
-        protected override void OnCellValidated(DataGridViewCellEventArgs e)
-        {
-            if (IsSumColumn(this.Columns[e.ColumnIndex]))
-                CalculateTotal(this.Columns[e.ColumnIndex]);
-            base.OnCellValidated(e);
-        }
-        protected override void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
-        {
-            if (e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.ReadOnly && e.Column.Name != ColSeqName)
-                e.Column.DefaultCellStyle.BackColor = Common.DataGridViewCellReadonlyBackColor;
-            base.OnColumnStateChanged(e);
-        }
-        //protected override void OnCellStateChanged(DataGridViewCellStateChangedEventArgs e)
-        //{
-        //    if (e.StateChanged == DataGridViewElementStates.ReadOnly && !e.Cell.ReadOnly)
-        //    {
-        //        DataGridViewColumn col = this.Columns[e.Cell.ColumnIndex];
-        //        if (col.Name != ColSeqName)
-        //            e.Cell.Style.BackColor = this.DefaultCellStyle.BackColor;
-        //    }
-        //    //else
-        //    //    e.Cell.Style.BackColor = this.DefaultCellStyle.BackColor;
-        //    base.OnCellStateChanged(e);
-        //}
         protected override void OnDataBindingComplete(DataGridViewBindingCompleteEventArgs e)
         {
             base.OnDataBindingComplete(e);
@@ -151,10 +93,72 @@ namespace hwj.UserControls.DataList
         {
             base.OnBindingContextChanged(e);
         }
+
+        protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
+        {
+            if (RowSeqVisible && this.Rows[e.RowIndex].Cells[ColSeqName].Value == null)
+                this.Rows[e.RowIndex].Cells[ColSeqName].Value = e.RowIndex + 1;
+            base.OnRowPostPaint(e);
+        }
         protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e)
         {
             base.OnRowsAdded(e);
             RefreshRowSeq();
+        }
+
+        private bool PressEnter = false;
+        private bool isSuggestBoxCell = false;
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter && !CurrentCell.ReadOnly)
+            {
+                isSuggestBoxCell = false;
+                if (CurrentCell is xDataGridViewTextBoxCell)
+                {
+                    xDataGridViewTextBoxCell c = CurrentCell as xDataGridViewTextBoxCell;
+                    isSuggestBoxCell = c.IsSuggestBoxCell;
+                    return base.ProcessCmdKey(ref msg, keyData);
+                }
+
+                PressEnter = true;
+                SendKeys.Send("{Tab}");
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (isSuggestBoxCell && keyData == Keys.Enter)
+                return false;
+            else
+                return base.ProcessDialogKey(keyData);
+        }
+
+        protected override void OnCellEnter(DataGridViewCellEventArgs e)
+        {
+            DataGridViewCell cell = this[e.ColumnIndex, e.RowIndex];
+            if (PressEnter && cell.ReadOnly)
+                SendKeys.Send("{Tab}");
+            else
+                PressEnter = false;
+            base.OnCellEnter(e);
+        }
+        protected override void OnCellValidated(DataGridViewCellEventArgs e)
+        {
+            if (IsSumColumn(this.Columns[e.ColumnIndex]))
+                CalculateTotal(this.Columns[e.ColumnIndex]);
+            base.OnCellValidated(e);
+        }
+        protected override void OnCellStateChanged(DataGridViewCellStateChangedEventArgs e)
+        {
+            if (e.StateChanged == DataGridViewElementStates.ReadOnly)
+            {
+                if (e.Cell.ReadOnly)
+                    e.Cell.Style.BackColor = Common.DataGridViewCellReadonlyBackColor;
+                else
+                    e.Cell.Style.BackColor = this.DefaultCellStyle.BackColor;
+            }
+            base.OnCellStateChanged(e);
         }
         protected override void OnCellValueChanged(DataGridViewCellEventArgs e)
         {
@@ -162,6 +166,28 @@ namespace hwj.UserControls.DataList
                 ValueChangedHandle.IsChanged = true;
             base.OnCellValueChanged(e);
         }
+
+        protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
+        {
+            if (!DesignMode)
+            {
+                if (isCreateTotal)
+                    CreateTotal();
+            }
+            base.OnColumnWidthChanged(e);
+        }
+        protected override void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
+        {
+            if (!DesignMode && e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.Name != ColSeqName)
+            {
+                if (e.Column.ReadOnly)
+                    e.Column.DefaultCellStyle.BackColor = Common.DataGridViewCellReadonlyBackColor;
+                else
+                    e.Column.DefaultCellStyle.BackColor = this.DefaultCellStyle.BackColor;
+            }
+            base.OnColumnStateChanged(e);
+        }
+       
         #endregion
 
         #region Public Function
