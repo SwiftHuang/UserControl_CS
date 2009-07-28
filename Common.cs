@@ -28,18 +28,21 @@ namespace hwj.UserControls
         }
         public static void ShowToolTip(ToolTip toolTip1, Control control, string text, bool isError)
         {
-            //toolTip.IsBalloon = true;
-            if (isError)
+            if (toolTip1 != null || control != null)
             {
-                toolTip.ToolTipIcon = ToolTipIcon.Error;
-                toolTip.ToolTipTitle = Properties.Resources.ErrorInfo;
+                //toolTip.IsBalloon = true;
+                if (isError)
+                {
+                    toolTip.ToolTipIcon = ToolTipIcon.Error;
+                    toolTip.ToolTipTitle = Properties.Resources.ErrorInfo;
+                }
+                else
+                {
+                    toolTip.ToolTipIcon = ToolTipIcon.Info;
+                    toolTip.ToolTipTitle = Properties.Resources.Information;
+                }
+                toolTip.Show(text, control, 0, control.Height, 1500);
             }
-            else
-            {
-                toolTip.ToolTipIcon = ToolTipIcon.Info;
-                toolTip.ToolTipTitle = Properties.Resources.Information;
-            }
-            toolTip.Show(text, control, 0, control.Height, 1500);
         }
         #endregion
 

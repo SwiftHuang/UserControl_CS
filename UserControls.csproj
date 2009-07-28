@@ -92,6 +92,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Common.cs" />
+    <Compile Include="DataList\xDataGridViewTextBoxCell.cs" />
     <Compile Include="Function\Verify\RequiredHandle.cs" />
     <Compile Include="Function\Verify\RequiredInfo.cs" />
     <Compile Include="Function\Verify\ValueChangedHandle.cs" />
