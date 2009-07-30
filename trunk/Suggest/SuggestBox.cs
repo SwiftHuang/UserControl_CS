@@ -10,7 +10,6 @@ namespace hwj.UserControls.Suggest
     public partial class SuggestBox : UserControl, IEnterEqualTab
     {
         private int selectIndex = 0;
-        private bool textChange = false;
         private bool IsShowed
         {
             get
@@ -199,12 +198,11 @@ namespace hwj.UserControls.Suggest
             if (!DesignMode)
             {
                 DataList = new SuggestList();
-                Size MinSize = new Size(100, 150);
+                
 
                 txtValue.LostFocus += new EventHandler(txtValue_LostFocus);
 
                 ListControl = new SuggestView();
-                ListControl.MinimumSize = MinSize;
                 ListControl.SelectedValue += new SuggestView.SelectedValueHandler(lstCtrl_SelectedValue);
 
                 tsCH = new ToolStripControlHost(ListControl);
@@ -221,7 +219,10 @@ namespace hwj.UserControls.Suggest
 
         protected override void OnCreateControl()
         {
-            tsDropDown.Width = this.Width;
+            Size MinSize = new Size(this.Width, 150);
+            tsDropDown.MinimumSize = MinSize;
+            ListControl.MinimumSize = MinSize;
+
             btnSelect.Visible = ButtonVisible;
             txtValue.MaxLength = MaxLength;
             this.txtValue.BackColor = SystemColors.Window;
@@ -345,7 +346,6 @@ namespace hwj.UserControls.Suggest
             {
                 if (txtValue.ValueChangedHandle != null)
                     txtValue.ValueChangedHandle.IsChanged = true;
-                textChange = true;
                 ShowList(sender, e);
             }
             catch (Exception ex)
@@ -452,7 +452,6 @@ namespace hwj.UserControls.Suggest
         {
             if (ReadOnly) return;
             DataBind(sender, e);
-            textChange = false;
             selectIndex = 0;
             if (RecordCount > 0)
             {

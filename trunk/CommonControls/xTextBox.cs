@@ -129,7 +129,8 @@ namespace hwj.UserControls.CommonControls
                         if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
                         this.Text = string.Empty;
-                        e.Cancel = true;
+                        if (IsRequired)
+                            e.Cancel = true;
                     }
                     break;
                 case ContentType.Numberic:
@@ -138,7 +139,8 @@ namespace hwj.UserControls.CommonControls
                     {
                         if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
-                        e.Cancel = true;
+                        if (IsRequired)
+                            e.Cancel = true;
                     }
                     if (!string.IsNullOrEmpty(Format))
                         this.Text = v.ToString(Format);
