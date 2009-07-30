@@ -43,7 +43,7 @@ namespace hwj.UserControls.Suggest
             this.dgList.AllowUserToDeleteRows = false;
             this.dgList.AllowUserToResizeColumns = false;
             this.dgList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(239)))), ((int)(((byte)(247)))));
             this.dgList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
@@ -57,7 +57,6 @@ namespace hwj.UserControls.Suggest
             this.Column2});
             this.dgList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.dgList.Location = new System.Drawing.Point(0, 0);
-            this.dgList.MinimumSize = new System.Drawing.Size(211, 182);
             this.dgList.MultiSelect = false;
             this.dgList.Name = "dgList";
             this.dgList.ReadOnly = true;
