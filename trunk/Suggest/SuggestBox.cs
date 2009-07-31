@@ -33,6 +33,7 @@ namespace hwj.UserControls.Suggest
                     return 0;
             }
         }
+        protected Function.Verify.RequiredHandle RequiredHandle { get; set; }
 
         #region Event Object
         public delegate void SelectedValueHandler(SuggestValue e);
@@ -61,8 +62,6 @@ namespace hwj.UserControls.Suggest
 
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
-
-        protected Function.Verify.RequiredHandle RequiredHandle { get; set; }
 
         [DefaultValue(false)]
         public bool IsRequired
@@ -176,9 +175,11 @@ namespace hwj.UserControls.Suggest
         /// </summary>
         [DefaultValue(SuggextBoxStyle.Suggest), Description("获取或设置SuggestBox Dropdown的显示方式")]
         public SuggextBoxStyle DropDownStyle { get; set; }
+
         [DefaultValue(true)]
         public bool ShowToolTip { get; set; }
 
+        public int ListWidth { get; set; }
         #endregion
 
         public SuggestBox()
@@ -198,7 +199,7 @@ namespace hwj.UserControls.Suggest
             if (!DesignMode)
             {
                 DataList = new SuggestList();
-                
+
 
                 txtValue.LostFocus += new EventHandler(txtValue_LostFocus);
 
@@ -219,9 +220,17 @@ namespace hwj.UserControls.Suggest
 
         protected override void OnCreateControl()
         {
+            #region Set Width
             Size MinSize = new Size(this.Width, 150);
             tsDropDown.MinimumSize = MinSize;
             ListControl.MinimumSize = MinSize;
+
+            if (ListWidth != 0)
+            {
+                tsDropDown.Width = ListWidth;
+                ListControl.Width = ListWidth;
+            }
+            #endregion
 
             btnSelect.Visible = ButtonVisible;
             txtValue.MaxLength = MaxLength;
@@ -286,6 +295,8 @@ namespace hwj.UserControls.Suggest
         #region Text Control
         private void txtValue_Enter(object sender, EventArgs e)
         {
+            if(DropDownStyle== SuggextBoxStyle.DropDownList)
+                txtValue.SelectAll();
             if (OnFocus != null)
                 OnFocus(sender, e);
         }

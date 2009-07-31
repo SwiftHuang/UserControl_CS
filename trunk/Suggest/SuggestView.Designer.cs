@@ -65,7 +65,7 @@ namespace hwj.UserControls.Suggest
             this.dgList.RowTemplate.Height = 21;
             this.dgList.RowTemplate.ReadOnly = true;
             this.dgList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgList.Size = new System.Drawing.Size(211, 202);
+            this.dgList.Size = new System.Drawing.Size(154, 202);
             this.dgList.TabIndex = 0;
             this.dgList.TabStop = false;
             this.dgList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgList_CellClick);
@@ -101,7 +101,7 @@ namespace hwj.UserControls.Suggest
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dgList);
             this.Name = "SuggestView";
-            this.Size = new System.Drawing.Size(211, 202);
+            this.Size = new System.Drawing.Size(154, 202);
             ((System.ComponentModel.ISupportInitialize)(this.dgList)).EndInit();
             this.ResumeLayout(false);
 
