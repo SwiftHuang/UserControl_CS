@@ -180,6 +180,11 @@ namespace hwj.UserControls.Suggest
         public bool ShowToolTip { get; set; }
 
         public int ListWidth { get; set; }
+        public Image Image
+        {
+            get { return btnSelect.Image; }
+            set { btnSelect.Image = value; }
+        }
         #endregion
 
         public SuggestBox()
@@ -295,7 +300,7 @@ namespace hwj.UserControls.Suggest
         #region Text Control
         private void txtValue_Enter(object sender, EventArgs e)
         {
-            if(DropDownStyle== SuggextBoxStyle.DropDownList)
+            if (DropDownStyle == SuggextBoxStyle.DropDownList)
                 txtValue.SelectAll();
             if (OnFocus != null)
                 OnFocus(sender, e);
