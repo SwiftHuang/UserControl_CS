@@ -17,8 +17,6 @@ namespace hwj.UserControls.Suggest
         public SuggestView()
         {
             InitializeComponent();
-            dgList.MouseEnter += new EventHandler(dgList_MouseEnter);
-            dgList.MouseLeave += new EventHandler(dgList_MouseLeave);
             dgList.AutoGenerateColumns = false;
             SecondColumnMode = false;
         }
@@ -136,6 +134,12 @@ namespace hwj.UserControls.Suggest
         {
             IsEnterList = true;
         }
+        private void dgList_MouseMove(object sender, MouseEventArgs e)
+        {
+            IsEnterList = true;
+        }
         #endregion
+
+       
     }
 }
