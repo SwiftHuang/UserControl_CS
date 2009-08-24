@@ -85,11 +85,6 @@ namespace hwj.UserControls.DataList
             }
         }
         /// <summary>
-        /// 设置CheckBox列所在的DataGridView
-        /// </summary>
-        [Category("Select All(CheckBox)"), Description("设置CheckBox列所在的DataGridView")]
-        public DataGridView DataGridView { get; set; }
-        /// <summary>
         /// 设置CheckBox列
         /// </summary>
         [Category("Select All(CheckBox)"), Description("设置CheckBox列")]
@@ -121,7 +116,6 @@ namespace hwj.UserControls.DataList
             toolCboPageSize.SelectedItem = "500";
             SelectAllVisible = false;
             CheckBoxColumn = null;
-            DataGridView = null;
             toolTxtIndex.Text = "1";
             RecordCount = 0;
             PageNum = 1;
@@ -233,9 +227,9 @@ namespace hwj.UserControls.DataList
 
         private void toolChkSelectAll_CheckedChanged(object sender, EventArgs e)
         {
-            if (SelectAllVisible && toolChkSelectAll != null && DataGridView != null && CheckBoxColumn != null && DataGridView.Rows.Count > 0)
+            if (SelectAllVisible && toolChkSelectAll != null && CheckBoxColumn != null && CheckBoxColumn.DataGridView != null && CheckBoxColumn.DataGridView.Rows.Count > 0)
             {
-                foreach (DataGridViewRow r in DataGridView.Rows)
+                foreach (DataGridViewRow r in CheckBoxColumn.DataGridView.Rows)
                 {
                     r.Cells[CheckBoxColumn.Name].Value = toolChkSelectAll.CheckBox.Checked;
                 }
