@@ -49,6 +49,11 @@ namespace hwj.UserControls.CommonControls
         [DefaultValue("")]
         public string Format { get; set; }
 
+        /// <summary>
+        /// 内容是否改变(在Validating/Validated有效)
+        /// </summary>
+        [Browsable(false)]
+        public bool TextIsChanged { get; set; }
         #endregion
 
         public xTextBox()
@@ -56,6 +61,7 @@ namespace hwj.UserControls.CommonControls
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;
 
+            TextIsChanged = false;
             OldBackColor = this.BackColor;
             IsRequired = false;
             EnterEqualTab = true;
@@ -154,10 +160,16 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnTextChanged(EventArgs e)
         {
+            TextIsChanged = true;
             if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnTextChanged(e);
             SetRequiredStatus();
+        }
+        protected override void OnValidated(EventArgs e)
+        {
+            base.OnValidated(e);
+            TextIsChanged = false;
         }
         #endregion
 
