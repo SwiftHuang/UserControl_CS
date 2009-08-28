@@ -242,7 +242,8 @@ namespace hwj.UserControls.Suggest
             this.txtValue.BackColor = SystemColors.Window;
 
             base.OnCreateControl();
-
+            if (Image == null)
+                Image = Properties.Resources.page_search;
             if (DropDownStyle == SuggextBoxStyle.DropDownList)
             {
                 txtValue.ReadOnly = true;

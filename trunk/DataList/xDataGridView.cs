@@ -178,7 +178,7 @@ namespace hwj.UserControls.DataList
         }
         protected override void OnColumnStateChanged(DataGridViewColumnStateChangedEventArgs e)
         {
-            if (!DesignMode && e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.Name != ColSeqName)
+            if (e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.Name != ColSeqName)
             {
                 if (e.Column.ReadOnly)
                     e.Column.DefaultCellStyle.BackColor = Common.DataGridViewCellReadonlyBackColor;
@@ -187,7 +187,7 @@ namespace hwj.UserControls.DataList
             }
             base.OnColumnStateChanged(e);
         }
-       
+
         #endregion
 
         #region Public Function
