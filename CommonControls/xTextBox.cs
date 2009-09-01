@@ -180,13 +180,23 @@ namespace hwj.UserControls.CommonControls
             if (IsRequired && string.IsNullOrEmpty(this.Text))
             {
                 if (RequiredHandle != null)
-                    RequiredHandle.Add(this);
+                {
+                    if (this.Parent is Suggest.SuggestBox)
+                        RequiredHandle.Add(this.Parent);
+                    else
+                        RequiredHandle.Add(this);
+                }
                 this.BackColor = Common.RequiredBackColor;
             }
             else
             {
                 if (RequiredHandle != null)
-                    RequiredHandle.Remove(this);
+                {
+                    if (this.Parent is Suggest.SuggestBox)
+                        RequiredHandle.Remove(this.Parent);
+                    else
+                        RequiredHandle.Remove(this);
+                }
                 this.BackColor = this.OldBackColor;
             }
         }
