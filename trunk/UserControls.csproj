@@ -68,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonControls\xCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CommonControls\xComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

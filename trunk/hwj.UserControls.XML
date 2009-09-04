@@ -270,5 +270,10 @@
             设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
+        <member name="P:hwj.UserControls.CommonControls.xCheckBox.ValueChangedHandle">
+            <summary>
+            设置引发hwj.UserControls.ValueChanged事件的对象
+            </summary>
+        </member>
     </members>
 </doc>
