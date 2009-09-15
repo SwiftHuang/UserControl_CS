@@ -74,6 +74,9 @@
     <Compile Include="CommonControls\xComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CommonControls\xRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataList\DataListPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
