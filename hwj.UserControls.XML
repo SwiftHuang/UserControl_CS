@@ -21,6 +21,16 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="F:hwj.UserControls.CommonControls.ContentType.Numberic">
+            <summary>
+            数字(含正负小数点)
+            </summary>
+        </member>
+        <member name="F:hwj.UserControls.CommonControls.ContentType.Integer">
+            <summary>
+            整数
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.CommonControls.xTextBox.IsRequired">
             <summary>
             获取或设置为必填控件
@@ -95,6 +105,11 @@
         <member name="P:hwj.UserControls.Properties.Resources.ReturnRecord">
             <summary>
               查找类似 {0}条记录 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xRadioButton.ValueChangedHandle">
+            <summary>
+            设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
         <member name="M:hwj.UserControls.DataList.DataListPage.PerformPageChange(System.Int32)">
@@ -273,11 +288,6 @@
         <member name="P:hwj.UserControls.Function.Verify.RequiredHandle.HasRequired">
             <summary>
             获取是否存在没完整填写的控件
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xRadioButton.ValueChangedHandle">
-            <summary>
-            设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
     </members>

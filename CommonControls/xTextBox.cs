@@ -12,7 +12,14 @@ namespace hwj.UserControls.CommonControls
     {
         None,
         Email,
+        /// <summary>
+        /// 数字(含正负小数点)
+        /// </summary>
         Numberic,
+        /// <summary>
+        /// 整数
+        /// </summary>
+        Integer,
     }
 
     public class xTextBox : TextBox, IEnterEqualTab
@@ -104,6 +111,11 @@ namespace hwj.UserControls.CommonControls
                     e.Handled = true;
                     return;
                 }
+                if (!(Char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
+                    e.Handled = true;
+            }
+            else if (ContentType == ContentType.Integer)
+            {
                 if (!(Char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
                     e.Handled = true;
             }
