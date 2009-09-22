@@ -162,7 +162,7 @@ namespace hwj.UserControls.DataList
         }
         protected override void OnCellValueChanged(DataGridViewCellEventArgs e)
         {
-            if (ValueChangedHandle != null)
+            if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnCellValueChanged(e);
         }
