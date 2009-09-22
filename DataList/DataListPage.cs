@@ -231,7 +231,8 @@ namespace hwj.UserControls.DataList
             {
                 foreach (DataGridViewRow r in CheckBoxColumn.DataGridView.Rows)
                 {
-                    r.Cells[CheckBoxColumn.Name].Value = toolChkSelectAll.CheckBox.Checked;
+                    if (!r.Cells[CheckBoxColumn.Name].ReadOnly)
+                        r.Cells[CheckBoxColumn.Name].Value = toolChkSelectAll.CheckBox.Checked;
                 }
             }
         }

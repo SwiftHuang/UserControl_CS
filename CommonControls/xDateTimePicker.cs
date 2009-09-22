@@ -59,6 +59,12 @@ namespace hwj.UserControls.CommonControls
                 ValueChangedHandle.IsChanged = true;
             base.OnValueChanged(eventargs);
         }
+        protected override void OnCloseUp(EventArgs eventargs)
+        {
+            if (ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
+            base.OnCloseUp(eventargs);
+        }
         #endregion
     }
 }
