@@ -105,7 +105,7 @@ namespace hwj.UserControls.Suggest
             SuggestValue v = new SuggestValue();
             v.Key = dgList.Rows[rowIndex].Cells["colValue"].Value.ToString();
             v.PrimaryValue = dgList.Rows[rowIndex].Cells["colPri"].Value.ToString();
-            if (SecondColumnMode)
+            if (SecondColumnMode && dgList.Columns["colSec"] != null)
                 v.SecondValue = dgList.Rows[rowIndex].Cells["colSec"].Value.ToString();
 
             if (SelectedValue != null)
@@ -140,6 +140,6 @@ namespace hwj.UserControls.Suggest
         }
         #endregion
 
-       
+
     }
 }
