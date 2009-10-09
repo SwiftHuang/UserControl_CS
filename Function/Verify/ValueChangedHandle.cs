@@ -20,12 +20,12 @@ namespace hwj.UserControls.Function.Verify
             get { return _IsChanged; }
             set
             {
-                if (Enabled && _IsChanged == false && value && xValueChanged != null)
-                    xValueChanged(null, null);
                 if (Enabled)
                     _IsChanged = value;
                 else
                     _IsChanged = false;
+                if (Enabled && xValueChanged != null)
+                    xValueChanged(null, null);
             }
         }
         #endregion
