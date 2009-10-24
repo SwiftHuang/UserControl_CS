@@ -266,6 +266,8 @@ namespace hwj.UserControls.Suggest
             {
                 if (OnFocus != null)
                     OnFocus(sender, e);
+                if (DropDownStyle == SuggextBoxStyle.Suggest)
+                    Clear();
                 ShowList(sender, e);
             }
             else
