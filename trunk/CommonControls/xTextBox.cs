@@ -61,6 +61,9 @@ namespace hwj.UserControls.CommonControls
         /// </summary>
         [Browsable(false)]
         public bool TextIsChanged { get; set; }
+
+        [Description("当值改变时,同时赋值给指定的控件")]
+        public xTextBox SetValueToControl { get; set; }
         #endregion
 
         public xTextBox()
@@ -72,6 +75,7 @@ namespace hwj.UserControls.CommonControls
             OldBackColor = this.BackColor;
             IsRequired = false;
             EnterEqualTab = true;
+            SetValueToControl = null;
         }
 
         #region Override Function
@@ -168,7 +172,8 @@ namespace hwj.UserControls.CommonControls
                     break;
             }
             SetRequiredStatus();
-
+            if (SetValueToControl != null)
+                SetValueToControl.Text = this.Text;
             base.OnValidating(e);
         }
         protected override void OnTextChanged(EventArgs e)
