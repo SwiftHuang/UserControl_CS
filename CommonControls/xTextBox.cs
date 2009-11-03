@@ -124,7 +124,8 @@ namespace hwj.UserControls.CommonControls
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (EnterEqualTab && e.KeyCode == Keys.Enter)
-                SendKeys.Send("{Tab}");
+                if (e.KeyData != (Keys.Control | Keys.Enter))
+                    SendKeys.Send("{Tab}");
             if (IsNegatives() && e.KeyCode == Keys.Left && SelectionStart == 1)
                 e.Handled = true;
             base.OnKeyDown(e);
