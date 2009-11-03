@@ -35,6 +35,9 @@ namespace hwj.UserControls.DataList
         /// </summary>
         [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
         protected Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
+
+        [DefaultValue(true)]
+        public bool EnterEqualTab { get; set; }
         #endregion
 
         public xDataGridView()
@@ -45,6 +48,7 @@ namespace hwj.UserControls.DataList
             DisplayRows = 0;
             BackgroundColor = SystemColors.Window;
             ValueChangedHandle = Common.ValueChanged;
+            EnterEqualTab = true;
         }
 
         public delegate void RowFooterValueChangedHandler(DataGridViewColumn column, string value);
@@ -110,10 +114,10 @@ namespace hwj.UserControls.DataList
         private bool isSuggestBoxCell = false;
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.Enter && !CurrentCell.ReadOnly)
+            if (EnterEqualTab && keyData == Keys.Enter)
             {
                 isSuggestBoxCell = false;
-                if (CurrentCell is xDataGridViewTextBoxCell)
+                if (!CurrentCell.ReadOnly && CurrentCell is xDataGridViewTextBoxCell)
                 {
                     xDataGridViewTextBoxCell c = CurrentCell as xDataGridViewTextBoxCell;
                     isSuggestBoxCell = c.IsSuggestBoxCell;
