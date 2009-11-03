@@ -185,6 +185,9 @@ namespace hwj.UserControls.Suggest
             get { return btnSelect.Image; }
             set { btnSelect.Image = value; }
         }
+
+        [Description("当值改变时,同时赋值给指定的控件")]
+        public SuggestBox SetValueToControl { get; set; }
         #endregion
 
         public SuggestBox()
@@ -200,11 +203,11 @@ namespace hwj.UserControls.Suggest
             OldBackColor = this.txtValue.OldBackColor;
             IsRequired = false;
             EnterEqualTab = true;
+            SetValueToControl = null;
 
             if (!DesignMode)
             {
                 DataList = new SuggestList();
-
 
                 txtValue.LostFocus += new EventHandler(txtValue_LostFocus);
 
@@ -289,6 +292,12 @@ namespace hwj.UserControls.Suggest
                 _SelectedText = string.Empty;
                 this.txtValue.Text = this.SelectedText;
                 SetSelectedValue(EmptyValue);
+            }
+
+            if (SetValueToControl != null)
+            {
+                SetValueToControl.SetSelectedValue(SelectedValue);
+                SetValueToControl.SetSelectedText(SelectedText);
             }
 
             CloseList(true);

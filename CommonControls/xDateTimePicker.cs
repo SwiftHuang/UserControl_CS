@@ -19,12 +19,16 @@ namespace hwj.UserControls.CommonControls
         /// </summary>
         [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
         protected Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
+
+        [Description("当值改变时,同时赋值给指定的控件")]
+        public xDateTimePicker SetValueToControl { get; set; }
         #endregion
 
         public xDateTimePicker()
         {
             EnterEqualTab = true;
             ValueChangedHandle = Common.ValueChanged;
+            SetValueToControl = null;
         }
 
         #region Override Function
@@ -57,6 +61,8 @@ namespace hwj.UserControls.CommonControls
         {
             if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
+            if (SetValueToControl != null)
+                SetValueToControl.Value = this.Value;
             base.OnValueChanged(eventargs);
         }
         protected override void OnCloseUp(EventArgs eventargs)
