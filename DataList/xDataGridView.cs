@@ -38,6 +38,12 @@ namespace hwj.UserControls.DataList
 
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
+
+        private int PageSize = 0;
+        [Browsable(false)]
+        public PagingEventArgs PagingArgs { get; private set; }
+        [Browsable(false)]
+        public DataListPage DataListPage { get; set; }
         #endregion
 
         public xDataGridView()
@@ -53,6 +59,11 @@ namespace hwj.UserControls.DataList
 
         public delegate void RowFooterValueChangedHandler(DataGridViewColumn column, string value);
         public event RowFooterValueChangedHandler RowFooterValueChanged;
+        public delegate void DataBindingHandler(PagingEventArgs e);
+        /// <summary>
+        /// 为DataGridView绑定数据
+        /// </summary>
+        public event DataBindingHandler DataBinding;
 
         #region Protected Function
 
@@ -192,6 +203,43 @@ namespace hwj.UserControls.DataList
             base.OnColumnStateChanged(e);
         }
 
+        private DataGridViewColumn oldSortColumn = null;
+        protected override void OnColumnHeaderMouseClick(DataGridViewCellMouseEventArgs e)
+        {
+            base.OnColumnHeaderMouseClick(e);
+            if (DataBinding != null && PageSize != 0 && this.Rows.Count > 0)
+            {
+                DataGridViewColumn col = this.Columns[e.ColumnIndex];
+                PagingEventArgs pageArg = new PagingEventArgs();
+                if (col.SortMode == DataGridViewColumnSortMode.Programmatic)
+                {
+                    if (oldSortColumn != null)
+                    {
+                        if (oldSortColumn.Name == col.Name && col.HeaderCell.SortGlyphDirection == SortOrder.Ascending)
+                        {
+                            col.HeaderCell.SortGlyphDirection = SortOrder.Descending;
+                            pageArg.Sort = ListSortDirection.Descending;
+                        }
+                        else
+                        {
+                            col.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+                            pageArg.Sort = ListSortDirection.Ascending;
+                        }
+                    }
+                    else
+                    {
+                        col.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+                        pageArg.Sort = ListSortDirection.Ascending;
+                    }
+                    oldSortColumn = col;
+
+                    pageArg.SortName = col.DataPropertyName;
+                    pageArg.PageIndex = 1;
+                    pageArg.PageSize = PageSize;
+                    OnDataBinding(pageArg);
+                }
+            }
+        }
         #endregion
 
         #region Public Function
@@ -216,6 +264,39 @@ namespace hwj.UserControls.DataList
         public string GetFooterValue(DataGridViewColumn column)
         {
             return this.Controls[LblName + column.DisplayIndex].Text;
+        }
+
+        public void OnDataBinding()
+        {
+            OnDataBinding(null);
+        }
+        public void OnDataBinding(int pageSize)
+        {
+            PageSize = pageSize;
+            OnDataBinding(null);
+        }
+        public void OnDataBinding(PagingEventArgs e)
+        {
+            if (DataBinding != null)
+            {
+                if (e == null)
+                {
+                    oldSortColumn = null;
+                    e = new PagingEventArgs();
+                    e.PageIndex = 1;
+                    e.PageSize = PageSize;
+                    e.Sort = ListSortDirection.Ascending;
+                    e.SortName = string.Empty;
+                }
+                else
+                    PageSize = e.PageSize;
+                PagingArgs = e;
+                if (DataListPage != null)
+                    DataListPage.PageIndex = e.PageIndex;
+                DataBinding(e);
+                if (oldSortColumn != null)
+                    oldSortColumn.HeaderCell.SortGlyphDirection = e.Sort == ListSortDirection.Ascending ? SortOrder.Ascending : SortOrder.Descending;
+            }
         }
         #endregion
 

@@ -83,6 +83,7 @@
     <Compile Include="DataList\DataListPage.Designer.cs">
       <DependentUpon>DataListPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataList\PagingEventArgs.cs" />
     <Compile Include="DataList\xDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
