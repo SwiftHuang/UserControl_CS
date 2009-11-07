@@ -31,6 +31,7 @@ namespace hwj.UserControls.DataList
             {
                 if (value == 0) value = 1;
                 toolTxtIndex.Text = value.ToString();
+                RefreshStatus();
             }
         }
         /// <summary>
@@ -101,10 +102,13 @@ namespace hwj.UserControls.DataList
             }
         }
 
+        [Description("当该属性有值时PageIndexChanged事件无效,请使用xDataGridViewd的DataBinding事件")]
+        public xDataGridView DataGridView { get; set; }
+
         #endregion
         #endregion
 
-        public delegate void PageIndexChangedHandler(int pageIndex, int pageSize);
+        public delegate void PageIndexChangedHandler(PagingEventArgs e);
         public event PageIndexChangedHandler PageIndexChanged;
 
         public DataListPage()
@@ -119,61 +123,81 @@ namespace hwj.UserControls.DataList
             toolTxtIndex.Text = "1";
             RecordCount = 0;
             PageNum = 1;
+
         }
 
-        #region Page Change
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            if (DataGridView != null)
+                DataGridView.DataListPage = this;
+        }
+
+        #region Page Changed
         private void toolBtnFirst_Click(object sender, EventArgs e)
         {
             PageIndex = 1;
-            PerformPageChange(PageIndex, PageSize);
+            PerformPageChanged(PageIndex, PageSize);
         }
 
         private void toolBtnPrev_Click(object sender, EventArgs e)
         {
             PageIndex--;
-            PerformPageChange(PageIndex, PageSize);
+            PerformPageChanged(PageIndex, PageSize);
         }
 
         private void toolBtnNext_Click(object sender, EventArgs e)
         {
             PageIndex++;
-            PerformPageChange(PageIndex, PageSize);
+            PerformPageChanged(PageIndex, PageSize);
         }
 
         private void toolBtnLast_Click(object sender, EventArgs e)
         {
             PageIndex = PageNum;
-            PerformPageChange(PageIndex, PageSize);
+            PerformPageChanged(PageIndex, PageSize);
         }
 
         private void toolTxtIndex_Validated(object sender, EventArgs e)
         {
             if (PageIndex > PageNum)
                 PageIndex = PageNum;
-            PerformPageChange(PageIndex, PageSize);
+            PerformPageChanged(PageIndex, PageSize);
         }
 
         private void toolCboPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             PageIndex = 1;
-            PerformPageChange(PageIndex, PageSize);
+            PerformPageChanged(PageIndex, PageSize);
         }
         #endregion
 
+        #region Public Function
         /// <summary>
         /// 执行分页事件
         /// </summary>
         /// <param name="pageIndex">页数</param>
-        public void PerformPageChange(int pageIndex)
+        public void PerformPageChanged(int pageIndex)
         {
-            PerformPageChange(pageIndex, PageSize);
+            PerformPageChanged(pageIndex, PageSize);
         }
         /// <summary>
         /// 执行分页事件
         /// </summary>
         /// <param name="pageIndex">页数</param>
         /// <param name="pageSize">每页记录数</param>
-        public void PerformPageChange(int pageIndex, int pageSize)
+        public void PerformPageChanged(int pageIndex, int pageSize)
+        {
+            PerformPageChanged(pageIndex, pageSize, null, ListSortDirection.Ascending);
+        }
+        /// <summary>
+        /// 执行分页事件
+        /// </summary>
+        /// <param name="pageIndex">页数</param>
+        /// <param name="pageSize">每页记录数</param>
+        /// <param name="sortName"></param>
+        /// <param name="sort"></param>
+        public void PerformPageChanged(int pageIndex, int pageSize, string sortName, ListSortDirection sort)
         {
             if (!HandlePageChange)
             {
@@ -182,10 +206,30 @@ namespace hwj.UserControls.DataList
             }
             PageIndex = pageIndex;
             PageSize = pageSize;
-            if (PageIndexChanged != null)
-                PageIndexChanged(PageIndex, PageSize);
+            if (PageIndexChanged != null || DataGridView != null)
+            {
+                PagingEventArgs e = new PagingEventArgs();
+                e.PageIndex = pageIndex;
+                e.PageSize = pageSize;
+                e.SortName = sortName;
+                e.Sort = sort;
+                if (DataGridView != null)
+                {
+                    if (DataGridView.PagingArgs != null)
+                    {
+                        e.SortName = DataGridView.PagingArgs.SortName;
+                        e.Sort = DataGridView.PagingArgs.Sort;
+                    }
+                    DataGridView.OnDataBinding(e);
+                }
+                else
+                    PageIndexChanged(e);
+            }
             RefreshStatus();
         }
+        #endregion
+
+        #region Private Function
         private void RefreshStatus()
         {
             if (DesignMode) return;
@@ -218,13 +262,11 @@ namespace hwj.UserControls.DataList
             }
             toolChkSelectAll_CheckedChanged(null, null);
         }
-
         private void toolTxtIndex_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!(Char.IsNumber(e.KeyChar)))
                 e.Handled = true;
         }
-
         private void toolChkSelectAll_CheckedChanged(object sender, EventArgs e)
         {
             if (SelectAllVisible && toolChkSelectAll != null && CheckBoxColumn != null && CheckBoxColumn.DataGridView != null && CheckBoxColumn.DataGridView.Rows.Count > 0)
@@ -236,5 +278,7 @@ namespace hwj.UserControls.DataList
                 }
             }
         }
+        #endregion
+
     }
 }

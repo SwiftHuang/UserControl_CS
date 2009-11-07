@@ -112,18 +112,27 @@
             设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
-        <member name="M:hwj.UserControls.DataList.DataListPage.PerformPageChange(System.Int32)">
+        <member name="M:hwj.UserControls.DataList.DataListPage.PerformPageChanged(System.Int32)">
             <summary>
             执行分页事件
             </summary>
             <param name="pageIndex">页数</param>
         </member>
-        <member name="M:hwj.UserControls.DataList.DataListPage.PerformPageChange(System.Int32,System.Int32)">
+        <member name="M:hwj.UserControls.DataList.DataListPage.PerformPageChanged(System.Int32,System.Int32)">
             <summary>
             执行分页事件
             </summary>
             <param name="pageIndex">页数</param>
             <param name="pageSize">每页记录数</param>
+        </member>
+        <member name="M:hwj.UserControls.DataList.DataListPage.PerformPageChanged(System.Int32,System.Int32,System.String,System.ComponentModel.ListSortDirection)">
+            <summary>
+            执行分页事件
+            </summary>
+            <param name="pageIndex">页数</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="sortName"></param>
+            <param name="sort"></param>
         </member>
         <member name="F:hwj.UserControls.DataList.DataListPage.components">
             <summary> 
@@ -266,6 +275,11 @@
         <member name="P:hwj.UserControls.DataList.xDataGridView.ValueChangedHandle">
             <summary>
             设置引发hwj.UserControls.ValueChanged事件的对象
+            </summary>
+        </member>
+        <member name="E:hwj.UserControls.DataList.xDataGridView.DataBinding">
+            <summary>
+            为DataGridView绑定数据
             </summary>
         </member>
         <member name="F:hwj.UserControls.Function.Verify.RequiredHandle.RequiredControls">
