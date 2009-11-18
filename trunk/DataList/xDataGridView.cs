@@ -207,7 +207,7 @@ namespace hwj.UserControls.DataList
         protected override void OnColumnHeaderMouseClick(DataGridViewCellMouseEventArgs e)
         {
             base.OnColumnHeaderMouseClick(e);
-            if (DataBinding != null && PageSize != 0 && this.Rows.Count > 0)
+            if (DataBinding != null && this.Rows.Count > 0)
             {
                 DataGridViewColumn col = this.Columns[e.ColumnIndex];
                 PagingEventArgs pageArg = new PagingEventArgs();
