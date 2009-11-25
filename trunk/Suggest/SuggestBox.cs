@@ -259,7 +259,7 @@ namespace hwj.UserControls.Suggest
                 txtValue.ReadOnly = ReadOnly;
                 btnSelect.Visible = !ReadOnly;
             }
-
+            txtValue.SetRequiredStatus();
         }
 
         #region Events
