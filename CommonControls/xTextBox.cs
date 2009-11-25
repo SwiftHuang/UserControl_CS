@@ -199,7 +199,7 @@ namespace hwj.UserControls.CommonControls
         #endregion
 
         #region Private Function
-        private void SetRequiredStatus()
+        public void SetRequiredStatus()
         {
             if (DesignMode) return;
             if (IsRequired && string.IsNullOrEmpty(this.Text))
