@@ -183,8 +183,15 @@ namespace hwj.UserControls.CommonControls
                 SetValueToControl.Text = this.Text;
             base.OnValidating(e);
         }
+        protected override void OnEnter(EventArgs e)
+        {
+            base.OnEnter(e);
+            TextIsChanged = false;
+        }
         protected override void OnTextChanged(EventArgs e)
         {
+            if (DesignMode)
+                return;
             TextIsChanged = true;
             if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
