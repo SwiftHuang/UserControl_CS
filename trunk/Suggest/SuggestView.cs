@@ -25,7 +25,20 @@ namespace hwj.UserControls.Suggest
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]//Hidden = 0
         public bool IsEnterList = false;
         public SuggestList DataList { get; set; }
-        public bool SecondColumnMode { get; set; }
+        private bool _SecondColumnMode = false;
+        public bool SecondColumnMode
+        {
+            get { return _SecondColumnMode; }
+            set
+            {
+                if (_SecondColumnMode != value)
+                {
+                    _isAlreadyCreateColumns = false;
+                    DataList = new SuggestList();
+                }
+                _SecondColumnMode = value;
+            }
+        }
         public string PrimaryColumnName { get; set; }
         public string SecondColumnName { get; set; }
         #endregion
@@ -67,6 +80,7 @@ namespace hwj.UserControls.Suggest
                 colValue.Visible = false;
                 colValue.ReadOnly = true;
                 dgList.Columns.Add(colValue);
+                dgList.Columns[0].Visible = false;
 
                 DataGridViewTextBoxColumn colPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
                 colPri.DataPropertyName = "PrimaryValue";
