@@ -203,13 +203,22 @@ namespace hwj.UserControls.CommonControls
             base.OnValidated(e);
             TextIsChanged = false;
         }
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            SetRequiredStatus();
+            base.OnEnabledChanged(e);
+        }
+        protected override void OnReadOnlyChanged(EventArgs e)
+        {
+            base.OnReadOnlyChanged(e);
+        }
         #endregion
 
         #region Private Function
         public void SetRequiredStatus()
         {
             if (DesignMode) return;
-            if (IsRequired && string.IsNullOrEmpty(this.Text))
+            if (IsRequired && string.IsNullOrEmpty(this.Text) && Enabled && !ReadOnly)
             {
                 if (RequiredHandle != null)
                 {
