@@ -28,11 +28,20 @@ namespace hwj.UserControls.CommonControls
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
 
+        private bool _IsRequired = false;
         /// <summary>
         /// 获取或设置为必填控件
         /// </summary>
         [DefaultValue(false), Description("获取或设置为必填控件")]
-        public bool IsRequired { get; set; }
+        public bool IsRequired
+        {
+            get { return _IsRequired; }
+            set
+            {
+                _IsRequired = value;
+                SetRequiredStatus();
+            }
+        }
 
         [Browsable(false)]
         public System.Drawing.Color OldBackColor { get; set; }
@@ -210,6 +219,7 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnReadOnlyChanged(EventArgs e)
         {
+            SetRequiredStatus();
             base.OnReadOnlyChanged(e);
         }
         #endregion
@@ -218,11 +228,25 @@ namespace hwj.UserControls.CommonControls
         public void SetRequiredStatus()
         {
             if (DesignMode) return;
-            if (IsRequired && string.IsNullOrEmpty(this.Text) && Enabled && !ReadOnly)
+
+            bool tmpReadOnly = ReadOnly;
+            Suggest.SuggestBox sg = null;
+
+            if (RequiredHandle != null)
+            {
+                sg = this.Parent as Suggest.SuggestBox;
+                if (sg != null && sg.DropDownStyle == hwj.UserControls.Suggest.SuggestBox.SuggextBoxStyle.DropDownList)
+                {
+                    tmpReadOnly = false;
+                }
+            }
+
+            if (IsRequired && string.IsNullOrEmpty(this.Text) && Enabled && !tmpReadOnly)
             {
                 if (RequiredHandle != null)
                 {
-                    if (this.Parent is Suggest.SuggestBox)
+                    sg = this.Parent as Suggest.SuggestBox;
+                    if (sg != null)
                         RequiredHandle.Add(this.Parent);
                     else
                         RequiredHandle.Add(this);
@@ -233,7 +257,8 @@ namespace hwj.UserControls.CommonControls
             {
                 if (RequiredHandle != null)
                 {
-                    if (this.Parent is Suggest.SuggestBox)
+                    sg = this.Parent as Suggest.SuggestBox;
+                    if (sg != null)
                         RequiredHandle.Remove(this.Parent);
                     else
                         RequiredHandle.Remove(this);
