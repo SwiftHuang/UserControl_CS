@@ -214,17 +214,16 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnEnabledChanged(EventArgs e)
         {
-            SetRequiredStatus();
             base.OnEnabledChanged(e);
+            SetRequiredStatus();
         }
         protected override void OnReadOnlyChanged(EventArgs e)
         {
-            SetRequiredStatus();
             base.OnReadOnlyChanged(e);
+            SetRequiredStatus();
         }
         #endregion
 
-        #region Private Function
         public void SetRequiredStatus()
         {
             if (DesignMode) return;
@@ -273,8 +272,6 @@ namespace hwj.UserControls.CommonControls
             else
                 return false;
         }
-        #endregion
-
     }
 
 }
