@@ -118,24 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInfo" xml:space="preserve">
-    <value>错误信息</value>
+    <value>Error Message</value>
+    <comment>错误信息</comment>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>提示信息</value>
+    <value>Information</value>
+    <comment>提示信息</comment>
   </data>
   <data name="InvalidEmail" xml:space="preserve">
-    <value>[{0}]为无效的电子邮箱格式</value>
+    <value>An invalid e-mail format [{0}]</value>
+    <comment>为无效的电子邮箱格式</comment>
   </data>
   <data name="InvalidNumberic" xml:space="preserve">
-    <value>[{0}]为无效的数字格式</value>
+    <value>The digital format is invalid [{0}]</value>
+    <comment>为无效的数字格式</comment>
   </data>
   <data name="NoRecord" xml:space="preserve">
-    <value>当前找不到你所需要的记录</value>
+    <value>Can't find the records.</value>
+    <comment>当前找不到你所需要的记录</comment>
   </data>
   <data name="PageRecordCount" xml:space="preserve">
-    <value>共{0}条记录</value>
+    <value>Total: {0} records</value>
+    <comment>共{0}条记录</comment>
   </data>
   <data name="ReturnRecord" xml:space="preserve">
-    <value>返回{0}条记录</value>
+    <value>{0} records</value>
+    <comment>返回{0}条记录</comment>
   </data>
 </root>

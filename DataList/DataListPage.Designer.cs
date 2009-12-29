@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataListPage));
+            this.toolChkSelectAll = new hwj.UserControls.ToolStrip.ToolStripCheckedBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolChkSelectAll = new hwj.UserControls.ToolStrip.ToolStripCheckedBox();
             this.toolSeparatorSelAll = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnFirst = new System.Windows.Forms.ToolStripButton();
             this.toolLblTotal = new System.Windows.Forms.ToolStripLabel();
@@ -48,9 +48,32 @@
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
+            // toolChkSelectAll
+            // 
+            this.toolChkSelectAll.AccessibleDescription = null;
+            resources.ApplyResources(this.toolChkSelectAll, "toolChkSelectAll");
+            this.toolChkSelectAll.BackColor = System.Drawing.Color.Transparent;
+            this.toolChkSelectAll.BackgroundImage = null;
+            // 
+            // toolChkSelectAll
+            // 
+            this.toolChkSelectAll.CheckBox.AccessibleDescription = null;
+            resources.ApplyResources(this.toolChkSelectAll.CheckBox, "toolChkSelectAll");
+            this.toolChkSelectAll.CheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.toolChkSelectAll.CheckBox.BackgroundImage = null;
+            this.toolChkSelectAll.CheckBox.Font = null;
+            this.toolChkSelectAll.CheckBox.Name = "toolStripCheckedBox1";
+            this.toolChkSelectAll.CheckBox.UseVisualStyleBackColor = false;
+            this.toolChkSelectAll.Name = "toolChkSelectAll";
+            this.toolChkSelectAll.CheckedChanged += new System.EventHandler(this.toolChkSelectAll_CheckedChanged);
+            // 
             // toolStrip1
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStrip1.AccessibleDescription = null;
+            this.toolStrip1.AccessibleName = null;
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
+            this.toolStrip1.BackgroundImage = null;
+            this.toolStrip1.Font = null;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator3,
@@ -68,157 +91,149 @@
             this.toolCboPageSize,
             this.toolStripLabel2,
             this.toolStripSeparator2});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(629, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripSeparator3
             // 
+            this.toolStripSeparator3.AccessibleDescription = null;
+            this.toolStripSeparator3.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolChkSelectAll
-            // 
-            this.toolChkSelectAll.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // toolChkSelectAll
-            // 
-            this.toolChkSelectAll.CheckBox.AccessibleName = "toolChkSelectAll";
-            this.toolChkSelectAll.CheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.toolChkSelectAll.CheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolChkSelectAll.CheckBox.Location = new System.Drawing.Point(6, 1);
-            this.toolChkSelectAll.CheckBox.Name = "toolStripCheckedBox1";
-            this.toolChkSelectAll.CheckBox.Size = new System.Drawing.Size(72, 22);
-            this.toolChkSelectAll.CheckBox.TabIndex = 2;
-            this.toolChkSelectAll.CheckBox.Text = "全选(页)";
-            this.toolChkSelectAll.CheckBox.UseVisualStyleBackColor = false;
-            this.toolChkSelectAll.Name = "toolChkSelectAll";
-            this.toolChkSelectAll.Size = new System.Drawing.Size(72, 22);
-            this.toolChkSelectAll.Text = "全选(页)";
-            this.toolChkSelectAll.ToolTipText = "全选当前页";
-            this.toolChkSelectAll.CheckedChanged += new System.EventHandler(this.toolChkSelectAll_CheckedChanged);
             // 
             // toolSeparatorSelAll
             // 
+            this.toolSeparatorSelAll.AccessibleDescription = null;
+            this.toolSeparatorSelAll.AccessibleName = null;
+            resources.ApplyResources(this.toolSeparatorSelAll, "toolSeparatorSelAll");
             this.toolSeparatorSelAll.Name = "toolSeparatorSelAll";
-            this.toolSeparatorSelAll.Size = new System.Drawing.Size(6, 25);
             // 
             // toolBtnFirst
             // 
+            this.toolBtnFirst.AccessibleDescription = null;
+            this.toolBtnFirst.AccessibleName = null;
+            resources.ApplyResources(this.toolBtnFirst, "toolBtnFirst");
+            this.toolBtnFirst.BackgroundImage = null;
             this.toolBtnFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnFirst.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnFirst.Image")));
-            this.toolBtnFirst.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolBtnFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnFirst.Name = "toolBtnFirst";
-            this.toolBtnFirst.Size = new System.Drawing.Size(23, 22);
-            this.toolBtnFirst.Text = "最前";
             this.toolBtnFirst.Click += new System.EventHandler(this.toolBtnFirst_Click);
             // 
             // toolLblTotal
             // 
+            this.toolLblTotal.AccessibleDescription = null;
+            this.toolLblTotal.AccessibleName = null;
             this.toolLblTotal.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            resources.ApplyResources(this.toolLblTotal, "toolLblTotal");
+            this.toolLblTotal.BackgroundImage = null;
             this.toolLblTotal.Name = "toolLblTotal";
-            this.toolLblTotal.Size = new System.Drawing.Size(77, 22);
-            this.toolLblTotal.Text = "共1000条记录";
             // 
             // toolBtnPrev
             // 
+            this.toolBtnPrev.AccessibleDescription = null;
+            this.toolBtnPrev.AccessibleName = null;
+            resources.ApplyResources(this.toolBtnPrev, "toolBtnPrev");
+            this.toolBtnPrev.BackgroundImage = null;
             this.toolBtnPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnPrev.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnPrev.Image")));
-            this.toolBtnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnPrev.Name = "toolBtnPrev";
-            this.toolBtnPrev.Size = new System.Drawing.Size(23, 22);
-            this.toolBtnPrev.Text = "前一页";
             this.toolBtnPrev.Click += new System.EventHandler(this.toolBtnPrev_Click);
             // 
             // toolTxtIndex
             // 
-            this.toolTxtIndex.MaxLength = 5;
+            this.toolTxtIndex.AccessibleDescription = null;
+            this.toolTxtIndex.AccessibleName = null;
+            resources.ApplyResources(this.toolTxtIndex, "toolTxtIndex");
             this.toolTxtIndex.Name = "toolTxtIndex";
-            this.toolTxtIndex.Size = new System.Drawing.Size(40, 25);
-            this.toolTxtIndex.Text = "1";
-            this.toolTxtIndex.ToolTipText = "当前页数";
             this.toolTxtIndex.Validated += new System.EventHandler(this.toolTxtIndex_Validated);
             this.toolTxtIndex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolTxtIndex_KeyPress);
             // 
             // toolLblPage
             // 
+            this.toolLblPage.AccessibleDescription = null;
+            this.toolLblPage.AccessibleName = null;
+            resources.ApplyResources(this.toolLblPage, "toolLblPage");
+            this.toolLblPage.BackgroundImage = null;
             this.toolLblPage.Name = "toolLblPage";
-            this.toolLblPage.Size = new System.Drawing.Size(17, 22);
-            this.toolLblPage.Text = "/1";
-            this.toolLblPage.ToolTipText = "总页数";
             // 
             // toolBtnNext
             // 
+            this.toolBtnNext.AccessibleDescription = null;
+            this.toolBtnNext.AccessibleName = null;
+            resources.ApplyResources(this.toolBtnNext, "toolBtnNext");
+            this.toolBtnNext.BackgroundImage = null;
             this.toolBtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnNext.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnNext.Image")));
-            this.toolBtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnNext.Name = "toolBtnNext";
-            this.toolBtnNext.Size = new System.Drawing.Size(23, 22);
-            this.toolBtnNext.Text = "后一页";
             this.toolBtnNext.Click += new System.EventHandler(this.toolBtnNext_Click);
             // 
             // toolBtnLast
             // 
+            this.toolBtnLast.AccessibleDescription = null;
+            this.toolBtnLast.AccessibleName = null;
+            resources.ApplyResources(this.toolBtnLast, "toolBtnLast");
+            this.toolBtnLast.BackgroundImage = null;
             this.toolBtnLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnLast.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnLast.Image")));
-            this.toolBtnLast.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolBtnLast.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnLast.Name = "toolBtnLast";
-            this.toolBtnLast.Size = new System.Drawing.Size(23, 22);
-            this.toolBtnLast.Text = "最后";
             this.toolBtnLast.Click += new System.EventHandler(this.toolBtnLast_Click);
             // 
             // toolStripSeparator1
             // 
+            this.toolStripSeparator1.AccessibleDescription = null;
+            this.toolStripSeparator1.AccessibleName = null;
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripLabel1
             // 
+            this.toolStripLabel1.AccessibleDescription = null;
+            this.toolStripLabel1.AccessibleName = null;
+            resources.ApplyResources(this.toolStripLabel1, "toolStripLabel1");
+            this.toolStripLabel1.BackgroundImage = null;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(29, 22);
-            this.toolStripLabel1.Text = "每页";
             // 
             // toolCboPageSize
             // 
+            this.toolCboPageSize.AccessibleDescription = null;
+            this.toolCboPageSize.AccessibleName = null;
             this.toolCboPageSize.AutoCompleteCustomSource.AddRange(new string[] {
-            "50",
-            "100",
-            "500",
-            "1000"});
+            resources.GetString("toolCboPageSize.AutoCompleteCustomSource"),
+            resources.GetString("toolCboPageSize.AutoCompleteCustomSource1"),
+            resources.GetString("toolCboPageSize.AutoCompleteCustomSource2"),
+            resources.GetString("toolCboPageSize.AutoCompleteCustomSource3")});
+            resources.ApplyResources(this.toolCboPageSize, "toolCboPageSize");
             this.toolCboPageSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolCboPageSize.DropDownWidth = 50;
             this.toolCboPageSize.Items.AddRange(new object[] {
-            "50",
-            "100",
-            "500",
-            "1000"});
+            resources.GetString("toolCboPageSize.Items"),
+            resources.GetString("toolCboPageSize.Items1"),
+            resources.GetString("toolCboPageSize.Items2"),
+            resources.GetString("toolCboPageSize.Items3")});
             this.toolCboPageSize.Name = "toolCboPageSize";
-            this.toolCboPageSize.Size = new System.Drawing.Size(75, 25);
             this.toolCboPageSize.SelectedIndexChanged += new System.EventHandler(this.toolCboPageSize_SelectedIndexChanged);
             // 
             // toolStripLabel2
             // 
+            this.toolStripLabel2.AccessibleDescription = null;
+            this.toolStripLabel2.AccessibleName = null;
+            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
+            this.toolStripLabel2.BackgroundImage = null;
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(29, 22);
-            this.toolStripLabel2.Text = "记录";
             // 
             // toolStripSeparator2
             // 
+            this.toolStripSeparator2.AccessibleDescription = null;
+            this.toolStripSeparator2.AccessibleName = null;
             this.toolStripSeparator2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // DataListPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = null;
             this.Controls.Add(this.toolStrip1);
+            this.Font = null;
             this.Name = "DataListPage";
-            this.Size = new System.Drawing.Size(629, 25);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

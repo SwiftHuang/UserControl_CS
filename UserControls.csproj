@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2545D533-9E25-4895-AFD1-CA59A72BA2B9}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -135,11 +135,14 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DataList\DataListPage.en-US.resx">
+      <DependentUpon>DataListPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataList\DataListPage.resx">
       <DependentUpon>DataListPage.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.zh-cn.resx">
+    <EmbeddedResource Include="Properties\Resources.en-US.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Suggest\SuggestBox.resx">
