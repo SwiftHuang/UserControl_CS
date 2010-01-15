@@ -374,7 +374,8 @@ namespace hwj.UserControls.Suggest
             {
                 if (txtValue.ValueChangedHandle != null)
                     txtValue.ValueChangedHandle.IsChanged = true;
-                ShowList(sender, e);
+                if (!string.IsNullOrEmpty(txtValue.Text))
+                    ShowList(sender, e);
             }
             catch (Exception ex)
             {
