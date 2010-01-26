@@ -118,6 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolChkSelectAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 22</value>
+  </data>
+  <data name="toolChkSelectAll.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="toolChkSelectAll.Size1" type="System.Drawing.Size, System.Drawing">
+    <value>61, 22</value>
+  </data>
+  <data name="toolChkSelectAll.Text1" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="toolChkSelectAll.ToolTipText" xml:space="preserve">
+    <value>Select Page</value>
+  </data>
   <data name="toolBtnFirst.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -196,6 +211,12 @@
   <data name="toolBtnPrev.Text" xml:space="preserve">
     <value>Prev</value>
   </data>
+  <data name="toolTxtIndex.ToolTipText" xml:space="preserve">
+    <value>Pages</value>
+  </data>
+  <data name="toolLblPage.ToolTipText" xml:space="preserve">
+    <value>Total Pages</value>
+  </data>
   <data name="toolBtnNext.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -272,5 +293,17 @@
   </data>
   <data name="toolBtnLast.Text" xml:space="preserve">
     <value>Last</value>
+  </data>
+  <data name="toolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>12, 22</value>
+  </data>
+  <data name="toolStripLabel1.Text" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="toolStripLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 22</value>
+  </data>
+  <data name="toolStripLabel2.Text" xml:space="preserve">
+    <value>Records per page</value>
   </data>
 </root>
