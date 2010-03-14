@@ -91,7 +91,7 @@ namespace hwj.UserControls.DataList
         public xDataGridViewNumbericCellEdittingControl()
         {
             //this.Format = DateTimePickerFormat.Short;
-            this.Format = Common.Format_Numberic;
+            //this.Format = Common.Format_Numberic;
             this.ContentType = ContentType.Numberic;
             this.ShowContentError = false;
             this.EnterEqualTab = false;
