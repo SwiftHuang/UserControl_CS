@@ -2,45 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Text;
 using System.IO;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace hwj.UserControls.Other
 {
     public partial class LoginComboBox : CommonControls.xComboBox
     {
+        ContextMenu menu = new ContextMenu();
+        MenuItem menuItemClearHistory = new MenuItem(Properties.Resources.ClearHistory);
+        MenuItem menuItemOpenFile = new MenuItem(Properties.Resources.OpenFile);
+
         #region Property
         public string FileName { get; set; }
-        //public bool KeepRecord { get; set; }
-        ContextMenu menu = new ContextMenu();
+        public bool DefaultDisplayLastRecord { get; set; }
         #endregion
-        MenuItem menuItemRemoveAll = new MenuItem("Remove All");
-
 
         public LoginComboBox()
         {
+
+            DefaultDisplayLastRecord = true;
             menu.Popup += new EventHandler(menu_Popup);
-            menuItemRemoveAll.Click += new EventHandler(menuItemRemoveAll_Click);
+            menuItemClearHistory.Click += new EventHandler(menuItemClearHistory_Click);
+            menuItemOpenFile.Click += new EventHandler(menuItemOpenFile_Click);
+
             InitializeComponent();
+
             AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-        }
-
-        void menuItemRemoveAll_Click(object sender, EventArgs e)
-        {
-            RemoveALL();
-        }
-
-        void menu_Popup(object sender, EventArgs e)
-        {
-            //MenuItem menuItem2 = new MenuItem("Remove");
-            menu.MenuItems.Clear();
-            if (menu.SourceControl == this)
-            {
-                menu.MenuItems.Add(menuItemRemoveAll);
-                //menu.MenuItems.Add(menuItem2);
-            }
         }
 
         protected override void OnCreateControl()
@@ -49,11 +40,48 @@ namespace hwj.UserControls.Other
             {
                 this.ContextMenu = menu;
                 CheckFileName();
-                this.DataSource = GetList();
+                RefreshList(GetList());
             }
             base.OnCreateControl();
         }
 
+        #region Event Function
+        void menuItemClearHistory_Click(object sender, EventArgs e)
+        {
+            ClearHistory();
+        }
+        void menuItemOpenFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(FileName))
+                    System.Diagnostics.Process.Start(FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format(Properties.Resources.OpenFileException, ex.Message), Properties.Resources.ErrorInfo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        void menu_Popup(object sender, EventArgs e)
+        {
+            //MenuItem menuItem2 = new MenuItem("Remove");
+            Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
+            menu.MenuItems.Clear();
+
+            menuItemClearHistory.Text = Properties.Resources.ClearHistory;
+            menuItemOpenFile.Text = Properties.Resources.OpenFile;
+
+            if (menu.SourceControl == this)
+            {
+                menu.MenuItems.Add(menuItemClearHistory);
+                if (!string.IsNullOrEmpty(FileName))
+                    menu.MenuItems.Add(menuItemOpenFile);
+                //menu.MenuItems.Add(menuItem2);
+            }
+        }
+        #endregion
+
+        #region Public Function
         public bool AddText()
         {
             List<string> list = GetList();
@@ -61,11 +89,23 @@ namespace hwj.UserControls.Other
             if (list == null)
                 list = new List<string>();
             else
-                list.Add(this.Text);
+            {
+                List<string> delList = new List<string>();
+                foreach (string s in list)
+                {
+                    if (s.ToUpper().Trim() == this.Text.ToUpper().Trim())
+                        delList.Add(s);
+                }
+                foreach (string s in delList)
+                {
+                    list.Remove(s);
+                }
+                list.Insert(0, this.Text);
+            }
 
             return UpdateFile(list);
         }
-        public bool RemoveALL()
+        public bool ClearHistory()
         {
             return UpdateFile(null);
         }
@@ -81,7 +121,9 @@ namespace hwj.UserControls.Other
             }
             return true;
         }
+        #endregion
 
+        #region Private Function
         private bool UpdateFile(List<string> list)
         {
             if (!DesignMode)
@@ -99,12 +141,10 @@ namespace hwj.UserControls.Other
                         }
                     }
                 }
-                this.DataSource = list;
+                RefreshList(list);
             }
             return true;
         }
-
-
         private List<string> GetList()
         {
             List<string> strList = new List<string>();
@@ -114,7 +154,9 @@ namespace hwj.UserControls.Other
             {
                 while (sr.Peek() >= 0)
                 {
-                    strList.Add(sr.ReadLine());
+                    string tmpStr = sr.ReadLine();
+                    if (!string.IsNullOrEmpty(tmpStr))
+                        strList.Add(tmpStr);
                 }
             }
             return strList;
@@ -133,5 +175,12 @@ namespace hwj.UserControls.Other
 
             }
         }
+        private void RefreshList(List<string> list)
+        {
+            this.DataSource = list;
+            if (list != null && list.Count > 0 && DefaultDisplayLastRecord)
+                this.SelectedIndex = 0;
+        }
+        #endregion
     }
 }
