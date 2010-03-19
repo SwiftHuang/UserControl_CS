@@ -142,4 +142,16 @@
   <data name="PageRecordCount" xml:space="preserve">
     <value>共{0}条记录</value>
   </data>
+  <data name="ClearHistory" xml:space="preserve">
+    <value>清空记录</value>
+    <comment>清空记录</comment>
+  </data>
+  <data name="OpenFile" xml:space="preserve">
+    <value>打开文件</value>
+    <comment>打开文件</comment>
+  </data>
+  <data name="OpenFileException" xml:space="preserve">
+    <value>打开文件异常!
+-{0}</value>
+  </data>
 </root>
