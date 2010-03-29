@@ -22,7 +22,6 @@ namespace hwj.UserControls.Other
 
         public LoginComboBox()
         {
-
             DefaultDisplayLastRecord = true;
             menu.Popup += new EventHandler(menu_Popup);
             menuItemClearHistory.Click += new EventHandler(menuItemClearHistory_Click);
@@ -39,8 +38,13 @@ namespace hwj.UserControls.Other
             if (!DesignMode)
             {
                 this.ContextMenu = menu;
-                CheckFileName();
-                RefreshList(GetList());
+                if (!string.IsNullOrEmpty(FileName))
+                {
+                    CheckFileName();
+                    RefreshList(GetList());
+                }
+                else
+                    this.DropDownStyle = ComboBoxStyle.Simple;
             }
             base.OnCreateControl();
         }
@@ -64,19 +68,22 @@ namespace hwj.UserControls.Other
         }
         void menu_Popup(object sender, EventArgs e)
         {
-            //MenuItem menuItem2 = new MenuItem("Remove");
-            Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
-            menu.MenuItems.Clear();
-
-            menuItemClearHistory.Text = Properties.Resources.ClearHistory;
-            menuItemOpenFile.Text = Properties.Resources.OpenFile;
-
-            if (menu.SourceControl == this)
+            if (!string.IsNullOrEmpty(FileName))
             {
-                menu.MenuItems.Add(menuItemClearHistory);
-                if (!string.IsNullOrEmpty(FileName))
-                    menu.MenuItems.Add(menuItemOpenFile);
-                //menu.MenuItems.Add(menuItem2);
+                //MenuItem menuItem2 = new MenuItem("Remove");
+                Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
+                menu.MenuItems.Clear();
+
+                menuItemClearHistory.Text = Properties.Resources.ClearHistory;
+                menuItemOpenFile.Text = Properties.Resources.OpenFile;
+
+                if (menu.SourceControl == this)
+                {
+                    menu.MenuItems.Add(menuItemClearHistory);
+                    if (!string.IsNullOrEmpty(FileName))
+                        menu.MenuItems.Add(menuItemOpenFile);
+                    //menu.MenuItems.Add(menuItem2);
+                }
             }
         }
         #endregion
@@ -84,40 +91,51 @@ namespace hwj.UserControls.Other
         #region Public Function
         public bool AddText()
         {
-            List<string> list = GetList();
-
-            if (list == null)
-                list = new List<string>();
-            else
+            if (!string.IsNullOrEmpty(FileName))
             {
-                List<string> delList = new List<string>();
-                foreach (string s in list)
-                {
-                    if (s.ToUpper().Trim() == this.Text.ToUpper().Trim())
-                        delList.Add(s);
-                }
-                foreach (string s in delList)
-                {
-                    list.Remove(s);
-                }
-                list.Insert(0, this.Text);
-            }
+                List<string> list = GetList();
 
-            return UpdateFile(list);
+                if (list == null)
+                    list = new List<string>();
+                else
+                {
+                    List<string> delList = new List<string>();
+                    foreach (string s in list)
+                    {
+                        if (s.ToUpper().Trim() == this.Text.ToUpper().Trim())
+                            delList.Add(s);
+                    }
+                    foreach (string s in delList)
+                    {
+                        list.Remove(s);
+                    }
+                    list.Insert(0, this.Text);
+                }
+
+                return UpdateFile(list);
+            }
+            return true;
         }
         public bool ClearHistory()
         {
-            return UpdateFile(null);
+            if (!string.IsNullOrEmpty(FileName))
+                return UpdateFile(null);
+            else
+                return true;
         }
         public bool RemoveAt(string text)
         {
-            List<string> list = GetList();
-
-            if (list != null && !string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(FileName))
             {
-                list.Remove(text);
-                return UpdateFile(list);
-                this.Text = string.Empty;
+                List<string> list = GetList();
+
+                if (list != null && !string.IsNullOrEmpty(text))
+                {
+                    list.Remove(text);
+                    return UpdateFile(list);
+                    this.Text = string.Empty;
+                }
+                return true;
             }
             return true;
         }
@@ -169,10 +187,7 @@ namespace hwj.UserControls.Other
                 if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
                 else
-                    using (File.Create(FileName))
-                    {
-                    }
-
+                    using (File.Create(FileName)) { }
             }
         }
         private void RefreshList(List<string> list)
