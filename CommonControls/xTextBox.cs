@@ -90,10 +90,15 @@ namespace hwj.UserControls.CommonControls
         #region Override Function
         protected override void OnCreateControl()
         {
-            if (ContentType == ContentType.Numberic)
+            if (ContentType == ContentType.Numberic || ContentType == ContentType.Integer)
             {
-                if (Text == string.Empty)
-                    Text = "0.00";
+                if (string.IsNullOrEmpty(Text) && !string.IsNullOrEmpty(Format))
+                {
+                    if (ContentType == ContentType.Numberic)
+                        Text = decimal.Parse("0").ToString(Format);
+                    else if (ContentType == ContentType.Integer)
+                        Text = int.Parse("0").ToString(Format);
+                }
                 TextAlign = HorizontalAlignment.Right;
             }
             base.OnCreateControl();
@@ -158,6 +163,7 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnValidating(CancelEventArgs e)
         {
+            bool isInvaildText = false;
             switch (ContentType)
             {
                 case ContentType.None:
@@ -168,8 +174,7 @@ namespace hwj.UserControls.CommonControls
                         if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
                         this.Text = string.Empty;
-                        if (IsRequired)
-                            e.Cancel = true;
+                        isInvaildText = true;
                     }
                     break;
                 case ContentType.Numberic:
@@ -178,14 +183,29 @@ namespace hwj.UserControls.CommonControls
                     {
                         if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
-                        if (IsRequired)
-                            e.Cancel = true;
+                        isInvaildText = true;
                     }
                     if (!string.IsNullOrEmpty(Format))
                         this.Text = v.ToString(Format);
                     break;
+                case ContentType.Integer:
+                    int i = 0;
+                    if (!int.TryParse(this.Text, out i))
+                    {
+                        if (ShowContentError)
+                            Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
+                        isInvaildText = true;
+                    }
+                    if (!string.IsNullOrEmpty(Format))
+                        this.Text = i.ToString(Format);
+                    break;
                 default:
                     break;
+            }
+            if (isInvaildText && IsRequired)
+            {
+                e.Cancel = true;
+                TextIsChanged = true;
             }
             SetRequiredStatus();
             if (SetValueToControl != null)
