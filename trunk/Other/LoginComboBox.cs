@@ -42,7 +42,7 @@ namespace hwj.UserControls.Other
         {
             if (!DesignMode)
             {
-                isConfig = UserConfigSetting == null ? true : false;
+                isConfig = UserConfigSetting == null ? false : true;
 
                 this.ContextMenu = menu;
                 if (!isConfig && !string.IsNullOrEmpty(FileName))
