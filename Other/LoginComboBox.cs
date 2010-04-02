@@ -18,6 +18,11 @@ namespace hwj.UserControls.Other
         #region Property
         public string FileName { get; set; }
         public bool DefaultDisplayLastRecord { get; set; }
+
+        public System.Configuration.ApplicationSettingsBase UserConfigSetting { get; set; }
+        public string ConfigName { get; set; }
+
+        private bool isConfig;
         #endregion
 
         public LoginComboBox()
@@ -37,10 +42,16 @@ namespace hwj.UserControls.Other
         {
             if (!DesignMode)
             {
+                isConfig = UserConfigSetting == null ? true : false;
+
                 this.ContextMenu = menu;
-                if (!string.IsNullOrEmpty(FileName))
+                if (!isConfig && !string.IsNullOrEmpty(FileName))
                 {
                     CheckFileName();
+                }
+
+                if (CheckProperty())
+                {
                     RefreshList(GetList());
                 }
                 else
@@ -80,7 +91,7 @@ namespace hwj.UserControls.Other
                 if (menu.SourceControl == this)
                 {
                     menu.MenuItems.Add(menuItemClearHistory);
-                    if (!string.IsNullOrEmpty(FileName))
+                    if (!isConfig && (!string.IsNullOrEmpty(FileName)))
                         menu.MenuItems.Add(menuItemOpenFile);
                     //menu.MenuItems.Add(menuItem2);
                 }
@@ -91,7 +102,7 @@ namespace hwj.UserControls.Other
         #region Public Function
         public bool AddText()
         {
-            if (!string.IsNullOrEmpty(FileName))
+            if (CheckProperty())
             {
                 List<string> list = GetList();
 
@@ -112,27 +123,27 @@ namespace hwj.UserControls.Other
                     list.Insert(0, this.Text);
                 }
 
-                return UpdateFile(list);
+                return Update(list);
             }
             return true;
         }
         public bool ClearHistory()
         {
-            if (!string.IsNullOrEmpty(FileName))
-                return UpdateFile(null);
+            if (CheckProperty())
+                return Update(null);
             else
                 return true;
         }
         public bool RemoveAt(string text)
         {
-            if (!string.IsNullOrEmpty(FileName))
+            if (CheckProperty())
             {
                 List<string> list = GetList();
 
                 if (list != null && !string.IsNullOrEmpty(text))
                 {
                     list.Remove(text);
-                    return UpdateFile(list);
+                    return Update(list);
                     this.Text = string.Empty;
                 }
                 return true;
@@ -159,14 +170,33 @@ namespace hwj.UserControls.Other
                         }
                     }
                 }
-                RefreshList(list);
             }
             return true;
         }
-        private List<string> GetList()
+        private bool UpdateConfig(List<string> list)
+        {
+            if (!DesignMode)
+            {
+                if (list == null)
+                {
+                    UserConfigSetting[ConfigName] = string.Empty;
+                }
+                else
+                {
+                    UserConfigSetting[ConfigName] = string.Empty;
+                    foreach (string s in list)
+                    {
+                        if (UserConfigSetting[ConfigName] != null)
+                            UserConfigSetting[ConfigName] = UserConfigSetting[ConfigName] + "|" + s;
+                    }
+                }
+                UserConfigSetting.Save();
+            }
+            return true;
+        }
+        private List<string> GetListFile()
         {
             List<string> strList = new List<string>();
-
             CheckFileName();
             using (StreamReader sr = new StreamReader(FileName, System.Text.Encoding.UTF8))
             {
@@ -179,6 +209,46 @@ namespace hwj.UserControls.Other
             }
             return strList;
         }
+        private List<string> GetListConfig()
+        {
+            List<string> strList = new List<string>();
+            if (!string.IsNullOrEmpty(ConfigName) || UserConfigSetting[ConfigName] != null)
+            {
+                string[] arr = UserConfigSetting[ConfigName].ToString().Split('|');
+                for (int u = 0; u < arr.Length; u++)
+                {
+                    if (!string.IsNullOrEmpty(arr[u]))
+                        strList.Add(arr[u]);
+                }
+            }
+            return strList;
+        }
+
+        private bool Update(List<string> list)
+        {
+            bool Succ = true;
+            if (isConfig)
+            {
+                Succ = UpdateConfig(list);
+            }
+            else
+            {
+                Succ = UpdateFile(list);
+            }
+            RefreshList(list);
+            return Succ;
+        }
+        private List<string> GetList()
+        {
+            if (isConfig)
+            {
+                return GetListConfig();
+            }
+            else
+            {
+                return GetListFile();
+            }
+        }
         private void CheckFileName()
         {
             if (!DesignMode && !File.Exists(FileName))
@@ -189,6 +259,10 @@ namespace hwj.UserControls.Other
                 else
                     using (File.Create(FileName)) { }
             }
+        }
+        private bool CheckProperty()
+        {
+            return (!isConfig && !string.IsNullOrEmpty(FileName)) || (isConfig && !string.IsNullOrEmpty(ConfigName));
         }
         private void RefreshList(List<string> list)
         {
