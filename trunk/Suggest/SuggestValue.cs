@@ -13,5 +13,6 @@ namespace hwj.UserControls.Suggest
     }
     [Serializable]
     public class SuggestList : List<SuggestValue>
-    { }
+    {
+    }
 }
