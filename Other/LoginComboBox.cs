@@ -50,7 +50,7 @@ namespace hwj.UserControls.Other
                     CheckFileName();
                 }
 
-                if (CheckProperty())
+                if (CheckAllowSaveLogin())
                 {
                     RefreshList(GetList());
                 }
@@ -102,7 +102,7 @@ namespace hwj.UserControls.Other
         #region Public Function
         public bool AddText()
         {
-            if (CheckProperty())
+            if (CheckAllowSaveLogin())
             {
                 List<string> list = GetList();
 
@@ -129,14 +129,14 @@ namespace hwj.UserControls.Other
         }
         public bool ClearHistory()
         {
-            if (CheckProperty())
+            if (CheckAllowSaveLogin())
                 return Update(null);
             else
                 return true;
         }
         public bool RemoveAt(string text)
         {
-            if (CheckProperty())
+            if (CheckAllowSaveLogin())
             {
                 List<string> list = GetList();
 
@@ -149,6 +149,10 @@ namespace hwj.UserControls.Other
                 return true;
             }
             return true;
+        }
+        public bool CheckAllowSaveLogin()
+        {
+            return (!isConfig && !string.IsNullOrEmpty(FileName)) || (isConfig && !string.IsNullOrEmpty(ConfigName));
         }
         #endregion
 
@@ -260,10 +264,7 @@ namespace hwj.UserControls.Other
                     using (File.Create(FileName)) { }
             }
         }
-        private bool CheckProperty()
-        {
-            return (!isConfig && !string.IsNullOrEmpty(FileName)) || (isConfig && !string.IsNullOrEmpty(ConfigName));
-        }
+
         private void RefreshList(List<string> list)
         {
             this.DataSource = list;

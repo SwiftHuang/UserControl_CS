@@ -91,6 +91,6 @@ namespace hwj.UserControls
         #endregion
 
         public static Color DataGridViewCellReadonlyBackColor = Color.FromArgb(245, 245, 245);
-
+     
     }
 }
