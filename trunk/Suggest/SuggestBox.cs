@@ -131,6 +131,8 @@ namespace hwj.UserControls.Suggest
                 SetSelectedText(value);
             }
         }
+        [BrowsableAttribute(false)]
+        public object SelectedItem { get; set; }
         public override string Text
         {
             get { return txtValue.Text; }
@@ -285,11 +287,13 @@ namespace hwj.UserControls.Suggest
                 else if (DisplayMember == DisplayMemberType.Second)
                     _SelectedText = e.SecondValue;
                 this.txtValue.Text = this.SelectedText;
+                SelectedItem = e.Item;
                 SetSelectedValue(e.Key);
             }
             else
             {
                 _SelectedText = string.Empty;
+                SelectedItem = null;
                 this.txtValue.Text = this.SelectedText;
                 SetSelectedValue(EmptyValue);
             }
@@ -446,6 +450,7 @@ namespace hwj.UserControls.Suggest
         {
             _SelectedText = string.Empty;
             txtValue.Text = string.Empty;
+            SelectedItem = null;
             SetSelectedValue(EmptyValue);
         }
         public new void Focus()
@@ -531,6 +536,7 @@ namespace hwj.UserControls.Suggest
             {
                 if (s.Key == value)
                 {
+                    SelectedItem = s.Item;
                     if (DisplayMember == DisplayMemberType.Primary)
                         return s.PrimaryValue;
                     else if (DisplayMember == DisplayMemberType.Second)
@@ -543,6 +549,7 @@ namespace hwj.UserControls.Suggest
         {
             foreach (SuggestValue s in DataList)
             {
+                SelectedItem = s.Item;
                 if (DisplayMember == DisplayMemberType.Primary && s.PrimaryValue == text)
                     return s.Key;
                 else if (DisplayMember == DisplayMemberType.Second && s.SecondValue == text)
