@@ -119,6 +119,9 @@ namespace hwj.UserControls.Suggest
             SuggestValue v = new SuggestValue();
             v.Key = dgList.Rows[rowIndex].Cells["colValue"].Value.ToString();
             v.PrimaryValue = dgList.Rows[rowIndex].Cells["colPri"].Value.ToString();
+            SuggestValue tmp = DataList[rowIndex] as SuggestValue;
+            if (tmp != null)
+                v.Item = tmp.Item; ;
             if (SecondColumnMode && dgList.Columns["colSec"] != null)
                 v.SecondValue = dgList.Rows[rowIndex].Cells["colSec"].Value.ToString();
 
