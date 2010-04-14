@@ -90,6 +90,8 @@ namespace hwj.UserControls.CommonControls
         #region Override Function
         protected override void OnCreateControl()
         {
+            if (DesignMode)
+                return;
             if (ContentType == ContentType.Numberic || ContentType == ContentType.Integer)
             {
                 if (string.IsNullOrEmpty(Text) && !string.IsNullOrEmpty(Format))
@@ -109,6 +111,8 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
+            if (DesignMode)
+                return;
             //3=Ctrl+C;22=Ctrl+V;26=Ctrl+Z
             if (e.KeyChar == 3 || e.KeyChar == 22 || e.KeyChar == 26)
             {
@@ -148,6 +152,8 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (DesignMode)
+                return;
             if (EnterEqualTab && e.KeyCode == Keys.Enter)
                 if (e.KeyData != (Keys.Control | Keys.Enter))
                     SendKeys.Send("{Tab}");
@@ -157,12 +163,16 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnClick(EventArgs e)
         {
+            if (DesignMode)
+                return;
             if (IsNegatives() && SelectionStart == 0)
                 SelectionStart = 1;
             base.OnClick(e);
         }
         protected override void OnValidating(CancelEventArgs e)
         {
+            if (DesignMode)
+                return;
             bool isInvaildText = false;
             switch (ContentType)
             {
@@ -214,6 +224,8 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnEnter(EventArgs e)
         {
+            if (DesignMode)
+                return;
             base.OnEnter(e);
             TextIsChanged = false;
         }
@@ -229,16 +241,22 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnValidated(EventArgs e)
         {
+            if (DesignMode)
+                return;
             base.OnValidated(e);
             TextIsChanged = false;
         }
         protected override void OnEnabledChanged(EventArgs e)
         {
+            if (DesignMode)
+                return;
             base.OnEnabledChanged(e);
             SetRequiredStatus();
         }
         protected override void OnReadOnlyChanged(EventArgs e)
         {
+            if (DesignMode)
+                return;
             base.OnReadOnlyChanged(e);
             SetRequiredStatus();
         }

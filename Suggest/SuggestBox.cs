@@ -316,6 +316,8 @@ namespace hwj.UserControls.Suggest
         #region Text Control
         private void txtValue_Enter(object sender, EventArgs e)
         {
+            if (DesignMode)
+                return;
             if (DropDownStyle == SuggextBoxStyle.DropDownList)
                 txtValue.SelectAll();
             if (OnFocus != null)
@@ -323,6 +325,8 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_KeyDown(object sender, KeyEventArgs e)
         {
+            if (DesignMode)
+                return;
             this.Cursor = Cursors.AppStarting;
             try
             {
@@ -368,10 +372,14 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_LostFocus(object sender, EventArgs e)
         {
+            if (DesignMode)
+                return;
             CloseList(false);
         }
         private void txtValue_TextChanged(object sender, EventArgs e)
         {
+            if (DesignMode)
+                return;
             if (!(txtValue.Focused || IsShowed) || ReadOnly) return;
             this.Cursor = Cursors.AppStarting;
             try
@@ -389,6 +397,8 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_Validating(object sender, CancelEventArgs e)
         {
+            if (DesignMode)
+                return;
             if (ReadOnly) return;
             if (_SelectedText != this.txtValue.Text)
                 Clear();
@@ -420,6 +430,8 @@ namespace hwj.UserControls.Suggest
         }
         private void txtValue_Click(object sender, EventArgs e)
         {
+            if (DesignMode)
+                return;
             if (DropDownStyle == SuggextBoxStyle.DropDownList)
                 ShowList(sender, e);
         }
