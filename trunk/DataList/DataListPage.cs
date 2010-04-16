@@ -116,7 +116,7 @@ namespace hwj.UserControls.DataList
             this.Dock = DockStyle.Bottom;
             InitializeComponent();
             SelectChecked = false;
-            toolCboPageSize.SelectedItem = "500";
+            toolCboPageSize.SelectedItem = "100";
             SelectAllVisible = false;
             CheckBoxColumn = null;
             toolTxtIndex.Text = "1";
@@ -166,6 +166,7 @@ namespace hwj.UserControls.DataList
 
         private void toolCboPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (DesignMode) return;
             PageIndex = 1;
             PerformPageChanged(PageIndex, PageSize);
         }
