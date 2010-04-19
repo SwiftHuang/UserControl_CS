@@ -13,7 +13,7 @@ namespace hwj.UserControls.DataList
     {
         #region Property
         private const string pagefmt = "/{0}";
-        private bool HandlePageChange = false;
+        private bool HandlePageChange = true;
         /// <summary>
         /// 获取或设置当前页数
         /// </summary>
@@ -167,8 +167,11 @@ namespace hwj.UserControls.DataList
         private void toolCboPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DesignMode) return;
-            PageIndex = 1;
-            PerformPageChanged(PageIndex, PageSize);
+            if (this.Created)
+            {
+                PageIndex = 1;
+                PerformPageChanged(PageIndex, PageSize);
+            }
         }
         #endregion
 
