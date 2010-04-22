@@ -62,7 +62,12 @@ namespace hwj.UserControls.CommonControls
             if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             if (SetValueToControl != null)
+            {
+                SetValueToControl.ShowCheckBox = this.ShowCheckBox;
+                SetValueToControl.Checked = this.Checked;
+                SetValueToControl.Text = this.Text;
                 SetValueToControl.Value = this.Value;
+            }
             base.OnValueChanged(eventargs);
         }
         protected override void OnCloseUp(EventArgs eventargs)
