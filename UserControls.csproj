@@ -108,6 +108,12 @@
     <Compile Include="Other\LoginComboBox.Designer.cs">
       <DependentUpon>LoginComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\MaskedDateTimePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Other\MaskedDateTimePicker.Designer.cs">
+      <DependentUpon>MaskedDateTimePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Suggest\SuggestBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -140,6 +146,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataList\DataListPage.resx">
       <DependentUpon>DataListPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\MaskedDateTimePicker.resx">
+      <DependentUpon>MaskedDateTimePicker.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.en-US.resx">
