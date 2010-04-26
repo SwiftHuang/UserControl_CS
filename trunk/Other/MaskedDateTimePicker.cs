@@ -47,7 +47,7 @@ namespace hwj.UserControls.Other
                 _value = value;
                 string tmp = value.ToString(Format);
                 if (tmp.Length > mTxtValue.Text.Length)
-                    mTxtValue.Mask = Regex.Replace(Format, @"[a-zA-Z0-9]", "0");
+                    mTxtValue.Mask = Regex.Replace(tmp, @"[a-zA-Z0-9]", "0");
                 mTxtValue.Text = value.ToString(Format);
             }
         }
