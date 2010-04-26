@@ -263,7 +263,16 @@ namespace hwj.UserControls.Suggest
             }
             txtValue.SetRequiredStatus();
         }
-
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Tab && IsShowed)
+            {
+                ListControl.SetSelectedValue(selectIndex);
+                selectIndex = 0;
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
         #region Events
         private void btnSelect_Click(object sender, EventArgs e)
         {
