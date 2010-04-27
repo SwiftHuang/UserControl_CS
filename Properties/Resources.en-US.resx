@@ -129,6 +129,9 @@
     <value>Information</value>
     <comment>提示信息</comment>
   </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>Invalid date.</value>
+  </data>
   <data name="InvalidEmail" xml:space="preserve">
     <value>An invalid e-mail format [{0}]</value>
     <comment>为无效的电子邮箱格式</comment>

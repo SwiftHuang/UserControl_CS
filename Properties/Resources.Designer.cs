@@ -60,6 +60,13 @@ namespace hwj.UserControls.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap calendar {
+            get {
+                object obj = ResourceManager.GetObject("calendar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to 清空记录.
         /// </summary>
@@ -84,6 +91,15 @@ namespace hwj.UserControls.Properties {
         internal static string Information {
             get {
                 return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 无效的日期.
+        /// </summary>
+        internal static string InvalidDate {
+            get {
+                return ResourceManager.GetString("InvalidDate", resourceCulture);
             }
         }
         

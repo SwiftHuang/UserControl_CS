@@ -23,9 +23,9 @@ namespace hwj.UserControls.CommonControls
         [Description("当值改变时,同时赋值给指定的控件")]
         public xDateTimePicker SetValueToControl { get; set; }
 
-        private DateTimePickerFormat tmpFormat = DateTimePickerFormat.Custom;
-        private string tmpCustomFormat = string.Empty;
-        public string InputFormat { get; set; }
+        //private DateTimePickerFormat tmpFormat = DateTimePickerFormat.Custom;
+        //private string tmpCustomFormat = string.Empty;
+        //public string InputFormat { get; set; }
         #endregion
 
         public xDateTimePicker()
@@ -80,37 +80,27 @@ namespace hwj.UserControls.CommonControls
                 ValueChangedHandle.IsChanged = true;
             base.OnCloseUp(eventargs);
         }
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
-            if (!string.IsNullOrEmpty(InputFormat))
-            {
-                tmpFormat = this.Format;
-                tmpCustomFormat = this.CustomFormat;
-                this.Format = DateTimePickerFormat.Custom;
-                this.CustomFormat = InputFormat;
-            }
-        }
-        protected override void OnLeave(EventArgs e)
-        {
-            base.OnLeave(e);
-            if (!string.IsNullOrEmpty(InputFormat))
-            {
-                this.Format = tmpFormat;
-                this.CustomFormat = tmpCustomFormat;
-                this.Value = hwj.CommonLibrary.Object.DateHelper.ToDate(this.Text, InputFormat);
-            }
-        }
-        protected override bool ProcessKeyPreview(ref   Message m)
-        {
-            Control ctr = Control.FromHandle(m.HWnd);
-
-            if (ctr is DateTimePicker && m.Msg == 0x100 && (int)m.WParam == 0xd)
-            {
-                m.WParam = (IntPtr)0x27;
-            }
-            return base.ProcessKeyPreview(ref   m);
-        }
+        //protected override void OnGotFocus(EventArgs e)
+        //{
+        //    base.OnGotFocus(e);
+        //    if (!string.IsNullOrEmpty(InputFormat))
+        //    {
+        //        tmpFormat = this.Format;
+        //        tmpCustomFormat = this.CustomFormat;
+        //        this.Format = DateTimePickerFormat.Custom;
+        //        this.CustomFormat = InputFormat;
+        //    }
+        //}
+        //protected override void OnLeave(EventArgs e)
+        //{
+        //    base.OnLeave(e);
+        //    if (!string.IsNullOrEmpty(InputFormat))
+        //    {
+        //        this.Format = tmpFormat;
+        //        this.CustomFormat = tmpCustomFormat;
+        //        this.Value = hwj.CommonLibrary.Object.DateHelper.ToDate(this.Text, InputFormat);
+        //    }
+        //}
 
         #endregion
     }

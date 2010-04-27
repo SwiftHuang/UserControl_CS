@@ -30,7 +30,8 @@
         {
             this.mTxtValue = new System.Windows.Forms.MaskedTextBox();
             this.chkBox = new System.Windows.Forms.CheckBox();
-            this.btnShow = new System.Windows.Forms.Button();
+            this.pBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pBox)).BeginInit();
             this.SuspendLayout();
             // 
             // mTxtValue
@@ -40,10 +41,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.mTxtValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.mTxtValue.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
-            this.mTxtValue.Location = new System.Drawing.Point(20, 3);
-            this.mTxtValue.MinimumSize = new System.Drawing.Size(0, 15);
+            this.mTxtValue.Location = new System.Drawing.Point(19, 3);
             this.mTxtValue.Name = "mTxtValue";
-            this.mTxtValue.Size = new System.Drawing.Size(92, 15);
+            this.mTxtValue.Size = new System.Drawing.Size(66, 14);
             this.mTxtValue.TabIndex = 0;
             // 
             // chkBox
@@ -52,22 +52,25 @@
             this.chkBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.chkBox.Location = new System.Drawing.Point(0, 0);
             this.chkBox.Name = "chkBox";
-            this.chkBox.Padding = new System.Windows.Forms.Padding(2, 1, 0, 0);
-            this.chkBox.Size = new System.Drawing.Size(17, 19);
+            this.chkBox.Padding = new System.Windows.Forms.Padding(1, 1, 0, 0);
+            this.chkBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.chkBox.Size = new System.Drawing.Size(16, 19);
             this.chkBox.TabIndex = 1;
+            this.chkBox.TabStop = false;
             this.chkBox.UseVisualStyleBackColor = true;
             // 
-            // btnShow
+            // pBox
             // 
-            this.btnShow.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnShow.Location = new System.Drawing.Point(114, 0);
-            this.btnShow.Margin = new System.Windows.Forms.Padding(1);
-            this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(19, 19);
-            this.btnShow.TabIndex = 2;
-            this.btnShow.Text = "button1";
-            this.btnShow.UseVisualStyleBackColor = true;
-            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            this.pBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pBox.Image = global::hwj.UserControls.Properties.Resources.calendar;
+            this.pBox.Location = new System.Drawing.Point(87, 0);
+            this.pBox.Name = "pBox";
+            this.pBox.Size = new System.Drawing.Size(19, 19);
+            this.pBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pBox.TabIndex = 2;
+            this.pBox.TabStop = false;
+            this.pBox.Click += new System.EventHandler(this.pBox_Click);
             // 
             // MaskedDateTimePicker
             // 
@@ -75,13 +78,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.mTxtValue);
-            this.Controls.Add(this.btnShow);
+            this.Controls.Add(this.pBox);
             this.Controls.Add(this.chkBox);
+            this.Controls.Add(this.mTxtValue);
             this.Margin = new System.Windows.Forms.Padding(1);
             this.MinimumSize = new System.Drawing.Size(50, 21);
             this.Name = "MaskedDateTimePicker";
-            this.Size = new System.Drawing.Size(133, 19);
+            this.Size = new System.Drawing.Size(106, 19);
+            ((System.ComponentModel.ISupportInitialize)(this.pBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -91,6 +95,6 @@
 
         private System.Windows.Forms.MaskedTextBox mTxtValue;
         private System.Windows.Forms.CheckBox chkBox;
-        private System.Windows.Forms.Button btnShow;
+        private System.Windows.Forms.PictureBox pBox;
     }
 }
