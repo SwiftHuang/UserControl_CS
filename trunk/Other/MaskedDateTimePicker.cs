@@ -90,6 +90,7 @@ namespace hwj.UserControls.Other
                 if (tmp.Length > mTxtValue.Text.Length)
                     mTxtValue.Mask = Regex.Replace(tmp, @"[a-zA-Z0-9]", "0");
                 mTxtValue.Text = value.ToString(Format);
+
                 if (this.Created && LastDateTime != value)
                 {
                     SetOtherControl();
@@ -132,10 +133,12 @@ namespace hwj.UserControls.Other
 
         [DefaultValue(Enums.DateFormat.None)]
         public Enums.DateFormat DateFormat { get; set; }
+
         #endregion
 
         public MaskedDateTimePicker()
         {
+            _value = DateTime.Now;
             InitializeComponent();
             ShowCheckBox = false;
             SetValueToControl = null;
@@ -167,12 +170,6 @@ namespace hwj.UserControls.Other
             }
         }
 
-        void mTxtValue_TextChanged(object sender, EventArgs e)
-        {
-            if (this.Focused && ValueChangedHandle != null)
-                ValueChangedHandle.IsChanged = true;
-        }
-
         protected override void OnCreateControl()
         {
             switch (DateFormat)
@@ -195,6 +192,11 @@ namespace hwj.UserControls.Other
             Value = DateTime.Now;
             LastDateTime = Value;
             base.OnCreateControl();
+        }
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            mTxtValue.BackColor = this.BackColor;
+            base.OnBackColorChanged(e);
         }
 
         #region Private Event Function
@@ -221,9 +223,10 @@ namespace hwj.UserControls.Other
             else
             {
                 mTxtValue.ResetText();
-                Value = DateTime.MinValue;
+                _value = DateTime.MinValue;
                 Common.ShowToolTipInfo(this, Properties.Resources.InvalidDate);
             }
+            SetRequiredStatus();
         }
         void mTxtValue_EnabledChanged(object sender, EventArgs e)
         {
@@ -237,6 +240,11 @@ namespace hwj.UserControls.Other
             if (EnterEqualTab && e.KeyCode == Keys.Enter)
                 SendKeys.Send("{Tab}");
             base.OnKeyDown(e);
+        }
+        void mTxtValue_TextChanged(object sender, EventArgs e)
+        {
+            if (this.Focused && ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
         }
 
         void ParentForm_Move(object sender, EventArgs e)
@@ -289,12 +297,12 @@ namespace hwj.UserControls.Other
             if (IsRequired && this.Value == DateTime.MinValue)
             {
                 RequiredHandle.Add(this);
-                mTxtValue.BackColor = Common.RequiredBackColor;
+                BackColor = Common.RequiredBackColor;
             }
             else
             {
                 RequiredHandle.Remove(this);
-                mTxtValue.BackColor = this.OldBackColor;
+                BackColor = this.OldBackColor;
             }
         }
         #endregion
