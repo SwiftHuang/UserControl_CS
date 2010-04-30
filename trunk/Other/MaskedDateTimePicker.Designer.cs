@@ -43,7 +43,7 @@
             this.mTxtValue.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.mTxtValue.Location = new System.Drawing.Point(19, 3);
             this.mTxtValue.Name = "mTxtValue";
-            this.mTxtValue.Size = new System.Drawing.Size(66, 14);
+            this.mTxtValue.Size = new System.Drawing.Size(50, 14);
             this.mTxtValue.TabIndex = 0;
             // 
             // chkBox
@@ -64,7 +64,7 @@
             this.pBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.pBox.Image = global::hwj.UserControls.Properties.Resources.calendar;
-            this.pBox.Location = new System.Drawing.Point(87, 0);
+            this.pBox.Location = new System.Drawing.Point(71, 0);
             this.pBox.Name = "pBox";
             this.pBox.Size = new System.Drawing.Size(19, 19);
             this.pBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -81,10 +81,9 @@
             this.Controls.Add(this.pBox);
             this.Controls.Add(this.chkBox);
             this.Controls.Add(this.mTxtValue);
-            this.Margin = new System.Windows.Forms.Padding(1);
             this.MinimumSize = new System.Drawing.Size(50, 21);
             this.Name = "MaskedDateTimePicker";
-            this.Size = new System.Drawing.Size(106, 19);
+            this.Size = new System.Drawing.Size(90, 19);
             ((System.ComponentModel.ISupportInitialize)(this.pBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
