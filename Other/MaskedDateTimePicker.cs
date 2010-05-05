@@ -142,8 +142,6 @@ namespace hwj.UserControls.Other
             InitializeComponent();
             ShowCheckBox = false;
             SetValueToControl = null;
-            ValueChangedHandle = Common.ValueChanged;
-            RequiredHandle = Common.Required;
             EnterEqualTab = true;
             OldBackColor = this.mTxtValue.BackColor;
 
@@ -192,6 +190,10 @@ namespace hwj.UserControls.Other
             Value = DateTime.Now;
             LastDateTime = Value;
             base.OnCreateControl();
+
+            ValueChangedHandle = Common.ValueChanged;
+            RequiredHandle = Common.Required;
+            SetRequiredStatus();
         }
         protected override void OnBackColorChanged(EventArgs e)
         {
@@ -209,6 +211,7 @@ namespace hwj.UserControls.Other
         void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
         {
             Value = monthCalendar.SelectionStart;
+            SetValueChangedHandle();
             CloseList();
         }
 
@@ -226,6 +229,7 @@ namespace hwj.UserControls.Other
                 _value = DateTime.MinValue;
                 Common.ShowToolTipInfo(this, Properties.Resources.InvalidDate);
             }
+            SetValueChangedHandle();
             SetRequiredStatus();
         }
         void mTxtValue_EnabledChanged(object sender, EventArgs e)
@@ -304,6 +308,11 @@ namespace hwj.UserControls.Other
                 RequiredHandle.Remove(this);
                 BackColor = this.OldBackColor;
             }
+        }
+        private void SetValueChangedHandle()
+        {
+            if (ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
         }
         #endregion
 

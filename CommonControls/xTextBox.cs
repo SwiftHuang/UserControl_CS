@@ -25,6 +25,7 @@ namespace hwj.UserControls.CommonControls
     public class xTextBox : TextBox, IEnterEqualTab
     {
         #region Property
+        private bool isFirstFocus = false;
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
 
@@ -73,13 +74,16 @@ namespace hwj.UserControls.CommonControls
 
         [Description("当值改变时,同时赋值给指定的控件")]
         public xTextBox SetValueToControl { get; set; }
+
+        [DefaultValue(false), Description("当获取焦点时,自动全选")]
+        public bool AutoSelectAll { get; set; }
         #endregion
 
         public xTextBox()
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;
-
+            
             TextIsChanged = false;
             OldBackColor = this.BackColor;
             IsRequired = false;
@@ -167,6 +171,9 @@ namespace hwj.UserControls.CommonControls
                 return;
             if (IsNegatives() && SelectionStart == 0)
                 SelectionStart = 1;
+            if (AutoSelectAll && isFirstFocus)
+                this.SelectAll();
+            isFirstFocus = false;
             base.OnClick(e);
         }
         protected override void OnValidating(CancelEventArgs e)
@@ -259,6 +266,16 @@ namespace hwj.UserControls.CommonControls
                 return;
             base.OnReadOnlyChanged(e);
             SetRequiredStatus();
+        }
+        protected override void OnGotFocus(EventArgs e)
+        {
+            isFirstFocus = true;
+            base.OnGotFocus(e);
+        }
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+            isFirstFocus = false;
         }
         #endregion
 
