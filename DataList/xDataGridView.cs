@@ -322,6 +322,7 @@ namespace hwj.UserControls.DataList
                 colNum.HeaderText = "";
                 colNum.DefaultCellStyle = cellStyle;
                 colNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+                colNum.SortMode = DataGridViewColumnSortMode.NotSortable;
                 this.Columns.Insert(0, colNum);
             }
         }

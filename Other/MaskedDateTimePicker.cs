@@ -12,6 +12,7 @@ namespace hwj.UserControls.Other
 {
     public partial class MaskedDateTimePicker : UserControl, IEnterEqualTab
     {
+        private bool isFirstFocus = false;
         private ToolStripDropDown tsDropDown = null;
         private ToolStripControlHost tsCtrlHost = null;
         private MonthCalendar monthCalendar = new MonthCalendar();
@@ -51,7 +52,7 @@ namespace hwj.UserControls.Other
                     mTxtValue.Enabled = chkBox.Checked;
                     Point p = new Point(19, 3);
                     mTxtValue.Location = p;
-                    mTxtValue.Width = mTxtValue.Width - 16;
+                    mTxtValue.Width = this.Width - 40;
                     chkBox.CheckedChanged += new EventHandler(chkBox_CheckedChanged);
                 }
                 else
@@ -60,7 +61,7 @@ namespace hwj.UserControls.Other
                     mTxtValue.Enabled = true;
                     Point p = new Point(3, 3);
                     mTxtValue.Location = p;
-                    mTxtValue.Width = mTxtValue.Width + 16;
+                    mTxtValue.Width = this.Width + 40;
                     chkBox.CheckedChanged -= new EventHandler(chkBox_CheckedChanged);
                 }
             }
@@ -94,6 +95,7 @@ namespace hwj.UserControls.Other
                 if (this.Created && LastDateTime != value)
                 {
                     SetOtherControl();
+                    SetRequiredStatus();
                     if (ValueChanged != null)
                         ValueChanged(this, null);
                 }
@@ -148,12 +150,16 @@ namespace hwj.UserControls.Other
             if (!DesignMode)
             {
                 monthCalendar.DateSelected += new DateRangeEventHandler(monthCalendar_DateSelected);
+                monthCalendar.VisibleChanged += new EventHandler(monthCalendar_VisibleChanged);
 
+                mTxtValue.Click += new EventHandler(mTxtValue_Click);
                 mTxtValue.ValidatingType = typeof(System.DateTime);
                 mTxtValue.TypeValidationCompleted += new TypeValidationEventHandler(mTxtValue_TypeValidationCompleted);
                 mTxtValue.EnabledChanged += new EventHandler(mTxtValue_EnabledChanged);
                 mTxtValue.KeyDown += new KeyEventHandler(mTxtValue_KeyDown);
                 mTxtValue.TextChanged += new EventHandler(mTxtValue_TextChanged);
+                mTxtValue.LostFocus += new EventHandler(mTxtValue_LostFocus);
+                mTxtValue.GotFocus += new EventHandler(mTxtValue_GotFocus);
 
                 tsCtrlHost = new ToolStripControlHost(monthCalendar);
                 tsCtrlHost.Padding = new Padding(0);
@@ -214,6 +220,14 @@ namespace hwj.UserControls.Other
             SetValueChangedHandle();
             CloseList();
         }
+        void monthCalendar_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Value != DateTime.MinValue)
+            {
+                monthCalendar.SelectionStart = this.Value;
+                monthCalendar.SelectionEnd = this.Value;
+            }
+        }
 
         void mTxtValue_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
         {
@@ -249,6 +263,20 @@ namespace hwj.UserControls.Other
         {
             if (this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
+        }
+        void mTxtValue_Click(object sender, EventArgs e)
+        {
+            if (isFirstFocus)
+                mTxtValue.SelectAll();
+            isFirstFocus = false;
+        }
+        void mTxtValue_LostFocus(object sender, EventArgs e)
+        {
+            isFirstFocus = true;
+        }
+        void mTxtValue_GotFocus(object sender, EventArgs e)
+        {
+            isFirstFocus = true;
         }
 
         void ParentForm_Move(object sender, EventArgs e)
