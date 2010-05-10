@@ -87,10 +87,7 @@ namespace hwj.UserControls.Other
             {
                 LastDateTime = _value;
                 _value = value;
-                string tmp = value.ToString(Format);
-                if (tmp.Length > mTxtValue.Text.Length)
-                    mTxtValue.Mask = Regex.Replace(tmp, @"[a-zA-Z0-9]", "0");
-                mTxtValue.Text = value.ToString(Format);
+                SetValue();
 
                 if (this.Created && LastDateTime != value)
                 {
@@ -193,7 +190,8 @@ namespace hwj.UserControls.Other
                 Format = mTxtValue.Culture.DateTimeFormat.ShortDatePattern;
 
             mTxtValue.Mask = Regex.Replace(Format, @"[a-zA-Z0-9]", "0");
-            Value = DateTime.Now;
+            _value = DateTime.Now;
+            SetValue();
             LastDateTime = Value;
             base.OnCreateControl();
 
@@ -341,6 +339,13 @@ namespace hwj.UserControls.Other
         {
             if (ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
+        }
+        private void SetValue()
+        {
+            string tmp = _value.ToString(Format);
+            if (tmp.Length > mTxtValue.Text.Length)
+                mTxtValue.Mask = Regex.Replace(tmp, @"[a-zA-Z0-9]", "0");
+            mTxtValue.Text = _value.ToString(Format);
         }
         #endregion
 
