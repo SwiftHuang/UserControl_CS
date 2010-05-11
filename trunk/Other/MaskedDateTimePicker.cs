@@ -137,7 +137,6 @@ namespace hwj.UserControls.Other
 
         public MaskedDateTimePicker()
         {
-            _value = DateTime.Now;
             InitializeComponent();
             ShowCheckBox = false;
             SetValueToControl = null;
@@ -169,10 +168,6 @@ namespace hwj.UserControls.Other
                 tsDropDown.Items.Add(tsCtrlHost);
                 tsDropDown.AutoClose = true;
             }
-        }
-
-        protected override void OnCreateControl()
-        {
             switch (DateFormat)
             {
                 case Enums.DateFormat.None:
@@ -190,9 +185,14 @@ namespace hwj.UserControls.Other
                 Format = mTxtValue.Culture.DateTimeFormat.ShortDatePattern;
 
             mTxtValue.Mask = Regex.Replace(Format, @"[a-zA-Z0-9]", "0");
-            _value = DateTime.Now;
+            if (_value == DateTime.MinValue)
+                _value = DateTime.Now;
             SetValue();
             LastDateTime = Value;
+        }
+
+        protected override void OnCreateControl()
+        {
             base.OnCreateControl();
 
             ValueChangedHandle = Common.ValueChanged;
