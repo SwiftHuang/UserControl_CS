@@ -41,9 +41,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.mTxtValue.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.mTxtValue.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
-            this.mTxtValue.Location = new System.Drawing.Point(19, 3);
+            this.mTxtValue.Location = new System.Drawing.Point(3, 3);
             this.mTxtValue.Name = "mTxtValue";
-            this.mTxtValue.Size = new System.Drawing.Size(50, 14);
+            this.mTxtValue.Size = new System.Drawing.Size(66, 14);
             this.mTxtValue.TabIndex = 0;
             // 
             // chkBox
@@ -58,6 +58,7 @@
             this.chkBox.TabIndex = 1;
             this.chkBox.TabStop = false;
             this.chkBox.UseVisualStyleBackColor = true;
+            this.chkBox.Visible = false;
             // 
             // pBox
             // 

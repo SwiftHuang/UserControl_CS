@@ -46,23 +46,25 @@ namespace hwj.UserControls.Other
             set
             {
                 _showCheckBox = value;
-                if (value)
+                if (this.Created || this.DesignMode)
                 {
-                    chkBox.Visible = true;
-                    mTxtValue.Enabled = chkBox.Checked;
-                    Point p = new Point(19, 3);
-                    mTxtValue.Location = p;
-                    mTxtValue.Width = this.Width - 40;
-                    chkBox.CheckedChanged += new EventHandler(chkBox_CheckedChanged);
-                }
-                else
-                {
-                    chkBox.Visible = false;
-                    mTxtValue.Enabled = true;
-                    Point p = new Point(3, 3);
-                    mTxtValue.Location = p;
-                    mTxtValue.Width = this.Width + 40;
-                    chkBox.CheckedChanged -= new EventHandler(chkBox_CheckedChanged);
+                    chkBox.Visible = value;
+                    if (value)
+                    {
+                        mTxtValue.Enabled = chkBox.Checked;
+                        Point p = new Point(19, 3);
+                        mTxtValue.Location = p;
+                        mTxtValue.Width = this.Width - 40;
+                        chkBox.CheckedChanged += new EventHandler(chkBox_CheckedChanged);
+                    }
+                    else
+                    {
+                        mTxtValue.Enabled = true;
+                        Point p = new Point(3, 3);
+                        mTxtValue.Location = p;
+                        mTxtValue.Width = this.Width + 40;
+                        chkBox.CheckedChanged -= new EventHandler(chkBox_CheckedChanged);
+                    }
                 }
             }
         }
