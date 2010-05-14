@@ -58,7 +58,6 @@
             this.chkBox.TabIndex = 1;
             this.chkBox.TabStop = false;
             this.chkBox.UseVisualStyleBackColor = true;
-            this.chkBox.Visible = false;
             // 
             // pBox
             // 
