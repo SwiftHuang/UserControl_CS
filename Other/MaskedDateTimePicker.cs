@@ -69,12 +69,14 @@ namespace hwj.UserControls.Other
             }
         }
 
-        private DateTime _value = DateTime.MinValue;
-        [Browsable(false)]
+        private DateTime _value = DateTime.Now;
         public DateTime Value
         {
             get
             {
+                if (DesignMode)
+                    return DateTime.Now;
+
                 if (ShowCheckBox)
                 {
                     if (chkBox.Checked)
@@ -169,6 +171,7 @@ namespace hwj.UserControls.Other
                 tsDropDown.DropShadowEnabled = true;
                 tsDropDown.Items.Add(tsCtrlHost);
                 tsDropDown.AutoClose = true;
+
             }
             switch (DateFormat)
             {
@@ -184,19 +187,20 @@ namespace hwj.UserControls.Other
                     break;
             }
             if (string.IsNullOrEmpty(Format))
-                Format = mTxtValue.Culture.DateTimeFormat.ShortDatePattern;
+                Format = Common.Format_Date;
 
             mTxtValue.Mask = Regex.Replace(Format, @"[a-zA-Z0-9]", "0");
             if (_value == DateTime.MinValue)
                 _value = DateTime.Now;
             SetValue();
             LastDateTime = Value;
+
         }
 
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-
+            ShowCheckBox = ShowCheckBox;
             ValueChangedHandle = Common.ValueChanged;
             RequiredHandle = Common.Required;
             SetRequiredStatus();
