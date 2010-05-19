@@ -104,7 +104,7 @@ namespace hwj.UserControls.Suggest
         {
             get
             {
-                if (string.IsNullOrEmpty(this.txtValue.Text))
+                if (string.IsNullOrEmpty(this.txtValue.Text) && string.IsNullOrEmpty(_SelectedValue))
                     return EmptyValue;
                 else
                     return _SelectedValue;
