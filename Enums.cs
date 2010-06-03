@@ -9,6 +9,7 @@ namespace hwj.UserControls
         public enum DateFormat
         {
             None,
+            InputDate,
             Date,
             DateTime,
         }
@@ -22,6 +23,8 @@ namespace hwj.UserControls
                     return Common.Format_Date;
                 case Enums.DateFormat.DateTime:
                     return Common.Format_DateTime;
+                case DateFormat.InputDate:
+                    return Common.Format_InputDate;
                 default:
                     break;
             }
