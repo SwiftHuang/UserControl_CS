@@ -10,7 +10,9 @@ namespace hwj.UserControls
     public class Common
     {
         public static string Format_Date = "yyyy-MM-dd";
+        public static string Format_InputDate = "yyyy-MM-dd";
         public static string Format_DateTime = "yyyy-MM-dd hh:mm:ss";
+        
         public static string Format_Numberic = "###,##0.00";
 
         protected internal static Function.Verify.ValueChangedHandle ValueChanged { get; set; }

@@ -36,7 +36,23 @@ namespace hwj.UserControls.Other
                     chkBox.Checked = value;
             }
         }
-        public string Format { get; set; }
+
+        [DefaultValue(Enums.DateFormat.None)]
+        public Enums.DateFormat DateFormat { get; set; }
+        private string _Format = string.Empty;
+        public string Format
+        {
+            get { return _Format; }
+            set
+            {
+                if (DateFormat == Enums.DateFormat.None)
+                    _Format = value;
+                else
+                    _Format = Enums.GetFormat(DateFormat);
+                if (!DesignMode)
+                    SetValue();
+            }
+        }
 
         private bool _showCheckBox = false;
         [Description("获取或设置一个值，该值指示在选定日期的左侧是否显示一个复选框。"), DefaultValue(false)]
@@ -79,13 +95,11 @@ namespace hwj.UserControls.Other
 
                 if (ShowCheckBox)
                 {
-                    if (chkBox.Checked)
-                        return _value;
-                    else
+                    if (!chkBox.Checked)
                         return DateTime.MinValue;
                 }
-                else
-                    return _value;
+                return _value;
+                //return Convert.ToDateTime(_value.ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern));
             }
             set
             {
@@ -134,9 +148,6 @@ namespace hwj.UserControls.Other
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
 
-        [DefaultValue(Enums.DateFormat.None)]
-        public Enums.DateFormat DateFormat { get; set; }
-
         #endregion
 
         public MaskedDateTimePicker()
@@ -173,19 +184,7 @@ namespace hwj.UserControls.Other
                 tsDropDown.AutoClose = true;
 
             }
-            switch (DateFormat)
-            {
-                case Enums.DateFormat.None:
-                    break;
-                case Enums.DateFormat.Date:
-                    Format = Common.Format_Date;
-                    break;
-                case Enums.DateFormat.DateTime:
-                    Format = Common.Format_DateTime;
-                    break;
-                default:
-                    break;
-            }
+            Format = Enums.GetFormat(DateFormat);
             if (string.IsNullOrEmpty(Format))
                 Format = Common.Format_Date;
 
@@ -348,10 +347,13 @@ namespace hwj.UserControls.Other
         }
         private void SetValue()
         {
-            string tmp = _value.ToString(Format);
-            if (tmp.Length > mTxtValue.Text.Length)
+            if (!string.IsNullOrEmpty(Format))
+            {
+                string tmp = _value.ToString(Format);
+                //if (tmp.Length > mTxtValue.Text.Length)
                 mTxtValue.Mask = Regex.Replace(tmp, @"[a-zA-Z0-9]", "0");
-            mTxtValue.Text = _value.ToString(Format);
+                mTxtValue.Text = _value.ToString(Format);
+            }
         }
         #endregion
 
