@@ -86,7 +86,8 @@ namespace hwj.UserControls.Other
         }
 
         private DateTime _value = DateTime.Now;
-        public DateTime Value
+        [DesignOnly(true)]
+        public new DateTime Value
         {
             get
             {
