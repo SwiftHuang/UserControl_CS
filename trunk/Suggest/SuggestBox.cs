@@ -190,6 +190,8 @@ namespace hwj.UserControls.Suggest
 
         [Description("当值改变时,同时赋值给指定的控件")]
         public SuggestBox SetValueToControl { get; set; }
+
+        public int SearchMinLength { get; set; }
         #endregion
 
         public SuggestBox()
@@ -450,6 +452,7 @@ namespace hwj.UserControls.Suggest
         #region Public Functions
         private void DataBind(object sender, EventArgs e)
         {
+
             if (DataBinding != null)
             {
                 DataBinding(sender, e);
@@ -465,7 +468,6 @@ namespace hwj.UserControls.Suggest
                     ListControl.DataList = DataList;
             }
             ListControl.DataBind();
-            //SetFootText();
         }
         public void Clear()
         {
