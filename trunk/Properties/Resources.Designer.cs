@@ -113,6 +113,15 @@ namespace hwj.UserControls.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 请输入{0}个以上的字符.
+        /// </summary>
+        internal static string InvalidInputString {
+            get {
+                return ResourceManager.GetString("InvalidInputString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [{0}]为无效的数字格式.
         /// </summary>
         internal static string InvalidNumberic {

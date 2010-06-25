@@ -45,6 +45,11 @@
               Looks up a localized string similar to [{0}]为无效的电子邮箱格式.
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Properties.Resources.InvalidInputString">
+            <summary>
+              Looks up a localized string similar to 请输入{0}个以上的字符.
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.Properties.Resources.InvalidNumberic">
             <summary>
               Looks up a localized string similar to [{0}]为无效的数字格式.
@@ -288,6 +293,11 @@
         <member name="P:hwj.UserControls.Suggest.SuggestBox.DropDownStyle">
             <summary>
             获取或设置SuggestBox Dropdown的显示方式
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.SuggestBox.SearchMinLength">
+            <summary>
+            获取或设置触发搜索的字符最小长度
             </summary>
         </member>
         <member name="M:hwj.UserControls.DataList.xDataGridView.RefreshRowFooter">

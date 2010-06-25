@@ -191,6 +191,10 @@ namespace hwj.UserControls.Suggest
         [Description("当值改变时,同时赋值给指定的控件")]
         public SuggestBox SetValueToControl { get; set; }
 
+        /// <summary>
+        /// 获取或设置触发搜索的字符最小长度
+        /// </summary>
+        [Description("获取或设置触发搜索的字符最小长度"), DefaultValue(0)]
         public int SearchMinLength { get; set; }
         #endregion
 
@@ -397,8 +401,15 @@ namespace hwj.UserControls.Suggest
             {
                 if (txtValue.ValueChangedHandle != null)
                     txtValue.ValueChangedHandle.IsChanged = true;
-                if (!string.IsNullOrEmpty(txtValue.Text))
-                    ShowList(sender, e);
+                if (txtValue.Text.Length >= SearchMinLength)
+                {
+                    if (!string.IsNullOrEmpty(txtValue.Text))
+                        ShowList(sender, e);
+                }
+                else if (ShowToolTip)
+                {
+                    Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidInputString, SearchMinLength));
+                }
             }
             catch (Exception ex)
             {
