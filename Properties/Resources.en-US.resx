@@ -136,6 +136,10 @@
     <value>An invalid e-mail format [{0}]</value>
     <comment>为无效的电子邮箱格式</comment>
   </data>
+  <data name="InvalidInputString" xml:space="preserve">
+    <value>Please enter {0} characters or more.</value>
+    <comment>请输入{0}个以上的字符</comment>
+  </data>
   <data name="InvalidNumberic" xml:space="preserve">
     <value>The digital format is invalid [{0}]</value>
     <comment>为无效的数字格式</comment>
