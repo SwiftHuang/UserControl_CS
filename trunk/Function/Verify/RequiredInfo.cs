@@ -2,7 +2,7 @@
 
 namespace hwj.UserControls.Function.Verify
 {
-    internal class RequiredInfo
+    public class RequiredInfo
     {
         public string Name { get; set; }
         public string TypeName { get; set; }
