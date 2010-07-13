@@ -11,7 +11,7 @@ namespace hwj.UserControls.Function.Verify
         /// <summary>
         /// 获取或设置必填的控件名称
         /// </summary>
-        private List<RequiredInfo> RequiredControls = null;
+        public List<RequiredInfo> RequiredControls { get; private set; }
         /// <summary>
         /// 获取是否存在没完整填写的控件
         /// </summary>

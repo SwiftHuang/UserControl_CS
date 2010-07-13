@@ -347,11 +347,6 @@
             获取是否有控件的值发生改变
             </summary>
         </member>
-        <member name="F:hwj.UserControls.Function.Verify.RequiredHandle.RequiredControls">
-            <summary>
-            获取或设置必填的控件名称
-            </summary>
-        </member>
         <member name="M:hwj.UserControls.Function.Verify.RequiredHandle.Add(System.Windows.Forms.Control)">
             <summary>
             添加必填控件
@@ -363,6 +358,11 @@
             移除必填控件
             </summary>
             <param name="control"></param>
+        </member>
+        <member name="P:hwj.UserControls.Function.Verify.RequiredHandle.RequiredControls">
+            <summary>
+            获取或设置必填的控件名称
+            </summary>
         </member>
         <member name="P:hwj.UserControls.Function.Verify.RequiredHandle.HasRequired">
             <summary>
