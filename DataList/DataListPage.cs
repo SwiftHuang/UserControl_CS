@@ -272,7 +272,7 @@ namespace hwj.UserControls.DataList
         }
         private void toolChkSelectAll_CheckedChanged(object sender, EventArgs e)
         {
-            if (SelectAllVisible && toolChkSelectAll != null && CheckBoxColumn != null && CheckBoxColumn.DataGridView != null && CheckBoxColumn.DataGridView.Rows.Count > 0)
+            if (this.Created && SelectAllVisible && toolChkSelectAll != null && CheckBoxColumn != null && CheckBoxColumn.DataGridView != null && CheckBoxColumn.DataGridView.Rows.Count > 0)
             {
                 foreach (DataGridViewRow r in CheckBoxColumn.DataGridView.Rows)
                 {
