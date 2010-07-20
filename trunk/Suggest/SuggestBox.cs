@@ -139,7 +139,11 @@ namespace hwj.UserControls.Suggest
             set { txtValue.Text = value; }
         }
         [DefaultValue(true), Browsable(true)]
-        public bool ButtonVisible { get; set; }
+        public bool ButtonVisible
+        {
+            get { return btnSelect.Visible; }
+            set { btnSelect.Visible = value; }
+        }
         private string _emptyValue = string.Empty;
         /// <summary>
         /// 如果TextBox.Text为空时,SelectedValue的值.
@@ -201,9 +205,10 @@ namespace hwj.UserControls.Suggest
         public SuggestBox()
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
+            //ButtonVisible = true;
             InitializeComponent();
             DropDownStyle = SuggextBoxStyle.Suggest;
-            ButtonVisible = true;
+
             txtValue.EnterEqualTab = false;
             _ReadOnly = false;
             ShowToolTip = true;
@@ -248,7 +253,7 @@ namespace hwj.UserControls.Suggest
             }
             #endregion
 
-            btnSelect.Visible = ButtonVisible;
+            //btnSelect.Visible = ButtonVisible;
             txtValue.MaxLength = MaxLength;
             this.txtValue.BackColor = SystemColors.Window;
 

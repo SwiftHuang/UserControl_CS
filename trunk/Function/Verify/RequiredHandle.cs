@@ -59,6 +59,7 @@ namespace hwj.UserControls.Function.Verify
                 {
                     return value.Name == control.Name ? true : false;
                 };
+
                 if (!RequiredControls.Exists(FindValues))
                     RequiredControls.Add(new RequiredInfo(control));
             }
