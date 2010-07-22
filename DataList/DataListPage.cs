@@ -263,7 +263,8 @@ namespace hwj.UserControls.DataList
                 toolBtnNext.Enabled = true;
                 toolBtnLast.Enabled = true;
             }
-            toolChkSelectAll_CheckedChanged(null, null);
+            //注释原因:当绑定数据后被自动清空状态了
+            //toolChkSelectAll_CheckedChanged(null, null);
         }
         private void toolTxtIndex_KeyPress(object sender, KeyPressEventArgs e)
         {
