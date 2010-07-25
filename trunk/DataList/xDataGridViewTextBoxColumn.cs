@@ -1,16 +1,19 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using hwj.UserControls.CommonControls;
 
 namespace hwj.UserControls.DataList
 {
-    public class xDataGridViewNumbericColumn : DataGridViewColumn
+    public class xDataGridViewTextBoxColumn : DataGridViewColumn
     {
-        public xDataGridViewNumbericColumn()
-            : base(new xDataGridViewNumbericCell())
+        [DefaultValue(10)]
+        public int MaxInputLength { get; set; }
+
+        public xDataGridViewTextBoxColumn()
+            : base(new xDataGridViewTextBoxCell())
         {
-            this.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.DefaultCellStyle.Format = Common.Format_Numberic;
+            MaxInputLength = 10;
         }
 
         public override DataGridViewCell CellTemplate
@@ -23,7 +26,7 @@ namespace hwj.UserControls.DataList
             {
                 // Ensure that the cell used for the template is a Numberic Cell.
                 if (value != null &&
-                    !value.GetType().IsAssignableFrom(typeof(xDataGridViewNumbericCell)))
+                    !value.GetType().IsAssignableFrom(typeof(xDataGridViewTextBoxCell)))
                 {
                     throw new InvalidCastException("Must be a NumbericCell");
                 }
@@ -32,15 +35,18 @@ namespace hwj.UserControls.DataList
         }
     }
 
-    public class xDataGridViewNumbericCell : DataGridViewTextBoxCell
+    public class xDataGridViewTextBoxCell : DataGridViewTextBoxCell
     {
+        public ContentType ContentType { get; set; }
+        public string Format { get; set; }
+        public DataGridViewContentAlignment Alignment { get; set; }
 
-        public xDataGridViewNumbericCell()
+        public xDataGridViewTextBoxCell()
             : base()
         {
-            this.MaxInputLength = 15;
-            this.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.Style.Format = Common.Format_Numberic;
+            ContentType = ContentType.None;
+            Format = string.Empty;
+            Alignment = DataGridViewContentAlignment.NotSet;
         }
 
         public override void InitializeEditingControl(int rowIndex, object
@@ -49,9 +55,50 @@ namespace hwj.UserControls.DataList
             // Set the value of the editing control to the current cell value.
             base.InitializeEditingControl(rowIndex, initialFormattedValue,
                 dataGridViewCellStyle);
-            xDataGridViewNumbericCellEdittingControl ctl = DataGridView.EditingControl as xDataGridViewNumbericCellEdittingControl;
-            if (this.Value is String)
-                ctl.Text = this.Value.ToString();
+
+            int maxLength = 32767;
+            if (this.DataGridView != null && this.ColumnIndex >= 0)
+            {
+                xDataGridViewTextBoxColumn col = DataGridView.Columns[ColumnIndex] as xDataGridViewTextBoxColumn;
+                maxLength = col.MaxInputLength;
+            }
+
+            if (this.ContentType == ContentType.Integer || this.ContentType == ContentType.Numberic)
+            {
+                xDataGridViewNumbericCellEdittingControl ctl = DataGridView.EditingControl as xDataGridViewNumbericCellEdittingControl;
+                ctl.MaxLength = maxLength;
+                ctl.ContentType = ContentType;
+
+                if (string.IsNullOrEmpty(Format))
+                    ctl.Format = Common.Format_Numberic;
+                else
+                    ctl.Format = Format;
+                this.Style.Format = ctl.Format;
+
+                if (Alignment == DataGridViewContentAlignment.NotSet)
+                {
+                    this.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
+                else if (Alignment == DataGridViewContentAlignment.BottomCenter || Alignment == DataGridViewContentAlignment.MiddleCenter || Alignment == DataGridViewContentAlignment.TopCenter)
+                    ctl.TextAlign = HorizontalAlignment.Center;
+                else if (Alignment == DataGridViewContentAlignment.BottomLeft || Alignment == DataGridViewContentAlignment.MiddleLeft || Alignment == DataGridViewContentAlignment.TopLeft)
+                    ctl.TextAlign = HorizontalAlignment.Left;
+                else
+                    ctl.TextAlign = HorizontalAlignment.Right;
+
+                if (this.Value is String)
+                    ctl.Text = this.Value.ToString();
+            }
+            else
+            {
+                xDataGridViewTextBoxCellEdittingControl ctl = DataGridView.EditingControl as xDataGridViewTextBoxCellEdittingControl;
+                ctl.MaxLength = maxLength;
+                ctl.ContentType = ContentType;
+
+                if (this.Value is String)
+                    ctl.Text = this.Value.ToString();
+            }
+
         }
 
         public override Type EditType
@@ -59,7 +106,10 @@ namespace hwj.UserControls.DataList
             get
             {
                 // Return the type of the editing contol that CalendarCell uses.
-                return typeof(xDataGridViewNumbericCellEdittingControl);
+                if (this.ContentType == ContentType.Integer || this.ContentType == ContentType.Numberic)
+                    return typeof(xDataGridViewNumbericCellEdittingControl);
+                else
+                    return typeof(xDataGridViewTextBoxCellEdittingControl);
             }
         }
 
@@ -82,20 +132,20 @@ namespace hwj.UserControls.DataList
         }
     }
 
-    class xDataGridViewNumbericCellEdittingControl : xTextBox, IDataGridViewEditingControl
+    class xDataGridViewTextBoxCellEdittingControl : xTextBox, IDataGridViewEditingControl
     {
         DataGridView dataGridView;
         private bool valueChanged = false;
         int rowIndex;
 
-        public xDataGridViewNumbericCellEdittingControl()
+        public xDataGridViewTextBoxCellEdittingControl()
         {
             //this.Format = DateTimePickerFormat.Short;
             //this.Format = Common.Format_Numberic;
-            this.ContentType = ContentType.Numberic;
+            //this.ContentType = ContentType.Numberic;
             this.ShowContentError = false;
             this.EnterEqualTab = false;
-            this.MaxLength = 18;
+            //this.MaxLength = 18;
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlFormattedValue 
@@ -104,16 +154,23 @@ namespace hwj.UserControls.DataList
         {
             get
             {
-                decimal v = 0;
-                if (!string.IsNullOrEmpty(this.Text) && decimal.TryParse(this.Text, out v))
+                if (this.ContentType == ContentType.Integer || this.ContentType == ContentType.Numberic)
                 {
-                    if (v == 0)
-                        return string.Empty;
+                    decimal v = 0;
+                    if (!string.IsNullOrEmpty(this.Text) && decimal.TryParse(this.Text, out v))
+                    {
+                        if (v == 0)
+                            return string.Empty;
+                        else
+                            return v.ToString(this.Format);
+                    }
                     else
-                        return v.ToString(this.Format);
+                        return string.Empty;
                 }
                 else
-                    return string.Empty;
+                {
+                    return this.Text;
+                }
             }
             set
             {

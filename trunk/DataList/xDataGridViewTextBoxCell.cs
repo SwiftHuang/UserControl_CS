@@ -15,4 +15,5 @@ namespace hwj.UserControls.DataList
             IsSuggestBoxCell = false;
         }
     }
+
 }
