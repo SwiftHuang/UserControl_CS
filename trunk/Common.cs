@@ -13,7 +13,7 @@ namespace hwj.UserControls
         public static string Format_InputDate = "yyyy-MM-dd";
         public static string Format_DateTime = "yyyy-MM-dd hh:mm:ss";
         
-        public static string Format_Numberic = "###,##0.00";
+        public static string Format_Numberic = "N";
 
         protected internal static Function.Verify.ValueChangedHandle ValueChanged { get; set; }
         protected internal static Function.Verify.RequiredHandle Required { get; set; }

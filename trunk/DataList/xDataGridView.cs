@@ -122,18 +122,18 @@ namespace hwj.UserControls.DataList
         }
 
         private bool PressEnter = false;
-        private bool isSuggestBoxCell = false;
+        //private bool isSuggestBoxCell = false;
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (EnterEqualTab && keyData == Keys.Enter)
             {
-                isSuggestBoxCell = false;
-                if (!CurrentCell.ReadOnly && CurrentCell is xDataGridViewTextBoxCell)
-                {
-                    xDataGridViewTextBoxCell c = CurrentCell as xDataGridViewTextBoxCell;
-                    isSuggestBoxCell = c.IsSuggestBoxCell;
-                    return base.ProcessCmdKey(ref msg, keyData);
-                }
+                //isSuggestBoxCell = false;
+                //if (!CurrentCell.ReadOnly && CurrentCell is xDataGridViewTextBoxCell)
+                //{
+                //    xDataGridViewTextBoxCell c = CurrentCell as xDataGridViewTextBoxCell;
+                //    isSuggestBoxCell = c.IsSuggestBoxCell;
+                //    return base.ProcessCmdKey(ref msg, keyData);
+                //}
 
                 PressEnter = true;
                 SendKeys.Send("{Tab}");
@@ -141,26 +141,29 @@ namespace hwj.UserControls.DataList
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        protected override bool ProcessDialogKey(Keys keyData)
-        {
-            if (isSuggestBoxCell && keyData == Keys.Enter)
-                return false;
-            else
-                return base.ProcessDialogKey(keyData);
-        }
+        //protected override bool ProcessDialogKey(Keys keyData)
+        //{
+        //    if (isSuggestBoxCell && keyData == Keys.Enter)
+        //        return false;
+        //    else
+        //        return base.ProcessDialogKey(keyData);
+        //}
 
         protected override void OnCellEnter(DataGridViewCellEventArgs e)
         {
-            DataGridViewCell cell = this[e.ColumnIndex, e.RowIndex];
-            if (PressEnter && cell.ReadOnly)
-                SendKeys.Send("{Tab}");
-            else
-                PressEnter = false;
+            if (e.ColumnIndex != -1 && e.RowIndex != -1)
+            {
+                DataGridViewCell cell = this[e.ColumnIndex, e.RowIndex];
+                if (PressEnter && cell.ReadOnly)
+                    SendKeys.Send("{Tab}");
+                else
+                    PressEnter = false;
+            }
             base.OnCellEnter(e);
         }
         protected override void OnCellValidated(DataGridViewCellEventArgs e)
         {
-            if (IsSumColumn(this.Columns[e.ColumnIndex]))
+            if (e.ColumnIndex != -1 && IsSumColumn(this.Columns[e.ColumnIndex]))
                 CalculateTotal(this.Columns[e.ColumnIndex]);
             base.OnCellValidated(e);
         }

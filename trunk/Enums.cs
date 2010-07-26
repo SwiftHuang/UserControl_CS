@@ -30,12 +30,12 @@ namespace hwj.UserControls
             }
             return string.Empty;
         }
-        public enum CellContentType
-        {
-            None,
-            Date,
-            Numberic,
-        }
+        //public enum CellContentType
+        //{
+        //    None,
+        //    Date,
+        //    Numberic,
+        //}
     }
     //public static class EnumsExtensions
     //{
