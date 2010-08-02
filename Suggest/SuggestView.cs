@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace hwj.UserControls.Suggest
 {
     internal partial class SuggestView : UserControl
-    {
+    {1
         private bool _isAlreadyCreateColumns = false;
         public delegate void SelectedValueHandler(SuggestValue e);
         public event SelectedValueHandler SelectedValue;
