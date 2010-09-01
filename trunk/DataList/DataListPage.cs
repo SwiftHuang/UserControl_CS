@@ -109,6 +109,7 @@ namespace hwj.UserControls.DataList
 
         public delegate void PageIndexChangedHandler(PagingEventArgs e);
         public event PageIndexChangedHandler PageIndexChanged;
+        public event EventHandler SelectAllCheckedChanged;
 
         public DataListPage()
         {
@@ -226,7 +227,11 @@ namespace hwj.UserControls.DataList
                     DataGridView.OnDataBinding(e);
                 }
                 else
+                {
                     PageIndexChanged(e);
+                    if (this.Created && !this.DesignMode)
+                        toolChkSelectAll.CheckBox.Checked = false;
+                }
             }
             RefreshStatus();
         }
@@ -280,6 +285,8 @@ namespace hwj.UserControls.DataList
                     if (!r.Cells[CheckBoxColumn.Name].ReadOnly)
                         r.Cells[CheckBoxColumn.Name].Value = toolChkSelectAll.CheckBox.Checked;
                 }
+                if (SelectAllCheckedChanged != null)
+                    SelectAllCheckedChanged(sender, e);
             }
         }
         #endregion
