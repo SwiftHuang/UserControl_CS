@@ -163,4 +163,7 @@
   <data name="InvalidInputString" xml:space="preserve">
     <value>请输入{0}个以上的字符</value>
   </data>
+  <data name="RequiredInfo" xml:space="preserve">
+    <value>提交数据前,请将资料填写完整</value>
+  </data>
 </root>
