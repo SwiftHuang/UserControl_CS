@@ -175,6 +175,15 @@ namespace hwj.UserControls.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 提交数据前,请将资料填写完整.
+        /// </summary>
+        internal static string RequiredInfo {
+            get {
+                return ResourceManager.GetString("RequiredInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}条记录.
         /// </summary>
         internal static string ReturnRecord {

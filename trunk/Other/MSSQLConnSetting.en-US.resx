@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,54 +117,117 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClearHistory" xml:space="preserve">
-    <value>Clear History</value>
-    <comment>清空记录</comment>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 28</value>
   </data>
-  <data name="ErrorInfo" xml:space="preserve">
-    <value>Error Message</value>
-    <comment>错误信息</comment>
+  <data name="label4.Text" xml:space="preserve">
+    <value>ServiceName:</value>
   </data>
-  <data name="Information" xml:space="preserve">
-    <value>Information</value>
-    <comment>提示信息</comment>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 28</value>
   </data>
-  <data name="InvalidDate" xml:space="preserve">
-    <value>Invalid date.</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="InvalidEmail" xml:space="preserve">
-    <value>An invalid e-mail format [{0}]</value>
-    <comment>为无效的电子邮箱格式</comment>
+  <data name="label5.Text" xml:space="preserve">
+    <value>ServiceType:</value>
   </data>
-  <data name="InvalidInputString" xml:space="preserve">
-    <value>Please enter {0} characters or more.</value>
-    <comment>请输入{0}个以上的字符</comment>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 28</value>
   </data>
-  <data name="InvalidNumberic" xml:space="preserve">
-    <value>The digital format is invalid [{0}]</value>
-    <comment>为无效的数字格式</comment>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="NoRecord" xml:space="preserve">
-    <value>Can't find the records.</value>
-    <comment>当前找不到你所需要的记录</comment>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Authentication:</value>
   </data>
-  <data name="OpenFile" xml:space="preserve">
-    <value>Open File</value>
-    <comment>打开文件</comment>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 28</value>
   </data>
-  <data name="OpenFileException" xml:space="preserve">
-    <value>Open the file exception!
--{0}</value>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
-  <data name="PageRecordCount" xml:space="preserve">
-    <value>Total: {0} records</value>
-    <comment>共{0}条记录</comment>
+  <data name="label7.Text" xml:space="preserve">
+    <value>UserName:</value>
   </data>
-  <data name="RequiredInfo" xml:space="preserve">
-    <value>To submit data before, please fill in the full information</value>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 28</value>
   </data>
-  <data name="ReturnRecord" xml:space="preserve">
-    <value>{0} records</value>
-    <comment>返回{0}条记录</comment>
+  <data name="label8.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 28</value>
+  </data>
+  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Database:</value>
+  </data>
+  <data name="btnRefreshDB.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="btnRefreshDB.Text" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="cboDatabase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 144</value>
+  </data>
+  <data name="cboDatabase.Size" type="System.Drawing.Size, System.Drawing">
+    <value>234, 20</value>
+  </data>
+  <data name="cboDatabase.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="txtDataSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 3</value>
+  </data>
+  <data name="txtDataSource.Size" type="System.Drawing.Size, System.Drawing">
+    <value>310, 21</value>
+  </data>
+  <data name="txtDataSource.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="cboServerType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 32</value>
+  </data>
+  <data name="cboServerType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>310, 20</value>
+  </data>
+  <data name="cboServerType.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="cboVerificationType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 60</value>
+  </data>
+  <data name="cboVerificationType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>310, 20</value>
+  </data>
+  <data name="cboVerificationType.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="txtUser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 87</value>
+  </data>
+  <data name="txtUser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>310, 21</value>
+  </data>
+  <data name="txtPassword.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 115</value>
+  </data>
+  <data name="txtPassword.Size" type="System.Drawing.Size, System.Drawing">
+    <value>310, 21</value>
+  </data>
+  <data name="txtPassword.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="tableLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
 </root>
