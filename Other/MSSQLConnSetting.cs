@@ -13,22 +13,22 @@ namespace hwj.UserControls.Other
     public partial class MSSQLConnSetting : UserControl
     {
         #region Property
-        private string _connectionString;
-        [DesignOnly(true)]
+        //private string _connectionString;
+        [DesignOnly(true), Browsable(false)]
         public string ConnectionString
         {
             get
             {
-                GetConnectionString();
-                return _connectionString;
+                return GetConnectionString();
+                //return _connectionString;
             }
-            set
-            {
-                _connectionString = value;
-                InitConnectionString(_connectionString);
-            }
+            //set
+            //{
+            //    _connectionString = value;
+            //    SetConnectionString(_connectionString);
+            //}
         }
-
+        [DesignOnly(true), Browsable(false)]
         public SqlConnectionStringBuilder SqlConnStringBuilder { get; set; }
         #endregion
 
@@ -76,8 +76,50 @@ namespace hwj.UserControls.Other
         }
         #endregion
 
+        #region Publice Function
+        public void SetConnectionString(string connectionString)
+        {
+            if (DesignMode || string.IsNullOrEmpty(connectionString))
+                return;
+
+            try
+            {
+                SqlConnStringBuilder = new SqlConnectionStringBuilder(connectionString);
+
+                if (SqlConnStringBuilder != null)
+                {
+                    SetDatabaseDataSource(connectionString);
+
+                    txtDataSource.Text = SqlConnStringBuilder.DataSource;
+                    cboDatabase.SelectedValue = SqlConnStringBuilder.InitialCatalog;
+
+                    if (SqlConnStringBuilder.IntegratedSecurity == false)
+                    {
+                        cboVerificationType.SelectedIndex = 0;
+
+                        txtUser.Enabled = true;
+                        txtPassword.Enabled = true;
+                        txtUser.Text = SqlConnStringBuilder.UserID;
+                        txtPassword.Text = SqlConnStringBuilder.Password;
+                    }
+                    else
+                    {
+                        cboVerificationType.SelectedIndex = 1;
+
+                        txtUser.Enabled = false;
+                        txtPassword.Enabled = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Connection Setting", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        #endregion
+
         #region Private Function
-        private void GetConnectionString()
+        private string GetConnectionString()
         {
             try
             {
@@ -85,89 +127,61 @@ namespace hwj.UserControls.Other
                 if (cboDatabase.SelectedValue != null)
                     db = cboDatabase.SelectedValue.ToString();
 
-                _connectionString = hwj.CommonLibrary.Object.StringHelper.GetMSSQLConnectionString(txtDataSource.Text, db,
+                SqlConnStringBuilder = hwj.CommonLibrary.Function.ConnectionString.GetMSSQLConnectionStringBuilder(txtDataSource.Text, db,
                     txtUser.Enabled ? txtUser.Text : string.Empty, txtPassword.Enabled ? txtPassword.Text : string.Empty, cboVerificationType.SelectedIndex == 1);
-            }
-            catch
-            {
-                _connectionString = string.Empty;
-            }
-        }
-        private void InitConnectionString(string connectionString)
-        {
-            if (DesignMode)
-                return;
-            if (string.IsNullOrEmpty(connectionString))
-                return;
-            try
-            {
-                SqlConnectionStringBuilder sqlConn = new SqlConnectionStringBuilder(connectionString);
 
-                if (sqlConn != null)
-                {
-                    SetDatabaseDataSource(connectionString);
-
-                    txtDataSource.Text = sqlConn.DataSource;
-                    cboDatabase.SelectedValue = sqlConn.InitialCatalog;
-                    txtUser.Text = sqlConn.UserID;
-                    txtPassword.Text = sqlConn.Password;
-
-                    if (!string.IsNullOrEmpty(sqlConn.Password))
-                    {
-                        cboVerificationType.SelectedIndex = 0;
-                    }
-
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        if (!string.IsNullOrEmpty(connection.ServerVersion))
-                        {
-                            if (connection.ServerVersion.StartsWith("08"))
-                            {
-                                cboServerType.SelectedIndex = 0;
-                            }
-                            else if (connection.ServerVersion.StartsWith("09"))
-                            {
-                                cboServerType.SelectedIndex = 1;
-                            }
-                        }
-                        connection.Close();
-                    }
-                }
+                if (SqlConnStringBuilder != null)
+                    return SqlConnStringBuilder.ToString();
+                else
+                    return string.Empty;
             }
             catch (Exception ex)
             {
-                //UI.Common.MsgInfo(ex.Message);
-                throw ex;
+                MessageBox.Show(ex.Message, "Connection Setting", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return string.Empty;
             }
         }
-        private void SetDatabaseDataSource(string ConnectionString)
+        private bool SetDatabaseDataSource(string ConnectionString)
         {
             if (!string.IsNullOrEmpty(ConnectionString))
             {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
                 {
                     try
                     {
-                        connection.Open();
-                        DataTable tb1 = connection.GetSchema("Databases");
+                        conn.Open();
+                        DataTable tb1 = conn.GetSchema("Databases");
                         DataView dv = tb1.DefaultView;
                         dv.Sort = "database_name";
                         cboDatabase.DisplayMember = "database_name";
                         cboDatabase.ValueMember = "database_name";
                         cboDatabase.DataSource = dv;
+
+                        if (!string.IsNullOrEmpty(conn.ServerVersion))
+                        {
+                            if (conn.ServerVersion.StartsWith("08"))
+                            {
+                                cboServerType.SelectedIndex = 0;
+                            }
+                            else if (conn.ServerVersion.StartsWith("09"))
+                            {
+                                cboServerType.SelectedIndex = 1;
+                            }
+                        }
+                        return true;
                     }
                     catch (Exception ex)
                     {
-                        //UI.Common.MsgInfo(ex.Message);
-                        throw ex;
+                        MessageBox.Show(ex.Message, "Connection Setting", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
                     }
                     finally
                     {
-                        connection.Close();
+                        conn.Close();
                     }
                 }
             }
+            return true;
         }
         #endregion
     }
