@@ -52,7 +52,16 @@ namespace hwj.UserControls.CommonControls
         /// </summary>
         [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
         protected internal Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
-        protected Function.Verify.RequiredHandle RequiredHandle { get; set; }
+        Function.Verify.RequiredHandle _RequiredHandle = null;
+        public Function.Verify.RequiredHandle RequiredHandle
+        {
+            get { return _RequiredHandle; }
+            set
+            {
+                _RequiredHandle = value;
+                SetRequiredStatus();
+            }
+        }
 
         /// <summary>
         /// "是否显示验证错误信息(只有ContentType不为None时有效)"
@@ -83,7 +92,7 @@ namespace hwj.UserControls.CommonControls
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;
-            
+
             TextIsChanged = false;
             OldBackColor = this.BackColor;
             IsRequired = false;
@@ -108,7 +117,8 @@ namespace hwj.UserControls.CommonControls
                 TextAlign = HorizontalAlignment.Right;
             }
             base.OnCreateControl();
-            RequiredHandle = Common.Required;
+            if (RequiredHandle == null)
+                RequiredHandle = Common.Required;
             ValueChangedHandle = Common.ValueChanged;
 
             SetRequiredStatus();

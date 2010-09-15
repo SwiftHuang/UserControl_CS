@@ -39,7 +39,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>D:\Project\WMAccount\trunk\DLL\</OutputPath>
+    <OutputPath>D:\Project\NJR\trunk\DLL\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -98,6 +98,7 @@
     <Compile Include="DataList\xDataGridViewTextBoxColumn.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Function\Verify\IRequiredHandle.cs" />
     <Compile Include="Function\Verify\RequiredHandle.cs" />
     <Compile Include="Function\Verify\RequiredInfo.cs" />
     <Compile Include="Function\Verify\ValueChangedHandle.cs" />
@@ -157,9 +158,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Other\MSSQLConnSetting.en-US.resx">
       <DependentUpon>MSSQLConnSetting.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Other\MSSQLConnSetting.resx">
       <DependentUpon>MSSQLConnSetting.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Other\MaskedDateTimePicker.resx">
       <DependentUpon>MaskedDateTimePicker.cs</DependentUpon>
