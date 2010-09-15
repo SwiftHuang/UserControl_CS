@@ -7,13 +7,13 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Threading;
 
 namespace hwj.UserControls.Other
 {
     public partial class MSSQLConnSetting : UserControl
     {
         #region Property
-        //private string _connectionString;
         [DesignOnly(true), Browsable(false)]
         public string ConnectionString
         {
@@ -34,6 +34,8 @@ namespace hwj.UserControls.Other
 
         public MSSQLConnSetting()
         {
+            Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
+
             InitializeComponent();
 
             if (this.DesignMode)
@@ -116,6 +118,33 @@ namespace hwj.UserControls.Other
                 MessageBox.Show(ex.Message, "Connection Setting", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        public bool IsValidConnectionString()
+        {
+            string error = string.Empty;
+            return IsValidConnectionString(out error);
+        }
+        public bool IsValidConnectionString(out string error)
+        {
+            error = string.Empty;
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    DataTable tb1 = conn.GetSchema("Databases");
+                }
+                catch (Exception ex)
+                {
+                    error = ex.Message;
+                    return false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return true;
+        }
         #endregion
 
         #region Private Function
@@ -184,5 +213,6 @@ namespace hwj.UserControls.Other
             return true;
         }
         #endregion
+
     }
 }

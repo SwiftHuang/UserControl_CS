@@ -177,12 +177,12 @@
             this.txtPassword.SetValueToControl = null;
             this.txtPassword.TextIsChanged = false;
             // 
-            // ConnectionSetting
+            // MSSQLConnSetting
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel2);
-            this.Name = "ConnectionSetting";
+            this.Name = "MSSQLConnSetting";
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);

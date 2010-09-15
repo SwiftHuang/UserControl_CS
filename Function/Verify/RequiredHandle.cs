@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace hwj.UserControls.Function.Verify
 {
@@ -37,6 +39,16 @@ namespace hwj.UserControls.Function.Verify
             if (Common.Required != null)
                 Common.Required = null;
             Common.Required = this;
+        }
+        public RequiredHandle(bool isCustom)
+        {
+            RequiredControls = new List<RequiredInfo>();
+            if (!isCustom)
+            {
+                if (Common.Required != null)
+                    Common.Required = null;
+                Common.Required = this;
+            }
         }
 
         public void SetCheckObject()
@@ -87,5 +99,6 @@ namespace hwj.UserControls.Function.Verify
                 r.ControlObject.BackColor = Common.RequiredBackColor;
             }
         }
+
     }
 }
