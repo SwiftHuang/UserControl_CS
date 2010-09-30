@@ -290,6 +290,8 @@ namespace hwj.UserControls.Other
         void chkBox_CheckedChanged(object sender, EventArgs e)
         {
             mTxtValue.Enabled = chkBox.Checked;
+            if (!DesignMode && ValueChangedHandle != null)
+                ValueChangedHandle.IsChanged = true;
         }
         #endregion
 

@@ -10,27 +10,32 @@ namespace hwj.UserControls.CommonControls
     public partial class xLabel : Label
     {
         #region Property
-        private Color OldBackColor;
         private Cursor OldCursor;
+        private Font OldFont;
 
-        [Description("获取或设置复制模式开启时，鼠标停留时显示的背景色")]
-        public Color ClipboardBackColor { get; set; }
-
+        //[Description("获取或设置复制模式开启时，鼠标进入时显示的背景色")]
+        //public Color ClipboardBackColor { get; set; }
+        [Description("获取或设置复制模式开启时鼠标进入时的字体样式(不填默认为将字体变为粗体)")]
+        public Font ClipboardFont { get; set; }
         [DefaultValue(false), Description("获取或设置控件是否支持双击复制")]
         public bool ClipboardEnabled { get; set; }
         #endregion
 
         public xLabel()
         {
-            ClipboardBackColor = Color.FromArgb(175, 167, 222);
         }
 
         protected override void OnCreateControl()
         {
             if (ClipboardEnabled)
             {
-                OldBackColor = this.BackColor;
+                OldFont = this.Font;
                 OldCursor = this.Cursor;
+                if (!DesignMode && ClipboardFont == null)
+                {
+                    ClipboardFont = this.Font;
+                    ClipboardFont = new Font(this.Font, FontStyle.Bold);
+                }
             }
             base.OnCreateControl();
         }
@@ -39,7 +44,8 @@ namespace hwj.UserControls.CommonControls
             if (ClipboardEnabled)
             {
                 this.Cursor = Cursors.Hand;
-                this.BackColor = ClipboardBackColor;
+                if (ClipboardFont != null)
+                    this.Font = ClipboardFont;
             }
             base.OnMouseEnter(e);
         }
@@ -48,7 +54,8 @@ namespace hwj.UserControls.CommonControls
             if (ClipboardEnabled)
             {
                 this.Cursor = OldCursor;
-                this.BackColor = OldBackColor;
+                if (OldFont != null)
+                    this.Font = OldFont;
             }
 
             base.OnMouseLeave(e);
@@ -58,7 +65,10 @@ namespace hwj.UserControls.CommonControls
             if (ClipboardEnabled)
             {
                 if (!string.IsNullOrEmpty(this.Text))
+                {
                     Clipboard.SetDataObject(this.Text);
+                    this.Font = OldFont;
+                }
             }
 
             base.OnMouseDoubleClick(e);
