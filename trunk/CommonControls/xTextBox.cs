@@ -143,6 +143,9 @@ namespace hwj.UserControls.CommonControls
                     }
                     else if (e.KeyChar == '-')
                     {
+                        if (SelectionLength == this.Text.Length)
+                            this.Text = string.Empty;
+
                         if (this.Text.IndexOf(e.KeyChar) != -1)
                             this.Text = this.Text.Replace("-", "");
                         else
