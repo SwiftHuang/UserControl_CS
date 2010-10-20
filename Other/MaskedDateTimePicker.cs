@@ -210,7 +210,15 @@ namespace hwj.UserControls.Other
             mTxtValue.BackColor = this.BackColor;
             base.OnBackColorChanged(e);
         }
-
+        protected override void OnGotFocus(EventArgs e)
+        {
+            if (ShowCheckBox)
+            {
+                //this.chkBox.CanSelect = true;
+                this.chkBox.Focus();
+            }
+            base.OnGotFocus(e);
+        }
         #region Private Event Function
         private void pBox_Click(object sender, EventArgs e)
         {
