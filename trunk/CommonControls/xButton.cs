@@ -25,8 +25,11 @@ namespace hwj.UserControls.CommonControls
         private Cursor _CurrCursor;
         protected override void OnClick(EventArgs e)
         {
-            _CurrCursor = this.Cursor;
-            this.Cursor = CursorFromClick;
+            if (e != EventArgs.Empty)
+            {
+                _CurrCursor = this.Cursor;
+                this.Cursor = CursorFromClick;
+            }
             try
             {
                 base.OnClick(e);
@@ -37,7 +40,10 @@ namespace hwj.UserControls.CommonControls
             }
             finally
             {
-                this.Cursor = _CurrCursor;
+                if (e != EventArgs.Empty)
+                {
+                    this.Cursor = _CurrCursor;
+                }
             }
         }
     }
