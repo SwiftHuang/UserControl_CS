@@ -22,6 +22,16 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:hwj.CommonLibrary.Object.Email.SmtpInfoList.LastSuccess">
+            <summary>
+            获取最后一次成功发送的SMTP配置。
+            </summary>
+        </member>
+        <member name="P:hwj.CommonLibrary.Object.Email.SmtpInfoList.Interval">
+            <summary>
+            获取或设置SMTP配置发送失败后，间隔几多分钟后重新使用。
+            </summary>
+        </member>
         <member name="F:hwj.CommonLibrary.Function.DecimalToChinese.EndOfInt">
             <summary>
             整(当没有 角分 时)
@@ -134,6 +144,16 @@
         <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.EmailCC">
             <summary>
             多个抄送人请用逗号分隔
+            </summary>
+        </member>
+        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.MultSmtpEnabled">
+            <summary>
+            获取或设置是否使用多个SMTP服务器的模式
+            </summary>
+        </member>
+        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.SmtpList">
+            <summary>
+            获取或设置SMTP服务器列表
             </summary>
         </member>
         <member name="T:hwj.CommonLibrary.WebSite.WebCache">
@@ -251,6 +271,17 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:hwj.CommonLibrary.Object.StringHelper.GetMSSQLConnectionString(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            请使用hwj.CommonLibrary.Function.ConnectionString.GetMSSQLConnectionString()方法代替
+            </summary>
+            <param name="server"></param>
+            <param name="database"></param>
+            <param name="user"></param>
+            <param name="password"></param>
+            <param name="isWindowsVerification"></param>
+            <returns></returns>
+        </member>
         <member name="M:hwj.CommonLibrary.Object.FileHelper.StreamToBytes(System.IO.Stream)">
             <summary>
             将 Stream 转成 byte[]
@@ -270,6 +301,108 @@
             <summary>
             从文件读取 Stream
             </summary>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            发送电子邮件
+            </summary>
+            <param name="smtpServer">SMTP服务器</param>
+            <param name="emailFrom">电子邮件的发件人地址</param>
+            <param name="emailFromPassword">发件人密码（如果该密码为空，则取消验证发件人身份）</param>
+            <param name="emailTo">收件人的地址</param>
+            <param name="cc">抄送 (CC) 收件人的地址</param>
+            <param name="subject">电子邮件的主题行</param>
+            <param name="body">邮件正文</param>
+            <param name="isBodyHtml">邮件正文是否为 Html 格式的值</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Collections.Generic.List{System.Net.Mail.Attachment})">
+            <summary>
+            发送电子邮件
+            </summary>
+            <param name="smtpServer">SMTP服务器</param>
+            <param name="emailFrom">电子邮件的发件人地址</param>
+            <param name="emailFromPassword">发件人密码（如果该密码为空，则取消验证发件人身份）</param>
+            <param name="emailTo">收件人的地址</param>
+            <param name="cc">抄送 (CC) 收件人的地址</param>
+            <param name="subject">电子邮件的主题行</param>
+            <param name="body">邮件正文</param>
+            <param name="isBodyHtml">邮件正文是否为 Html 格式的值</param>
+            <param name="attachments">此电子邮件的数据的附件集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.String,System.String,System.String,System.String[],System.String[],System.String,System.String,System.Boolean,System.Collections.Generic.List{System.Net.Mail.Attachment})">
+            <summary>
+            发送含附件的电子邮件
+            </summary>
+            <param name="smtpServer">SMTP服务器</param>
+            <param name="emailFrom">电子邮件的发件人地址</param>
+            <param name="emailFromPassword">发件人密码（如果该密码为空，则取消验证发件人身份）</param>
+            <param name="emailTo">收件人的地址集合</param>
+            <param name="cc">抄送 (CC) 收件人的地址集合</param>
+            <param name="subject">电子邮件的主题行</param>
+            <param name="body">邮件正文</param>
+            <param name="isBodyHtml">邮件正文是否为 Html 格式的值</param>
+            <param name="attachments">此电子邮件的数据的附件集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.String,System.String,System.String,System.Net.Mail.MailMessage)">
+            <summary>
+            
+            </summary>
+            <param name="smtpServer"></param>
+            <param name="emailFrom"></param>
+            <param name="emailFromPassword"></param>
+            <param name="message"></param>
+            <param name="isBodyHtml"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.String,System.String,System.String,System.String,System.Boolean,hwj.CommonLibrary.Object.Email.SmtpInfoList@)">
+            <summary>
+            发送电子邮件
+            </summary>
+            <param name="emailTo">收件人的地址</param>
+            <param name="cc">抄送 (CC) 收件人的地址</param>
+            <param name="subject">电子邮件的主题行</param>
+            <param name="body">邮件正文</param>
+            <param name="isBodyHtml">邮件正文是否为 Html 格式的值</param>
+            <param name="smtpInfos">SMTP服务器集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.String,System.String,System.String,System.String,System.Boolean,System.Collections.Generic.List{System.Net.Mail.Attachment},hwj.CommonLibrary.Object.Email.SmtpInfoList@)">
+            <summary>
+            发送含附件的电子邮件
+            </summary>
+            <param name="emailTo">收件人的地址</param>
+            <param name="cc">抄送 (CC) 收件人的地址</param>
+            <param name="subject">电子邮件的主题行</param>
+            <param name="body">邮件正文</param>
+            <param name="isBodyHtml">邮件正文是否为 Html 格式的值</param>
+            <param name="attachments">此电子邮件的数据的附件集合</param>
+            <param name="smtpInfos">SMTP服务器集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.String[],System.String[],System.String,System.String,System.Boolean,System.Collections.Generic.List{System.Net.Mail.Attachment},hwj.CommonLibrary.Object.Email.SmtpInfoList@)">
+            <summary>
+            发送含附件的电子邮件
+            </summary>
+            <param name="emailTo">>收件人的地址集合</param>
+            <param name="cc">抄送 (CC) 收件人的地址集合</param>
+            <param name="subject">电子邮件的主题行</param>
+            <param name="body">邮件正文</param>
+            <param name="isBodyHtml">邮件正文是否为 Html 格式的值</param>
+            <param name="attachments">此电子邮件的数据的附件集合</param>
+            <param name="smtpInfos">SMTP服务器集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.Net.Mail.MailMessage,hwj.CommonLibrary.Object.Email.SmtpInfoList@)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="isBodyHtml">邮件正文是否为 Html 格式的值</param>
+            <param name="smtpInfos">SMTP服务器集合</param>
+            <returns></returns>
         </member>
         <member name="T:hwj.CommonLibrary.WebSite.Base.BasePage">
             <summary>
