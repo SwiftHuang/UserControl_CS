@@ -76,6 +76,11 @@
               Looks up a localized string similar to 共{0}条记录.
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Properties.Resources.RequiredInfo">
+            <summary>
+              Looks up a localized string similar to 提交数据前,请将资料填写完整.
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.Properties.Resources.ReturnRecord">
             <summary>
               Looks up a localized string similar to {0}条记录.
@@ -320,6 +325,23 @@
         <member name="E:hwj.UserControls.DataList.xDataGridView.DataBinding">
             <summary>
             为DataGridView绑定数据
+            </summary>
+        </member>
+        <member name="F:hwj.UserControls.Other.MSSQLConnSetting.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Other.MSSQLConnSetting.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:hwj.UserControls.Other.MSSQLConnSetting.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
             </summary>
         </member>
         <member name="P:hwj.UserControls.Function.Verify.ValueChangedHandle.IsChanged">

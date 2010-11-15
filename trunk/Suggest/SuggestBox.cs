@@ -205,7 +205,6 @@ namespace hwj.UserControls.Suggest
         public SuggestBox()
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
-            //ButtonVisible = true;
             InitializeComponent();
             DropDownStyle = SuggextBoxStyle.Suggest;
 
@@ -220,6 +219,7 @@ namespace hwj.UserControls.Suggest
 
             if (!DesignMode)
             {
+                this.Disposed += new EventHandler(SuggestBox_Disposed);
                 DataList = new SuggestList();
 
                 txtValue.LostFocus += new EventHandler(txtValue_LostFocus);
@@ -235,7 +235,6 @@ namespace hwj.UserControls.Suggest
                 tsDropDown.Padding = new Padding(0);
                 tsDropDown.DropShadowEnabled = true;
                 tsDropDown.Items.Add(tsCH);
-                tsDropDown.AutoClose = false;
             }
         }
 
@@ -284,6 +283,7 @@ namespace hwj.UserControls.Suggest
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
         #region Events
         private void btnSelect_Click(object sender, EventArgs e)
         {
@@ -332,6 +332,13 @@ namespace hwj.UserControls.Suggest
         private void ParentForm_Move(object sender, EventArgs e)
         {
             CloseList(true);
+        }
+        void SuggestBox_Disposed(object sender, EventArgs e)
+        {
+            if (tsDropDown != null && tsDropDown.IsHandleCreated)
+            {
+                tsDropDown.Dispose();
+            }
         }
         #region Text Control
         private void txtValue_Enter(object sender, EventArgs e)
@@ -530,8 +537,15 @@ namespace hwj.UserControls.Suggest
             {
                 if (tsDropDown != null)
                 {
+                    if (tsDropDown.AutoClose)
+                        tsDropDown.AutoClose = false;
+
                     if (this.ParentForm != null)
+                    {
+                        this.ParentForm.Move -= new EventHandler(ParentForm_Move);
                         this.ParentForm.Move += new EventHandler(ParentForm_Move);
+                    }
+
                     ListControl.IsEnterList = false;
                     ListControl.Width = tsDropDown.Width;
                     tsDropDown.Show(this, 0, this.Height);
@@ -549,10 +563,12 @@ namespace hwj.UserControls.Suggest
         {
             if (tsDropDown == null)
                 return;
+
             if (nocheck)
                 tsDropDown.Close();
             else if (!ListControl.IsEnterList)
                 tsDropDown.Close();
+
             if (DropDownStyle == SuggextBoxStyle.DropDownList)
                 txtValue.SelectAll();
         }
@@ -596,10 +612,6 @@ namespace hwj.UserControls.Suggest
             }
             return string.Empty;
         }
-        //private void SetFootText()
-        //{
-        //    ListControl.FootInfoText = string.Format(Properties.Resources.ReturnRecord, RecordCount);
-        //}
         #endregion
 
     }
