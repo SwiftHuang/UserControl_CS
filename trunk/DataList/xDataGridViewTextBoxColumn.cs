@@ -9,6 +9,8 @@ namespace hwj.UserControls.DataList
     {
         public int MaxInputLength { get; set; }
         internal ContentType ColumnContentType { get; set; }
+        [DefaultValue(false), Description("当获取焦点时,自动全选")]
+        public bool CellAutoSelectAll { get; set; }
 
         public xDataGridViewTextBoxColumn()
             : base(new xDataGridViewTextBoxCell())
@@ -70,6 +72,8 @@ namespace hwj.UserControls.DataList
                 {
                     xDataGridViewTextBoxColumn col = DataGridView.Columns[ColumnIndex] as xDataGridViewTextBoxColumn;
                     ctl.MaxLength = col.MaxInputLength;
+                    ctl.CellAutoSelectAll = col.CellAutoSelectAll;
+
                     if (ContentType != ContentType.None)
                     {
                         ctl.ContentType = ContentType;
@@ -144,6 +148,7 @@ namespace hwj.UserControls.DataList
 
     class xDataGridViewTextBoxCellEdittingControl : xTextBox, IDataGridViewEditingControl
     {
+        public bool CellAutoSelectAll { get; set; }
         DataGridView dataGridView;
         private bool valueChanged = false;
         int rowIndex;
@@ -274,6 +279,13 @@ namespace hwj.UserControls.DataList
             valueChanged = true;
             this.EditingControlDataGridView.NotifyCurrentCellDirty(true);
             base.OnTextChanged(e);
+        }
+
+        protected override void OnGotFocus(EventArgs e)
+        {
+            if (CellAutoSelectAll)
+                this.SelectAll();
+            base.OnGotFocus(e);
         }
     }
 
