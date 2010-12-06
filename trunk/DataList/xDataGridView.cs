@@ -104,11 +104,6 @@ namespace hwj.UserControls.DataList
             //    AddRows();
             //}
         }
-        protected override void OnBindingContextChanged(EventArgs e)
-        {
-            base.OnBindingContextChanged(e);
-        }
-
         protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
         {
             if (RowSeqVisible && this.Rows[e.RowIndex].Cells[ColSeqName].Value == null)
@@ -331,7 +326,7 @@ namespace hwj.UserControls.DataList
         }
         private void RefreshRowSeq()
         {
-            if (!DesignMode && RowSeqVisible)
+            if (!DesignMode && RowSeqVisible && this.Columns[ColSeqName] != null)
             {
                 foreach (DataGridViewRow r in this.Rows)
                 {
