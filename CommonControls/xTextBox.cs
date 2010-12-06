@@ -128,41 +128,44 @@ namespace hwj.UserControls.CommonControls
             if (DesignMode)
                 return;
             //3=Ctrl+C;22=Ctrl+V;26=Ctrl+Z
-            if (e.KeyChar == 3 || e.KeyChar == 22 || e.KeyChar == 26)
+            if (!ReadOnly)
             {
-            }
-            else
-            {
-                if (ContentType == ContentType.Numberic)
+                if (e.KeyChar == 3 || e.KeyChar == 22 || e.KeyChar == 26)
                 {
-                    if (e.KeyChar == '.')
-                    {
-                        if (this.Text.IndexOf(e.KeyChar) != -1)
-                            e.Handled = true;
-                        return;
-                    }
-                    else if (e.KeyChar == '-')
-                    {
-                        if (SelectionLength == this.Text.Length)
-                            this.Text = string.Empty;
-
-                        if (this.Text.IndexOf(e.KeyChar) != -1)
-                            this.Text = this.Text.Replace("-", "");
-                        else
-                        {
-                            this.Text = this.Text.Insert(0, "-");
-                            SelectionStart = 1;
-                        }
-                        e.Handled = true;
-                        return;
-                    }
-                    if (!(Char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
-                        e.Handled = true;
                 }
-                else if (ContentType == ContentType.Integer)
+                else
                 {
-                    if (!(Char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
-                        e.Handled = true;
+                    if (ContentType == ContentType.Numberic)
+                    {
+                        if (e.KeyChar == '.')
+                        {
+                            if (this.Text.IndexOf(e.KeyChar) != -1)
+                                e.Handled = true;
+                            return;
+                        }
+                        else if (e.KeyChar == '-')
+                        {
+                            if (SelectionLength == this.Text.Length)
+                                this.Text = string.Empty;
+
+                            if (this.Text.IndexOf(e.KeyChar) != -1)
+                                this.Text = this.Text.Replace("-", "");
+                            else
+                            {
+                                this.Text = this.Text.Insert(0, "-");
+                                SelectionStart = 1;
+                            }
+                            e.Handled = true;
+                            return;
+                        }
+                        if (!(Char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
+                            e.Handled = true;
+                    }
+                    else if (ContentType == ContentType.Integer)
+                    {
+                        if (!(Char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
+                            e.Handled = true;
+                    }
                 }
             }
             base.OnKeyPress(e);
