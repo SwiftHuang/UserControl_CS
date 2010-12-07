@@ -236,6 +236,7 @@ namespace hwj.UserControls.Suggest
                 tsDropDown.DropShadowEnabled = true;
                 tsDropDown.Items.Add(tsCH);
             }
+          
         }
 
         protected override void OnCreateControl()
@@ -335,6 +336,7 @@ namespace hwj.UserControls.Suggest
         }
         void SuggestBox_Disposed(object sender, EventArgs e)
         {
+            Common.HideToolTopInfo(this);
             if (tsDropDown != null && tsDropDown.IsHandleCreated)
             {
                 tsDropDown.Dispose();

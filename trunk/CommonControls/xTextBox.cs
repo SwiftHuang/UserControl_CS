@@ -93,11 +93,17 @@ namespace hwj.UserControls.CommonControls
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;
 
+            this.Disposed += new EventHandler(xTextBox_Disposed);
             TextIsChanged = false;
             OldBackColor = this.BackColor;
             IsRequired = false;
             EnterEqualTab = true;
             SetValueToControl = null;
+        }
+
+        void xTextBox_Disposed(object sender, EventArgs e)
+        {
+            Common.HideToolTopInfo(this);
         }
 
         #region Override Function

@@ -194,7 +194,13 @@ namespace hwj.UserControls.Other
                 _value = DateTime.Now;
             SetValue();
             LastDateTime = Value;
+            this.Disposed += new EventHandler(MaskedDateTimePicker_Disposed);
 
+        }
+
+        void MaskedDateTimePicker_Disposed(object sender, EventArgs e)
+        {
+            Common.HideToolTopInfo(this);
         }
 
         protected override void OnCreateControl()
