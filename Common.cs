@@ -12,7 +12,7 @@ namespace hwj.UserControls
         public static string Format_Date = "yyyy-MM-dd";
         public static string Format_InputDate = "yyyy-MM-dd";
         public static string Format_DateTime = "yyyy-MM-dd hh:mm:ss";
-        
+
         public static string Format_Numberic = "N";
 
         protected internal static Function.Verify.ValueChangedHandle ValueChanged { get; set; }
@@ -20,6 +20,12 @@ namespace hwj.UserControls
 
         #region ToolTip Function
         private static ToolTip toolTip = new ToolTip();
+
+        public static void HideToolTopInfo(Control control)
+        {
+            if (toolTip.Active)
+                toolTip.Hide(control);
+        }
         public static void ShowToolTipInfo(Control control, string text)
         {
             ShowToolTip(toolTip, control, text, false);
@@ -93,6 +99,6 @@ namespace hwj.UserControls
         #endregion
 
         public static Color DataGridViewCellReadonlyBackColor = Color.FromArgb(245, 245, 245);
-     
+
     }
 }
