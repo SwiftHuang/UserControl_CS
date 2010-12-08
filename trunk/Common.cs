@@ -19,20 +19,13 @@ namespace hwj.UserControls
         protected internal static Function.Verify.RequiredHandle Required { get; set; }
 
         #region ToolTip Function
-        private static object syncRoot = new Object();
         private static ToolTip _toolTip;
         private static ToolTip toolTip
         {
             get
             {
                 if (_toolTip == null)
-                {
-                    lock (syncRoot)
-                    {
-                        if (_toolTip == null)
-                            _toolTip = new ToolTip();
-                    }
-                }
+                    _toolTip = new ToolTip();
                 return _toolTip;
             }
         }
