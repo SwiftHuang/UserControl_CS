@@ -200,7 +200,7 @@ namespace hwj.UserControls.Other
 
         void MaskedDateTimePicker_Disposed(object sender, EventArgs e)
         {
-            Common.HideToolTopInfo(this);
+            Common.HideToolTip();
         }
 
         protected override void OnCreateControl()

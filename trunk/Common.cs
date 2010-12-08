@@ -19,12 +19,31 @@ namespace hwj.UserControls
         protected internal static Function.Verify.RequiredHandle Required { get; set; }
 
         #region ToolTip Function
-        private static ToolTip toolTip = new ToolTip();
-
-        public static void HideToolTopInfo(Control control)
+        private static object syncRoot = new Object();
+        private static ToolTip _toolTip;
+        private static ToolTip toolTip
         {
-            if (toolTip.Active)
-                toolTip.Hide(control);
+            get
+            {
+                if (_toolTip == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (_toolTip == null)
+                            _toolTip = new ToolTip();
+                    }
+                }
+                return _toolTip;
+            }
+        }
+
+        public static void HideToolTip()
+        {
+            if (_toolTip != null)
+            {
+                _toolTip.Dispose();
+                _toolTip = null;
+            }
         }
         public static void ShowToolTipInfo(Control control, string text)
         {
@@ -41,15 +60,15 @@ namespace hwj.UserControls
                 //toolTip.IsBalloon = true;
                 if (isError)
                 {
-                    toolTip.ToolTipIcon = ToolTipIcon.Error;
-                    toolTip.ToolTipTitle = Properties.Resources.ErrorInfo;
+                    toolTip1.ToolTipIcon = ToolTipIcon.Error;
+                    toolTip1.ToolTipTitle = Properties.Resources.ErrorInfo;
                 }
                 else
                 {
-                    toolTip.ToolTipIcon = ToolTipIcon.Info;
-                    toolTip.ToolTipTitle = Properties.Resources.Information;
+                    toolTip1.ToolTipIcon = ToolTipIcon.Info;
+                    toolTip1.ToolTipTitle = Properties.Resources.Information;
                 }
-                toolTip.Show(text, control, 0, control.Height, 1500);
+                toolTip1.Show(text, control, 0, control.Height, 1500);
             }
         }
         #endregion

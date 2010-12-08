@@ -336,7 +336,7 @@ namespace hwj.UserControls.Suggest
         }
         void SuggestBox_Disposed(object sender, EventArgs e)
         {
-            Common.HideToolTopInfo(this);
+            Common.HideToolTip();
             if (tsDropDown != null && tsDropDown.IsHandleCreated)
             {
                 tsDropDown.Dispose();

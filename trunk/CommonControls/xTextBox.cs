@@ -103,7 +103,7 @@ namespace hwj.UserControls.CommonControls
 
         void xTextBox_Disposed(object sender, EventArgs e)
         {
-            Common.HideToolTopInfo(this);
+            Common.HideToolTip();
         }
 
         #region Override Function
