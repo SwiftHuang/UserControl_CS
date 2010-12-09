@@ -201,6 +201,23 @@ namespace hwj.UserControls.DataList
             base.OnColumnStateChanged(e);
         }
 
+        protected override void OnReadOnlyChanged(EventArgs e)
+        {
+            if (this.ReadOnly == false)
+            {
+                foreach (DataGridViewColumn c in this.Columns)
+                {
+                    if (RowSeqVisible && c.Name == ColSeqName)
+                    {
+                        c.ReadOnly = true;
+                        continue;
+                    }
+                    c.DefaultCellStyle.BackColor = this.DefaultCellStyle.BackColor;
+                }
+            }
+            base.OnReadOnlyChanged(e);
+        }
+
         private DataGridViewColumn oldSortColumn = null;
         protected override void OnColumnHeaderMouseClick(DataGridViewCellMouseEventArgs e)
         {
