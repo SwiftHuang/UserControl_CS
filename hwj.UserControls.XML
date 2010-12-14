@@ -346,7 +346,7 @@
         </member>
         <member name="P:hwj.UserControls.Function.Verify.ValueChangedHandle.IsChanged">
             <summary>
-            获取是否有控件的值发生改变
+            获取或设置是否有控件的值发生改变
             </summary>
         </member>
         <member name="M:hwj.UserControls.Function.Verify.RequiredHandle.Add(System.Windows.Forms.Control)">

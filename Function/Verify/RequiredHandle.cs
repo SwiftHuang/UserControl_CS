@@ -34,11 +34,9 @@ namespace hwj.UserControls.Function.Verify
         #endregion
 
         public RequiredHandle()
+            : this(false)
         {
-            RequiredControls = new List<RequiredInfo>();
-            if (Common.Required != null)
-                Common.Required = null;
-            Common.Required = this;
+
         }
         public RequiredHandle(bool isCustom)
         {
@@ -51,6 +49,7 @@ namespace hwj.UserControls.Function.Verify
             }
         }
 
+        #region Public Function
         public void SetCheckObject()
         {
             Common.Required = this;
@@ -91,6 +90,7 @@ namespace hwj.UserControls.Function.Verify
                 RequiredControls.RemoveAll(FindValues);
             }
         }
+        #endregion
 
         private void SetBackColor(List<RequiredInfo> list)
         {
