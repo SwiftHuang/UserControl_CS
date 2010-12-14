@@ -12,7 +12,7 @@ namespace hwj.UserControls.Function.Verify
         internal bool Enabled { get; set; }
         private bool _IsChanged = true;
         /// <summary>
-        /// 获取是否有控件的值发生改变
+        /// 获取或设置是否有控件的值发生改变
         /// </summary>
         public bool IsChanged
         {
