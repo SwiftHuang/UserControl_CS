@@ -143,7 +143,14 @@ namespace hwj.UserControls.DataList
         //    else
         //        return base.ProcessDialogKey(keyData);
         //}
-
+        protected override void OnCellContentClick(DataGridViewCellEventArgs e)
+        {
+            if (ValueChangedHandle != null && this[e.ColumnIndex, e.RowIndex] is DataGridViewCheckBoxCell && this[e.ColumnIndex, e.RowIndex].ReadOnly == false)
+            {
+                ValueChangedHandle.IsChanged = true;
+            }
+            base.OnCellContentClick(e);
+        }
         protected override void OnCellEnter(DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex != -1 && e.RowIndex != -1)
