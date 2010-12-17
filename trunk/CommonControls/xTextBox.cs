@@ -237,6 +237,8 @@ namespace hwj.UserControls.CommonControls
                     }
                     if (!string.IsNullOrEmpty(Format))
                         this.Text = i.ToString(Format);
+                    else
+                        this.Text = "0";
                     break;
                 default:
                     break;
