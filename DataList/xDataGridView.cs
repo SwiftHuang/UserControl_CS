@@ -145,7 +145,7 @@ namespace hwj.UserControls.DataList
         //}
         protected override void OnCellContentClick(DataGridViewCellEventArgs e)
         {
-            if (ValueChangedHandle != null && this[e.ColumnIndex, e.RowIndex] is DataGridViewCheckBoxCell && this[e.ColumnIndex, e.RowIndex].ReadOnly == false)
+            if (e.ColumnIndex != -1 && e.RowIndex != -1 && ValueChangedHandle != null && this[e.ColumnIndex, e.RowIndex] is DataGridViewCheckBoxCell && this[e.ColumnIndex, e.RowIndex].ReadOnly == false)
             {
                 ValueChangedHandle.IsChanged = true;
             }
