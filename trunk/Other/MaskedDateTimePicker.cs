@@ -110,6 +110,8 @@ namespace hwj.UserControls.Other
 
                 if (this.Created && LastDateTime != value)
                 {
+                    if (ShowCheckBox)
+                        this.chkBox.Checked = true;
                     SetOtherControl();
                     SetRequiredStatus();
                     if (ValueChanged != null)
@@ -228,8 +230,8 @@ namespace hwj.UserControls.Other
         #region Private Event Function
         private void pBox_Click(object sender, EventArgs e)
         {
-            if (ShowCheckBox)
-                chkBox.Checked = true;
+            //if (ShowCheckBox)
+            //    chkBox.Checked = true;
             ShowList(sender, e);
         }
         void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
