@@ -44,6 +44,26 @@ namespace hwj.UserControls.DataList
         public PagingEventArgs PagingArgs { get; private set; }
         [Browsable(false)]
         public DataListPage DataListPage { get; set; }
+
+        /// <summary>
+        /// 设置ValueChangedHandle的IsChanged属性
+        /// </summary>
+        [Browsable(false)]
+        public bool ValueIsChanged
+        {
+            get
+            {
+                if (ValueChangedHandle != null)
+                    return ValueChangedHandle.IsChanged;
+                else
+                    return false;
+            }
+            set
+            {
+                if (ValueChangedHandle != null)
+                    ValueChangedHandle.IsChanged = value;
+            }
+        }
         #endregion
 
         public xDataGridView()

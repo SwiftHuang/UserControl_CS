@@ -322,6 +322,11 @@
             设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
+        <member name="P:hwj.UserControls.DataList.xDataGridView.ValueIsChanged">
+            <summary>
+            设置ValueChangedHandle的IsChanged属性
+            </summary>
+        </member>
         <member name="E:hwj.UserControls.DataList.xDataGridView.DataBinding">
             <summary>
             为DataGridView绑定数据
