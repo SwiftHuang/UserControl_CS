@@ -184,7 +184,7 @@ namespace hwj.UserControls.Other
                 tsDropDown.Padding = new Padding(0);
                 tsDropDown.DropShadowEnabled = true;
                 tsDropDown.Items.Add(tsCtrlHost);
-                tsDropDown.AutoClose = true;
+                //tsDropDown.AutoClose = true;
 
             }
             Format = Enums.GetFormat(DateFormat);
@@ -203,6 +203,10 @@ namespace hwj.UserControls.Other
         void MaskedDateTimePicker_Disposed(object sender, EventArgs e)
         {
             Common.HideToolTip();
+            if (tsDropDown != null && tsDropDown.IsHandleCreated)
+            {
+                tsDropDown.Dispose();
+            }
         }
 
         protected override void OnCreateControl()
@@ -317,8 +321,14 @@ namespace hwj.UserControls.Other
 
             if (tsDropDown != null)
             {
+                if (tsDropDown.AutoClose)
+                    tsDropDown.AutoClose = false;
+
                 if (this.ParentForm != null)
+                {
+                    this.ParentForm.Move -= new EventHandler(ParentForm_Move);
                     this.ParentForm.Move += new EventHandler(ParentForm_Move);
+                }
                 tsDropDown.Show(this, -2, this.Height - 2);
                 Focus();
             }
@@ -375,6 +385,11 @@ namespace hwj.UserControls.Other
             }
         }
         #endregion
+
+        private void MaskedDateTimePicker_Leave(object sender, EventArgs e)
+        {
+            CloseList();
+        }
 
     }
 }

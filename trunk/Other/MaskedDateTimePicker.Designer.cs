@@ -84,6 +84,7 @@
             this.MinimumSize = new System.Drawing.Size(50, 21);
             this.Name = "MaskedDateTimePicker";
             this.Size = new System.Drawing.Size(90, 19);
+            this.Leave += new System.EventHandler(this.MaskedDateTimePicker_Leave);
             ((System.ComponentModel.ISupportInitialize)(this.pBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
