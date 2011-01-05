@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using hwj.UserControls.Interface;
+using System.Globalization;
 
 namespace hwj.UserControls.Other
 {
@@ -19,6 +20,11 @@ namespace hwj.UserControls.Other
         private DateTime LastDateTime = new DateTime();
         private Color OldBackColor;
         public event EventHandler ValueChanged;
+
+        private DateTime max = DateTime.MaxValue;
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly DateTime MaxDateTime = new DateTime(0x270e, 12, 0x1f);
+        private DateTime min = DateTime.MinValue;
 
         #region Property
         public bool Checked
@@ -151,6 +157,82 @@ namespace hwj.UserControls.Other
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
 
+        [DefaultValue(typeof(DateTime), "9998-12-31")]
+        public DateTime MaxDate
+        {
+            get
+            {
+                return EffectiveMaxDate(this.max);
+            }
+            set
+            {
+                if (value != this.max)
+                {
+                    if (value < EffectiveMinDate(this.min))
+                    {
+                        throw new ArgumentOutOfRangeException("MaxDate");
+                    }
+                    if (value > MaximumDateTime)
+                    {
+                        throw new ArgumentOutOfRangeException("MaxDate");
+                    }
+                    this.max = value;
+                    //this.SetRange();
+                    if (this.Value > this.max)
+                    {
+                        this.Value = this.max;
+                    }
+                }
+            }
+        }
+        public static DateTime MaximumDateTime
+        {
+            get
+            {
+                return MaxDateTime;
+            }
+        }
+        [DefaultValue(typeof(DateTime), "1753-1-1")]
+        public DateTime MinDate
+        {
+            get
+            {
+                return EffectiveMinDate(this.min);
+            }
+            set
+            {
+                if (value != this.min)
+                {
+                    if (value > EffectiveMaxDate(this.max))
+                    {
+                        throw new ArgumentOutOfRangeException("MinDate");
+                    }
+                    if (value < MinimumDateTime)
+                    {
+                        throw new ArgumentOutOfRangeException("MinDate");
+                    }
+                    this.min = value;
+                    //this.SetRange();
+                    if (this.Value < this.min)
+                    {
+                        this.Value = this.min;
+                    }
+                }
+            }
+        }
+
+        public static DateTime MinimumDateTime
+        {
+            get
+            {
+                DateTime minSupportedDateTime = CultureInfo.CurrentCulture.Calendar.MinSupportedDateTime;
+                if (minSupportedDateTime.Year < 0x6d9)
+                {
+                    return new DateTime(0x6d9, 1, 1);
+                }
+                return minSupportedDateTime;
+            }
+        }
         #endregion
 
         public MaskedDateTimePicker()
@@ -200,15 +282,6 @@ namespace hwj.UserControls.Other
 
         }
 
-        void MaskedDateTimePicker_Disposed(object sender, EventArgs e)
-        {
-            Common.HideToolTip();
-            if (tsDropDown != null && tsDropDown.IsHandleCreated)
-            {
-                tsDropDown.Dispose();
-            }
-        }
-
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
@@ -231,12 +304,25 @@ namespace hwj.UserControls.Other
             }
             base.OnGotFocus(e);
         }
+
         #region Private Event Function
         private void pBox_Click(object sender, EventArgs e)
         {
             //if (ShowCheckBox)
             //    chkBox.Checked = true;
             ShowList(sender, e);
+        }
+        private void MaskedDateTimePicker_Leave(object sender, EventArgs e)
+        {
+            CloseList();
+        }
+        private void MaskedDateTimePicker_Disposed(object sender, EventArgs e)
+        {
+            Common.HideToolTip();
+            if (tsDropDown != null && tsDropDown.IsHandleCreated)
+            {
+                tsDropDown.Dispose();
+            }
         }
         void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
         {
@@ -255,13 +341,23 @@ namespace hwj.UserControls.Other
 
         void mTxtValue_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
         {
-            if (e.IsValidInput)
+            bool isValid = e.IsValidInput;
+            if (isValid)
             {
-                LastDateTime = Value;
-                Value = (DateTime)e.ReturnValue;
-                SetOtherControl();
+                DateTime d = (DateTime)e.ReturnValue;
+                if (d < MinDate || d > MaxDate)
+                {
+                    isValid = false;
+                }
+                else
+                {
+                    LastDateTime = Value;
+                    Value = d;
+                    SetOtherControl();
+                }
             }
-            else
+
+            if (!isValid)
             {
                 mTxtValue.ResetText();
                 _value = DateTime.MinValue;
@@ -386,10 +482,24 @@ namespace hwj.UserControls.Other
         }
         #endregion
 
-        private void MaskedDateTimePicker_Leave(object sender, EventArgs e)
+        internal static DateTime EffectiveMaxDate(DateTime maxDate)
         {
-            CloseList();
+            DateTime maximumDateTime = MaximumDateTime;
+            if (maxDate > maximumDateTime)
+            {
+                return maximumDateTime;
+            }
+            return maxDate;
         }
 
+        internal static DateTime EffectiveMinDate(DateTime minDate)
+        {
+            DateTime minimumDateTime = MinimumDateTime;
+            if (minDate < minimumDateTime)
+            {
+                return minimumDateTime;
+            }
+            return minDate;
+        }
     }
 }
