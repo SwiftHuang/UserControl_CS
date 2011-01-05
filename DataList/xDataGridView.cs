@@ -176,8 +176,13 @@ namespace hwj.UserControls.DataList
             if (e.ColumnIndex != -1 && e.RowIndex != -1)
             {
                 DataGridViewCell cell = this[e.ColumnIndex, e.RowIndex];
-                if (PressEnter && cell.ReadOnly)
-                    SendKeys.Send("{Tab}");
+                if (PressEnter && cell.ReadOnly && !ReadOnly)
+                {
+                    if (!(cell.ColumnIndex == Columns.GetLastColumn(DataGridViewElementStates.Displayed, DataGridViewElementStates.None).Index) || !(cell.RowIndex == Rows.Count - 1))
+                        SendKeys.Send("{Tab}");
+                    else
+                        PressEnter = false;
+                }
                 else
                     PressEnter = false;
             }
