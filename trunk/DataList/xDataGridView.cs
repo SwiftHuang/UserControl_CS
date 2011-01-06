@@ -173,10 +173,10 @@ namespace hwj.UserControls.DataList
         }
         protected override void OnCellEnter(DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex != -1 && e.RowIndex != -1)
+            if (EnterEqualTab && !ReadOnly && PressEnter && e.ColumnIndex != -1 && e.RowIndex != -1)
             {
                 DataGridViewCell cell = this[e.ColumnIndex, e.RowIndex];
-                if (PressEnter && cell != null && cell.ReadOnly && !ReadOnly)
+                if (cell != null && cell.ReadOnly)
                 {
                     if (!(e.RowIndex + 1 == Rows.GetRowCount(DataGridViewElementStates.Visible)) || !(Columns[e.ColumnIndex].DisplayIndex + 1 == Columns.GetColumnCount(DataGridViewElementStates.Displayed)))
                         SendKeys.Send("{Tab}");
