@@ -178,7 +178,7 @@ namespace hwj.UserControls.DataList
                 DataGridViewCell cell = this[e.ColumnIndex, e.RowIndex];
                 if (PressEnter && cell.ReadOnly && !ReadOnly)
                 {
-                    if (cell != null && Columns.GetLastColumn(DataGridViewElementStates.Displayed, DataGridViewElementStates.None) != null && !(cell.RowIndex == Rows.Count - 1) || !(cell.ColumnIndex == Columns.GetLastColumn(DataGridViewElementStates.Displayed, DataGridViewElementStates.None).Index))
+                    if (!(e.RowIndex + 1 == Rows.GetRowCount(DataGridViewElementStates.Visible)) || !(Columns[e.ColumnIndex].DisplayIndex + 1 == Columns.GetColumnCount(DataGridViewElementStates.Displayed)))
                         SendKeys.Send("{Tab}");
                     else
                         PressEnter = false;
