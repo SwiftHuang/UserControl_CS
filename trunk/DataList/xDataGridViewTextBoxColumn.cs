@@ -90,7 +90,7 @@ namespace hwj.UserControls.DataList
 
                 if (ctl.ContentType == ContentType.Integer || ctl.ContentType == ContentType.Numberic)
                 {
-                    if (string.IsNullOrEmpty(Format))
+                    if (ctl.ContentType == ContentType.Numberic && string.IsNullOrEmpty(Format))
                     {
                         ctl.Format = Common.Format_Numberic;
                         this.Style.Format = ctl.Format;
@@ -103,13 +103,18 @@ namespace hwj.UserControls.DataList
                     {
                         this.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
                     }
-                    else if (Alignment == DataGridViewContentAlignment.BottomCenter || Alignment == DataGridViewContentAlignment.MiddleCenter || Alignment == DataGridViewContentAlignment.TopCenter)
-                        ctl.TextAlign = HorizontalAlignment.Center;
-                    else if (Alignment == DataGridViewContentAlignment.BottomLeft || Alignment == DataGridViewContentAlignment.MiddleLeft || Alignment == DataGridViewContentAlignment.TopLeft)
-                        ctl.TextAlign = HorizontalAlignment.Left;
-                    else
-                        ctl.TextAlign = HorizontalAlignment.Right;
                 }
+                else
+                {
+                    this.Style.Alignment = Alignment;
+                }
+
+                if (Alignment == DataGridViewContentAlignment.BottomCenter || Alignment == DataGridViewContentAlignment.MiddleCenter || Alignment == DataGridViewContentAlignment.TopCenter)
+                    ctl.TextAlign = HorizontalAlignment.Center;
+                else if (Alignment == DataGridViewContentAlignment.BottomLeft || Alignment == DataGridViewContentAlignment.MiddleLeft || Alignment == DataGridViewContentAlignment.TopLeft)
+                    ctl.TextAlign = HorizontalAlignment.Left;
+                else
+                    ctl.TextAlign = HorizontalAlignment.Right;
 
                 if (this.Value is String)
                     ctl.Text = this.Value.ToString();
