@@ -152,6 +152,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Suggest\View\DataBindingArg.cs" />
+    <Compile Include="Suggest\View\SuggestBoxView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Suggest\View\SuggestBoxView.Designer.cs">
+      <DependentUpon>SuggestBoxView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Suggest\View\SuggestView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Suggest\View\SuggestView.Designer.cs">
+      <DependentUpon>SuggestView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToolStrip\ToolStripCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -193,6 +206,14 @@
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Suggest\View\SuggestBoxView.resx">
+      <DependentUpon>SuggestBoxView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Suggest\View\SuggestView.resx">
+      <DependentUpon>SuggestView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -411,5 +411,71 @@
             设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
+        <member name="F:hwj.UserControls.Suggest.View.SuggestView.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestView.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestView.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.SetSelectedValue(System.String)">
+            <summary>
+            设置SelectedValue,不触发任何处理
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.SetSelectedText(System.String)">
+            <summary>
+            设置SelectedText,不触发任何处理
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="F:hwj.UserControls.Suggest.View.SuggestBoxView.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.EmptyValue">
+            <summary>
+            如果TextBox.Text为空时,SelectedValue的值.
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.MaxRecords">
+            <summary>
+            返回最大记录数
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.DropDownStyle">
+            <summary>
+            获取或设置SuggestBox Dropdown的显示方式
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.SearchMinLength">
+            <summary>
+            获取或设置触发搜索的字符最小长度
+            </summary>
+        </member>
     </members>
 </doc>
