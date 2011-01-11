@@ -35,9 +35,10 @@ namespace hwj.UserControls.Suggest.View
             }
         }
         protected Function.Verify.RequiredHandle RequiredHandle { get; set; }
+        public static readonly string ValueFlag = "[Sug_Value]";
 
         #region Event Object
-        public delegate void SelectedValueHandler(SuggestValue e);
+        public delegate void SelectedValueHandler(SelectedItem e);
         public event SelectedValueHandler OnSelected;
         public event EventHandler SelectedValueChanged;
         public event EventHandler OnFocus;
@@ -49,11 +50,42 @@ namespace hwj.UserControls.Suggest.View
         #endregion
 
         #region Property
-        public const string ValueFlag = "[Sug_Value]";
+
         public string FilterString { get; set; }
-        public string ValueMember { get; set; }
-        public string FirstMember { get; set; }
-        public string SecondMember { get; set; }
+
+        private string _ValueMember = string.Empty;
+        public string ValueMember
+        {
+            get { return _ValueMember; }
+            set
+            {
+                _ValueMember = value;
+                if (!DesignMode && ListControl != null)
+                    ListControl.KeyColumnDataPropertyName = value;
+            }
+        }
+        private string _FirstMember = string.Empty;
+        public string FirstMember
+        {
+            get { return _FirstMember; }
+            set
+            {
+                _FirstMember = value;
+                if (!DesignMode && ListControl != null)
+                    ListControl.FirstColumnDataPropertyName = value;
+            }
+        }
+        private string _SecondMember = string.Empty;
+        public string SecondMember
+        {
+            get { return _SecondMember; }
+            set
+            {
+                _SecondMember = value;
+                if (!DesignMode && ListControl != null)
+                    ListControl.SecondColumnDataPropertyName = value;
+            }
+        }
 
         private bool _ReadOnly = false;
         [DefaultValue(false)]
@@ -88,7 +120,7 @@ namespace hwj.UserControls.Suggest.View
             set { txtValue.BackColor = value; }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]//Hidden = 0
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public DataTable DataSource { get; set; }
 
         public bool SecondColumnMode
@@ -98,8 +130,8 @@ namespace hwj.UserControls.Suggest.View
         }
         public string PrimaryColumnHeaderName
         {
-            get { return ListControl.PrimaryColumnName; }
-            set { ListControl.PrimaryColumnName = value; }
+            get { return ListControl.FirstColumnName; }
+            set { ListControl.FirstColumnName = value; }
         }
         public string SecondColumnHeaderName
         {
@@ -119,6 +151,8 @@ namespace hwj.UserControls.Suggest.View
             }
             set
             {
+                if (DesignMode) return;
+
                 if (DataSource != null)
                 {
                     _SelectedText = GetMatchText(value);
@@ -134,6 +168,8 @@ namespace hwj.UserControls.Suggest.View
             get { return _SelectedText; }
             set
             {
+                if (DesignMode) return;
+
                 if (DataSource != null)
                     SetSelectedValue(GetMatchValue(value));
                 SetSelectedText(value);
@@ -232,7 +268,7 @@ namespace hwj.UserControls.Suggest.View
                 txtValue.LostFocus += new EventHandler(txtValue_LostFocus);
 
                 ListControl = new SuggestView();
-                ListControl.SelectedValue += new SuggestView.SelectedValueHandler(lstCtrl_SelectedValue);
+                ListControl.SelectedValue += new SuggestView.SelectedValueHandler(ListControl_SelectedValue);
 
                 tsCH = new ToolStripControlHost(ListControl);
                 tsCH.Padding = new Padding(0);
@@ -248,19 +284,10 @@ namespace hwj.UserControls.Suggest.View
 
         protected override void OnCreateControl()
         {
-            #region Set Width
-            Size MinSize = new Size(this.Width, 150);
-            tsDropDown.MinimumSize = MinSize;
-            ListControl.MinimumSize = MinSize;
+            if (DesignMode) return;
 
-            if (ListWidth != 0)
-            {
-                tsDropDown.Width = ListWidth;
-                ListControl.Width = ListWidth;
-            }
-            #endregion
+            SetListBoxWidth();
 
-            //btnSelect.Visible = ButtonVisible;
             txtValue.MaxLength = MaxLength;
             this.txtValue.BackColor = SystemColors.Window;
 
@@ -306,14 +333,15 @@ namespace hwj.UserControls.Suggest.View
             else
                 ButtonClick(sender, e);
         }
-        private void lstCtrl_SelectedValue(SuggestValue e)
+        void ListControl_SelectedValue(SelectedItem e)
         {
+            if (DesignMode) return;
             if (e != null)
             {
                 if (DisplayMember == DisplayMemberType.Primary)
-                    _SelectedText = e.PrimaryValue;
+                    _SelectedText = e.FirstColumnValue;
                 else if (DisplayMember == DisplayMemberType.Second)
-                    _SelectedText = e.SecondValue;
+                    _SelectedText = e.SecondColumnValue;
                 this.txtValue.Text = this.SelectedText;
                 SetSelectedValue(e.Key);
             }
@@ -420,7 +448,7 @@ namespace hwj.UserControls.Suggest.View
             {
                 if (txtValue.ValueChangedHandle != null)
                     txtValue.ValueChangedHandle.IsChanged = true;
-                if (txtValue.Text.Length >= SearchMinLength)
+                if (txtValue.Focused && txtValue.Text.Length >= SearchMinLength)
                 {
                     if (!string.IsNullOrEmpty(txtValue.Text))
                         ShowList(sender, e);
@@ -498,7 +526,9 @@ namespace hwj.UserControls.Suggest.View
                     if (txtValue.Text == string.Empty)
                         ListControl.DataList = DataSource.DefaultView;
                     else if (DropDownStyle == SuggextBoxStyle.Suggest)
-                        ListControl.DataList = SearchValue(txtValue.Text);
+                    {
+                        ListControl.DataList = SearchValue(ListControl.DataList, txtValue.Text);
+                    }
                     else
                         ListControl.DataList = DataSource.DefaultView;
                 }
@@ -542,7 +572,14 @@ namespace hwj.UserControls.Suggest.View
         #region Private Functions
         private void ShowList(object sender, EventArgs e)
         {
-            if (ReadOnly) return;
+            if (DesignMode)
+                return;
+
+            if (!ReadOnly && string.IsNullOrEmpty(ValueMember) && (string.IsNullOrEmpty(FirstMember) || string.IsNullOrEmpty(SecondMember)))
+                return;
+
+            SetListBoxWidth();
+
             DataBind();
             selectIndex = 0;
             if (RecordCount > 0)
@@ -584,24 +621,46 @@ namespace hwj.UserControls.Suggest.View
             if (DropDownStyle == SuggextBoxStyle.DropDownList)
                 txtValue.SelectAll();
         }
-        private DataView SearchValue(string value)
+        private DataView SearchValue(DataView dataView, string value)
         {
-            DataView dv = new DataView();
-            if (DataSource != null)
+            if (dataView == DataSource.DefaultView)
             {
-                dv = DataSource.DefaultView;
-                dv.RowFilter = FilterString.Replace(ValueFlag, value);
+                dataView = GetDataView();
             }
-            return dv;
+            dataView.RowFilter = FilterString.Replace(ValueFlag, value);
+            return dataView;
         }
         private string GetMatchText(string value)
         {
-            DataView dv = GetDataView();
-            if (dv != null)
+            if (!DesignMode)
             {
-                string filterStr = string.Format("{0}='{1}'", ValueMember, value);
-                dv.RowFilter = filterStr;
-                if (dv.Count > 0)
+                DataView dv = GetDataView();
+                if (dv != null)
+                {
+                    string filterStr = string.Format("{0}='{1}'", ValueMember, value);
+                    dv.RowFilter = filterStr;
+                    if (dv.Count > 0)
+                    {
+                        string member = string.Empty;
+                        if (DisplayMember == DisplayMemberType.Primary)
+                            member = FirstMember;
+                        else if (DisplayMember == DisplayMemberType.Second)
+                            member = SecondMember;
+
+                        object obj = dv[0][member];
+                        if (obj != null)
+                            return obj.ToString();
+                    }
+                }
+            }
+            return string.Empty;
+        }
+        private string GetMatchValue(string text)
+        {
+            if (!DesignMode)
+            {
+                DataView dv = GetDataView();
+                if (dv != null)
                 {
                     string member = string.Empty;
                     if (DisplayMember == DisplayMemberType.Primary)
@@ -609,49 +668,43 @@ namespace hwj.UserControls.Suggest.View
                     else if (DisplayMember == DisplayMemberType.Second)
                         member = SecondMember;
 
-                    object obj = dv[0][member];
-                    if (obj != null)
-                        return obj.ToString();
+                    string filterStr = string.Format("{0}='{1}'", member, text);
+                    dv.RowFilter = filterStr;
+                    if (dv.Count > 0)
+                    {
+                        object obj = dv[0][ValueMember];
+                        if (obj != null)
+                            return obj.ToString();
+                    }
                 }
             }
-            return string.Empty;
-        }
-        private string GetMatchValue(string text)
-        {
-            DataView dv = GetDataView();
-            if (dv != null)
-            {
-                string member = string.Empty;
-                if (DisplayMember == DisplayMemberType.Primary)
-                    member = FirstMember;
-                else if (DisplayMember == DisplayMemberType.Second)
-                    member = SecondMember;
-
-                string filterStr = string.Format("{0}='{1}'", member, text);
-                dv.RowFilter = filterStr;
-                if (dv.Count > 0)
-                {
-                    object obj = dv[0][ValueMember];
-                    if (obj != null)
-                        return obj.ToString();
-                }
-            }
-
             return string.Empty;
         }
         private DataView GetDataView()
         {
             if (DataSource != null)
             {
-                DataView dv = new DataView();
-                dv = DataSource.DefaultView;
-                return dv;
+                DataTable tb = DataSource.Copy();
+                return tb.DefaultView;
             }
             else
             {
                 return null;
             }
 
+        }
+        private void SetListBoxWidth()
+        {
+            Size MinSize = new Size(this.Width, 150);
+            tsDropDown.MinimumSize = MinSize;
+            ListControl.MinimumSize = MinSize;
+            tsDropDown.Size = MinSize;
+            ListControl.Size = MinSize;
+            if (ListWidth != 0)
+            {
+                tsDropDown.Width = ListWidth;
+                ListControl.Width = ListWidth;
+            }
         }
         #endregion
 
