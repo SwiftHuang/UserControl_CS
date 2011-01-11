@@ -10,8 +10,11 @@ namespace hwj.UserControls.Suggest.View
 {
     internal partial class SuggestView : UserControl
     {
+        public static readonly string colKeyName = "_colKeyName";
+        public static readonly string colFirstName = "_colFirstName";
+        public static readonly string colSecondName = "_colSecondName";
         private bool _isAlreadyCreateColumns = false;
-        public delegate void SelectedValueHandler(SuggestValue e);
+        public delegate void SelectedValueHandler(SelectedItem e);
         public event SelectedValueHandler SelectedValue;
 
         public SuggestView()
@@ -23,7 +26,7 @@ namespace hwj.UserControls.Suggest.View
 
         #region Property
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]//Hidden = 0
-        public bool IsEnterList = false;
+        internal bool IsEnterList = false;
         public DataView DataList { get; set; }
         private bool _SecondColumnMode = false;
         public bool SecondColumnMode
@@ -39,8 +42,14 @@ namespace hwj.UserControls.Suggest.View
                 _SecondColumnMode = value;
             }
         }
-        public string PrimaryColumnName { get; set; }
+
+        public string FirstColumnName { get; set; }
         public string SecondColumnName { get; set; }
+
+        public string KeyColumnDataPropertyName { get; set; }
+        public string FirstColumnDataPropertyName { get; set; }
+        public string SecondColumnDataPropertyName { get; set; }
+
         #endregion
 
         #region Public Functions
@@ -66,26 +75,26 @@ namespace hwj.UserControls.Suggest.View
             {
                 _isAlreadyCreateColumns = true;
 
-                if (string.IsNullOrEmpty(PrimaryColumnName) && string.IsNullOrEmpty(SecondColumnName))
+                if (string.IsNullOrEmpty(FirstColumnName) && string.IsNullOrEmpty(SecondColumnName))
                     dgList.ColumnHeadersVisible = false;
                 else
                     dgList.ColumnHeadersVisible = true;
 
                 dgList.Columns.Clear();
                 DataGridViewTextBoxColumn colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                colValue.DataPropertyName = "Key";
+                colValue.DataPropertyName = KeyColumnDataPropertyName;
                 colValue.Frozen = true;
-                colValue.HeaderText = "Key";
-                colValue.Name = "colValue";
+                colValue.HeaderText = "Value";
+                colValue.Name = colKeyName;
                 colValue.Visible = false;
                 colValue.ReadOnly = true;
                 dgList.Columns.Add(colValue);
                 dgList.Columns[0].Visible = false;
 
                 DataGridViewTextBoxColumn colPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                colPri.DataPropertyName = "PrimaryValue";
-                colPri.HeaderText = PrimaryColumnName;
-                colPri.Name = "colPri";
+                colPri.DataPropertyName = FirstColumnDataPropertyName;
+                colPri.HeaderText = FirstColumnName;
+                colPri.Name = colFirstName;
                 colPri.ReadOnly = true;
                 if (SecondColumnMode)
                 {
@@ -102,10 +111,10 @@ namespace hwj.UserControls.Suggest.View
                 if (SecondColumnMode)
                 {
                     DataGridViewTextBoxColumn colSec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                    colSec.DataPropertyName = "SecondValue";
+                    colSec.DataPropertyName = SecondColumnDataPropertyName;
                     colSec.Frozen = false;
                     colSec.HeaderText = SecondColumnName;
-                    colSec.Name = "colSec";
+                    colSec.Name = colSecondName;
                     colSec.ReadOnly = true;
                     colSec.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     dgList.Columns.Add(colSec);
@@ -116,15 +125,21 @@ namespace hwj.UserControls.Suggest.View
         {
             if (rowIndex == -1)
                 return;
-            SuggestValue v = new SuggestValue();
-            v.Key = dgList.Rows[rowIndex].Cells["colValue"].Value.ToString();
-            v.PrimaryValue = dgList.Rows[rowIndex].Cells["colPri"].Value.ToString();
 
-            if (SecondColumnMode && dgList.Columns["colSec"] != null)
-                v.SecondValue = dgList.Rows[rowIndex].Cells["colSec"].Value.ToString();
+            DataGridViewRow r = dgList.Rows[rowIndex];
+            if (r != null)
+            {
+                SelectedItem e = new SelectedItem();
+                e.SelectedIndex = rowIndex;
+                e.Item = DataList[e.SelectedIndex];
 
-            if (SelectedValue != null)
-                SelectedValue(v);
+                e.Key = r.Cells[colKeyName].Value.ToString();
+                e.FirstColumnValue = r.Cells[colFirstName].Value.ToString();
+                if (SecondColumnMode && dgList.Columns[colSecondName] != null)
+                    e.SecondColumnValue = r.Cells[colSecondName].Value.ToString();
+                if (SelectedValue != null)
+                    SelectedValue(e);
+            }
         }
         #endregion
 
