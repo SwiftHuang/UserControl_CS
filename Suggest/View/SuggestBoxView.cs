@@ -273,9 +273,11 @@ namespace hwj.UserControls.Suggest.View
                 tsCH = new ToolStripControlHost(ListControl);
                 tsCH.Padding = new Padding(0);
                 tsCH.Dock = DockStyle.Fill;
+                tsCH.Margin = new Padding(0);
 
                 tsDropDown = new ToolStripDropDown();
                 tsDropDown.Padding = new Padding(0);
+                tsDropDown.Margin = new Padding(0);
                 tsDropDown.DropShadowEnabled = true;
                 tsDropDown.Items.Add(tsCH);
             }
@@ -524,7 +526,9 @@ namespace hwj.UserControls.Suggest.View
                 if (DataSource != null)
                 {
                     if (txtValue.Text == string.Empty)
+                    {
                         ListControl.DataList = DataSource.DefaultView;
+                    }
                     else if (DropDownStyle == SuggextBoxStyle.Suggest)
                     {
                         ListControl.DataList = SearchValue(ListControl.DataList, txtValue.Text);

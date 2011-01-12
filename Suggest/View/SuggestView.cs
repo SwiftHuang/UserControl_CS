@@ -58,6 +58,8 @@ namespace hwj.UserControls.Suggest.View
             CreateColumns();
             dgList.DataSource = null;
             dgList.DataSource = DataList;
+            if (dgList.Rows.Count > 0)
+                dgList.Rows[0].Selected = true;
         }
         public void SelectIndex(int index)
         {

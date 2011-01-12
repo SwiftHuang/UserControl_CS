@@ -38,8 +38,11 @@ namespace hwj.UserControls.Suggest.View
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtValue.Format = null;
             this.txtValue.Location = new System.Drawing.Point(0, 0);
+            this.txtValue.Margin = new System.Windows.Forms.Padding(0);
             this.txtValue.Name = "txtValue";
             this.txtValue.OldBackColor = System.Drawing.SystemColors.Window;
+            this.txtValue.RequiredHandle = null;
+            this.txtValue.SetValueToControl = null;
             this.txtValue.Size = new System.Drawing.Size(97, 21);
             this.txtValue.TabIndex = 0;
             this.txtValue.TextIsChanged = false;
@@ -68,14 +71,14 @@ namespace hwj.UserControls.Suggest.View
             this.btnSelect.UseVisualStyleBackColor = true;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
-            // SuggestBox
+            // SuggestBoxView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.btnSelect);
             this.MinimumSize = new System.Drawing.Size(0, 21);
-            this.Name = "SuggestBox";
+            this.Name = "SuggestBoxView";
             this.Size = new System.Drawing.Size(120, 21);
             this.ResumeLayout(false);
             this.PerformLayout();
