@@ -7,7 +7,7 @@ using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls
 {
-    public class xDateTimePicker : DateTimePicker, IEnterEqualTab
+    public class xDateTimePicker : DateTimePicker, IEnterEqualTab, IValueChanged
     {
         #region Property
         [DefaultValue(Enums.DateFormat.None)]
@@ -33,6 +33,7 @@ namespace hwj.UserControls.CommonControls
             EnterEqualTab = true;
             ValueChangedHandle = Common.ValueChanged;
             SetValueToControl = null;
+            ValueChangedEnabled = true;
         }
 
         #region Override Function
@@ -63,7 +64,7 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnValueChanged(EventArgs eventargs)
         {
-            if (this.Focused && ValueChangedHandle != null)
+            if (ValueChangedEnabled && this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             if (SetValueToControl != null)
             {
@@ -76,7 +77,7 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnCloseUp(EventArgs eventargs)
         {
-            if (ValueChangedHandle != null)
+            if (ValueChangedEnabled && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnCloseUp(eventargs);
         }
@@ -101,6 +102,16 @@ namespace hwj.UserControls.CommonControls
         //        this.Value = hwj.CommonLibrary.Object.DateHelper.ToDate(this.Text, InputFormat);
         //    }
         //}
+
+        #endregion
+
+        #region IValueChanged Members
+
+        /// <summary>
+        /// 获取或设置ValueChanged事件的IsChanged属性
+        /// </summary>
+        [DefaultValue(true), Description("获取或设置ValueChanged事件的IsChanged属性")]
+        public bool ValueChangedEnabled { get; set; }
 
         #endregion
     }

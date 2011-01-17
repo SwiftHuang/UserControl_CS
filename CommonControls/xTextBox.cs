@@ -22,7 +22,7 @@ namespace hwj.UserControls.CommonControls
         Integer,
     }
 
-    public class xTextBox : TextBox, IEnterEqualTab
+    public class xTextBox : TextBox, IEnterEqualTab, IValueChanged
     {
         #region Property
         private bool isFirstFocus = false;
@@ -99,6 +99,7 @@ namespace hwj.UserControls.CommonControls
             IsRequired = false;
             EnterEqualTab = true;
             SetValueToControl = null;
+            ValueChangedEnabled = true;
         }
 
         void xTextBox_Disposed(object sender, EventArgs e)
@@ -145,8 +146,30 @@ namespace hwj.UserControls.CommonControls
                     {
                         if (e.KeyChar == '.')
                         {
-                            if (this.Text.IndexOf(e.KeyChar) != -1)
+                            int index = this.Text.IndexOf(e.KeyChar);
+                            if (index != -1)
+                            {
+                                string tmp = string.Empty;
+                                if (this.SelectionStart < index)
+                                {
+                                    tmp = this.Text.Remove(this.Text.IndexOf(e.KeyChar), 1);
+                                    tmp = tmp.Insert(this.SelectionStart, ".");
+                                    tmp = tmp.Replace(",", "");
+                                }
+                                else if (this.SelectionStart > index)
+                                {
+                                    tmp = this.Text.Insert(this.SelectionStart, ".");
+                                    tmp = tmp.Remove(this.Text.IndexOf(e.KeyChar), 1);
+                                    tmp = tmp.Replace(",", "");
+                                }
+                                else if (this.SelectionStart == index)
+                                {
+                                    e.Handled = true;
+                                    return;
+                                }
+                                this.Text = tmp;
                                 e.Handled = true;
+                            }
                             return;
                         }
                         else if (e.KeyChar == '-')
@@ -265,7 +288,7 @@ namespace hwj.UserControls.CommonControls
             if (DesignMode)
                 return;
             TextIsChanged = true;
-            if (this.Focused && ValueChangedHandle != null)
+            if (ValueChangedEnabled && this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnTextChanged(e);
             SetRequiredStatus();
@@ -351,6 +374,16 @@ namespace hwj.UserControls.CommonControls
             else
                 return false;
         }
+
+        #region IValueChanged Members
+
+        /// <summary>
+        /// 获取或设置ValueChanged事件的IsChanged属性
+        /// </summary>
+        [DefaultValue(true), Description("获取或设置ValueChanged事件的IsChanged属性")]
+        public bool ValueChangedEnabled { get; set; }
+
+        #endregion
     }
 
 }
