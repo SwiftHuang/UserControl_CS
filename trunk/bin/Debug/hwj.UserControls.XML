@@ -86,6 +86,11 @@
               Looks up a localized string similar to {0}条记录.
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Interface.IValueChanged.ValueChangedEnabled">
+            <summary>
+            获取或设置触发ValueChanged事件
+            </summary>
+        </member>
         <member name="F:hwj.UserControls.Other.MaskedDateTimePicker.components">
             <summary> 
             Required designer variable.
@@ -108,14 +113,46 @@
             获取或设置为必填控件
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Other.MaskedDateTimePicker.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
+            </summary>
+        </member>
+        <member name="F:hwj.UserControls.Suggest.View.SuggestView.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestView.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestView.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.CommonControls.xCheckBox.ValueChangedHandle">
             <summary>
             设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
+        <member name="P:hwj.UserControls.CommonControls.xCheckBox.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.CommonControls.xRadioButton.ValueChangedHandle">
             <summary>
             设置引发hwj.UserControls.ValueChanged事件的对象
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xRadioButton.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
             </summary>
         </member>
         <member name="F:hwj.UserControls.Suggest.SuggestView.components">
@@ -145,6 +182,11 @@
             获取或设置为必填控件
             </summary>
         </member>
+        <member name="P:hwj.UserControls.CommonControls.xComboBox.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
+            </summary>
+        </member>
         <member name="F:hwj.UserControls.Other.LoginComboBox.components">
             <summary>
             必需的设计器变量。
@@ -165,6 +207,11 @@
         <member name="P:hwj.UserControls.CommonControls.xDateTimePicker.ValueChangedHandle">
             <summary>
             设置引发hwj.UserControls.ValueChanged事件的对象
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xDateTimePicker.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
             </summary>
         </member>
         <member name="F:hwj.UserControls.DataList.DataListPage.components">
@@ -285,6 +332,60 @@
             获取或设置触发搜索的字符最小长度
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Suggest.SuggestBox.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
+            </summary>
+        </member>
+        <member name="F:hwj.UserControls.Suggest.View.SuggestBoxView.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.SetSelectedValue(System.String)">
+            <summary>
+            设置SelectedValue,不触发任何处理
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.SetSelectedText(System.String)">
+            <summary>
+            设置SelectedText,不触发任何处理
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.EmptyValue">
+            <summary>
+            如果TextBox.Text为空时,SelectedValue的值.
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.MaxRecords">
+            <summary>
+            返回最大记录数
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.DropDownStyle">
+            <summary>
+            获取或设置SuggestBox Dropdown的显示方式
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.SearchMinLength">
+            <summary>
+            获取或设置触发搜索的字符最小长度
+            </summary>
+        </member>
         <member name="M:hwj.UserControls.DataList.xDataGridView.RefreshRowFooter">
             <summary>
             刷新行尾
@@ -330,6 +431,11 @@
         <member name="E:hwj.UserControls.DataList.xDataGridView.DataBinding">
             <summary>
             为DataGridView绑定数据
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.DataList.xDataGridView.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
             </summary>
         </member>
         <member name="F:hwj.UserControls.Other.MSSQLConnSetting.components">
@@ -406,75 +512,19 @@
             内容是否改变(在Validating/Validated有效)
             </summary>
         </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.CommonControls.xNumericUpDown.ValueChangedHandle">
             <summary>
             设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
-        <member name="F:hwj.UserControls.Suggest.View.SuggestView.components">
-            <summary> 
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:hwj.UserControls.Suggest.View.SuggestView.Dispose(System.Boolean)">
-            <summary> 
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:hwj.UserControls.Suggest.View.SuggestView.InitializeComponent">
-            <summary> 
-            Required method for Designer support - do not modify 
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.SetSelectedValue(System.String)">
+        <member name="P:hwj.UserControls.CommonControls.xNumericUpDown.ValueChangedEnabled">
             <summary>
-            设置SelectedValue,不触发任何处理
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.SetSelectedText(System.String)">
-            <summary>
-            设置SelectedText,不触发任何处理
-            </summary>
-            <param name="text"></param>
-        </member>
-        <member name="F:hwj.UserControls.Suggest.View.SuggestBoxView.components">
-            <summary> 
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.Dispose(System.Boolean)">
-            <summary> 
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:hwj.UserControls.Suggest.View.SuggestBoxView.InitializeComponent">
-            <summary> 
-            Required method for Designer support - do not modify 
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.EmptyValue">
-            <summary>
-            如果TextBox.Text为空时,SelectedValue的值.
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.MaxRecords">
-            <summary>
-            返回最大记录数
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.DropDownStyle">
-            <summary>
-            获取或设置SuggestBox Dropdown的显示方式
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.Suggest.View.SuggestBoxView.SearchMinLength">
-            <summary>
-            获取或设置触发搜索的字符最小长度
+            获取或设置ValueChanged事件的IsChanged属性
             </summary>
         </member>
     </members>

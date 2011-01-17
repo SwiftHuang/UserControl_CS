@@ -636,7 +636,7 @@ namespace hwj.UserControls.Suggest.View
         }
         private string GetMatchText(string value)
         {
-            if (!DesignMode)
+            if (!DesignMode&&!string.IsNullOrEmpty(ValueMember))
             {
                 DataView dv = GetDataView();
                 if (dv != null)
@@ -672,13 +672,16 @@ namespace hwj.UserControls.Suggest.View
                     else if (DisplayMember == DisplayMemberType.Second)
                         member = SecondMember;
 
-                    string filterStr = string.Format("{0}='{1}'", member, text);
-                    dv.RowFilter = filterStr;
-                    if (dv.Count > 0)
+                    if (!string.IsNullOrEmpty(member))
                     {
-                        object obj = dv[0][ValueMember];
-                        if (obj != null)
-                            return obj.ToString();
+                        string filterStr = string.Format("{0}='{1}'", member, text);
+                        dv.RowFilter = filterStr;
+                        if (dv.Count > 0)
+                        {
+                            object obj = dv[0][ValueMember];
+                            if (obj != null)
+                                return obj.ToString();
+                        }
                     }
                 }
             }

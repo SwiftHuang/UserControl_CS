@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace hwj.UserControls.Other
 {
-    public partial class MaskedDateTimePicker : UserControl, IEnterEqualTab
+    public partial class MaskedDateTimePicker : UserControl, IEnterEqualTab, IValueChanged
     {
         private bool isFirstFocus = false;
         private ToolStripDropDown tsDropDown = null;
@@ -242,6 +242,7 @@ namespace hwj.UserControls.Other
             SetValueToControl = null;
             EnterEqualTab = true;
             OldBackColor = this.mTxtValue.BackColor;
+            ValueChangedEnabled = true;
 
             if (!DesignMode)
             {
@@ -381,7 +382,7 @@ namespace hwj.UserControls.Other
         }
         void mTxtValue_TextChanged(object sender, EventArgs e)
         {
-            if (this.Focused && ValueChangedHandle != null)
+            if (ValueChangedEnabled && this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
         }
         void mTxtValue_Click(object sender, EventArgs e)
@@ -406,7 +407,7 @@ namespace hwj.UserControls.Other
         void chkBox_CheckedChanged(object sender, EventArgs e)
         {
             mTxtValue.Enabled = chkBox.Checked;
-            if (!DesignMode && ValueChangedHandle != null)
+            if (!DesignMode && ValueChangedEnabled && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
         }
         #endregion
@@ -467,7 +468,7 @@ namespace hwj.UserControls.Other
         }
         private void SetValueChangedHandle()
         {
-            if (ValueChangedHandle != null)
+            if (ValueChangedEnabled && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
         }
         private void SetValue()
@@ -501,5 +502,15 @@ namespace hwj.UserControls.Other
             }
             return minDate;
         }
+
+        #region IValueChanged Members
+
+        /// <summary>
+        /// 获取或设置ValueChanged事件的IsChanged属性
+        /// </summary>
+        [DefaultValue(true), Description("获取或设置ValueChanged事件的IsChanged属性")]
+        public bool ValueChangedEnabled { get; set; }
+
+        #endregion
     }
 }

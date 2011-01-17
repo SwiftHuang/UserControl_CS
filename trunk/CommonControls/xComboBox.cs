@@ -7,7 +7,7 @@ using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls
 {
-    public class xComboBox : ComboBox, IEnterEqualTab
+    public class xComboBox : ComboBox, IEnterEqualTab, IValueChanged
     {
         #region Property
         [DefaultValue(true)]
@@ -45,6 +45,7 @@ namespace hwj.UserControls.CommonControls
             OldBackColor = this.BackColor;
             IsRequired = false;
             OldBackColor = this.BackColor;
+            ValueChangedEnabled = true;
         }
 
         #region Override Function
@@ -63,13 +64,13 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
-            if (this.Focused && ValueChangedHandle != null)
+            if (ValueChangedEnabled && this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnSelectedIndexChanged(e);
         }
         protected override void OnTextChanged(EventArgs e)
         {
-            if (this.Focused && ValueChangedHandle != null)
+            if (ValueChangedEnabled && this.Focused && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnTextChanged(e);
             SetRequiredStatus();
@@ -102,5 +103,15 @@ namespace hwj.UserControls.CommonControls
                 this.BackColor = this.OldBackColor;
             }
         }
+
+        #region IValueChanged Members
+
+        /// <summary>
+        /// 获取或设置ValueChanged事件的IsChanged属性
+        /// </summary>
+        [DefaultValue(true), Description("获取或设置ValueChanged事件的IsChanged属性")]
+        public bool ValueChangedEnabled { get; set; }
+
+        #endregion
     }
 }

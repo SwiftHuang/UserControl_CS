@@ -7,7 +7,7 @@ using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.DataList
 {
-    public class xDataGridView : System.Windows.Forms.DataGridView
+    public class xDataGridView : System.Windows.Forms.DataGridView, IValueChanged
     {
         #region Property
         /// <summary>
@@ -75,6 +75,7 @@ namespace hwj.UserControls.DataList
             BackgroundColor = SystemColors.Window;
             ValueChangedHandle = Common.ValueChanged;
             EnterEqualTab = true;
+            ValueChangedEnabled = true;
         }
 
         public delegate void RowFooterValueChangedHandler(DataGridViewColumn column, string value);
@@ -165,7 +166,7 @@ namespace hwj.UserControls.DataList
         //}
         protected override void OnCellContentClick(DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex != -1 && e.RowIndex != -1 && ValueChangedHandle != null && this[e.ColumnIndex, e.RowIndex] is DataGridViewCheckBoxCell && this[e.ColumnIndex, e.RowIndex].ReadOnly == false)
+            if (ValueChangedEnabled && e.ColumnIndex != -1 && e.RowIndex != -1 && ValueChangedHandle != null && this[e.ColumnIndex, e.RowIndex] is DataGridViewCheckBoxCell && this[e.ColumnIndex, e.RowIndex].ReadOnly == false)
             {
                 ValueChangedHandle.IsChanged = true;
             }
@@ -207,7 +208,7 @@ namespace hwj.UserControls.DataList
         }
         protected override void OnCellValueChanged(DataGridViewCellEventArgs e)
         {
-            if (this.EditingControl != null && ValueChangedHandle != null)
+            if (ValueChangedEnabled && this.EditingControl != null && ValueChangedHandle != null)
                 ValueChangedHandle.IsChanged = true;
             base.OnCellValueChanged(e);
         }
@@ -476,6 +477,16 @@ namespace hwj.UserControls.DataList
             }
             this.AllowUserToAddRows = allowAddRows;
         }
+        #endregion
+
+        #region IValueChanged Members
+
+        /// <summary>
+        /// 获取或设置ValueChanged事件的IsChanged属性
+        /// </summary>
+        [DefaultValue(true), Description("获取或设置ValueChanged事件的IsChanged属性")]
+        public bool ValueChangedEnabled { get; set; }
+
         #endregion
     }
 }

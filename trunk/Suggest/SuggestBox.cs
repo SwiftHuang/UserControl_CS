@@ -7,7 +7,7 @@ using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.Suggest
 {
-    public partial class SuggestBox : UserControl, IEnterEqualTab
+    public partial class SuggestBox : UserControl, IEnterEqualTab, IValueChanged
     {
         private int selectIndex = 0;
         private bool IsShowed
@@ -236,7 +236,7 @@ namespace hwj.UserControls.Suggest
                 tsDropDown.DropShadowEnabled = true;
                 tsDropDown.Items.Add(tsCH);
             }
-          
+
         }
 
         protected override void OnCreateControl()
@@ -413,7 +413,7 @@ namespace hwj.UserControls.Suggest
             this.Cursor = Cursors.AppStarting;
             try
             {
-                if (txtValue.ValueChangedHandle != null)
+                if (txtValue.ValueChangedEnabled && txtValue.ValueChangedHandle != null)
                     txtValue.ValueChangedHandle.IsChanged = true;
                 if (txtValue.Text.Length >= SearchMinLength)
                 {
@@ -616,5 +616,27 @@ namespace hwj.UserControls.Suggest
         }
         #endregion
 
+
+        #region IValueChanged Members
+        /// <summary>
+        /// 获取或设置ValueChanged事件的IsChanged属性
+        /// </summary>
+        [DefaultValue(true), Description("获取或设置ValueChanged事件的IsChanged属性")]
+        public bool ValueChangedEnabled
+        {
+            get
+            {
+                if (txtValue != null)
+                    return txtValue.ValueChangedEnabled;
+                else
+                    return true;
+            }
+            set
+            {
+                txtValue.ValueChangedEnabled = value;
+            }
+        }
+
+        #endregion
     }
 }
