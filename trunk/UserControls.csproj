@@ -133,6 +133,18 @@
     <Compile Include="Other\MaskedDateTimePicker.Designer.cs">
       <DependentUpon>MaskedDateTimePicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\PasswordTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Other\PasswordTextBox.designer.cs">
+      <DependentUpon>PasswordTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Other\xSplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Other\xSplitContainer.designer.cs">
+      <DependentUpon>xSplitContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Suggest\SuggestBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -191,6 +203,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Other\MaskedDateTimePicker.resx">
       <DependentUpon>MaskedDateTimePicker.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\xSplitContainer.resx">
+      <DependentUpon>xSplitContainer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.en-US.resx">
