@@ -175,6 +175,7 @@ namespace hwj.UserControls.Other
             InitializeComponent();
             SetSplitterButtonRectangle();
             this.SetStyle(ControlStyles.Selectable, false);
+            this.SplitterMoved += new SplitterEventHandler(xSplitContainer_SplitterMoved);
         }
 
         #region Private Function
@@ -295,6 +296,11 @@ namespace hwj.UserControls.Other
         {
             base.OnMouseUp(e);
             this.Panel2.Focus();
+        }
+
+        void xSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            this.Refresh();
         }
         #endregion
     }
