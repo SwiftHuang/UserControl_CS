@@ -33,7 +33,7 @@ namespace hwj.UserControls.Other
             set { splitterButtonHeight = value; }
         }
 
-        private SplitterDirection splitterDirection = SplitterDirection.None;
+        private SplitterDirection splitterDirection = SplitterDirection.Left;
         [Description("获取或设置分栏方向"), Category("Extension"), DefaultValue(typeof(SplitterDirection), "Left")]
         public SplitterDirection SplitterDirection
         {
@@ -254,11 +254,23 @@ namespace hwj.UserControls.Other
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-
             if (this.splitterButtonMouseHover)
             {
                 base.OnMouseClick(e);
                 this.SplitterCollapesd = !this.SplitterCollapesd;
+
+                if (this.SplitterButtonBackGround != null)
+                {
+                    Image img1 = this.SplitterButtonBackGround;
+                    img1.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    this.SplitterButtonBackGround = img1;
+                }
+                if (this.SplitterButtonBackGroundHover != null)
+                {
+                    Image img2 = this.SplitterButtonBackGroundHover;
+                    img2.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    this.SplitterButtonBackGroundHover = img2;
+                }
             }
         }
 
@@ -297,6 +309,7 @@ namespace hwj.UserControls.Other
             base.OnMouseUp(e);
             this.Panel2.Focus();
         }
+
 
         void xSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {
