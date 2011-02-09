@@ -310,7 +310,11 @@ namespace hwj.UserControls.Other
             this.Panel2.Focus();
         }
 
-
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            this.Refresh();
+        }
         void xSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {
             this.Refresh();
