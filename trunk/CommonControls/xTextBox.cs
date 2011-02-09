@@ -140,10 +140,11 @@ namespace hwj.UserControls.CommonControls
                 if (e.KeyChar == 3 || e.KeyChar == 22 || e.KeyChar == 26)
                 {
                 }
-                else
+                else if (this.SelectedText != this.Text)
                 {
                     if (ContentType == ContentType.Numberic)
                     {
+
                         if (e.KeyChar == '.')
                         {
                             int index = this.Text.IndexOf(e.KeyChar);
@@ -168,6 +169,7 @@ namespace hwj.UserControls.CommonControls
                                     return;
                                 }
                                 this.Text = tmp;
+                                SelectionStart = this.Text.IndexOf(".") + 1;
                                 e.Handled = true;
                             }
                             return;
