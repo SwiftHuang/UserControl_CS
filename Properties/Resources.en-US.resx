@@ -144,6 +144,10 @@
     <value>The digital format is invalid [{0}]</value>
     <comment>为无效的数字格式</comment>
   </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>The Password cannot contain "{0}" characters</value>
+    <comment>密码不能包含的字符</comment>
+  </data>
   <data name="NoRecord" xml:space="preserve">
     <value>Can't find the records.</value>
     <comment>当前找不到你所需要的记录</comment>
@@ -166,5 +170,8 @@
   <data name="ReturnRecord" xml:space="preserve">
     <value>{0} records</value>
     <comment>返回{0}条记录</comment>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>SPACE</value>
   </data>
 </root>
