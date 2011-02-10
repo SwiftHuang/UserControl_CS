@@ -15,33 +15,28 @@ namespace hwj.UserControls.Other
         [Description("获取或设置允许复制密码"), DefaultValue(false)]
         public bool AllowCopy { get; set; }
 
-        private List<char> unallowList = new List<char>();
+        private List<char> _invalidChar = new List<char>();
         [DesignOnly(false)]
-        public List<char> UnallowList
+        public List<char> InvalidChar
         {
             get
             {
-                if (unallowList == null)
+                if (_invalidChar == null)
                     return new List<char>();
                 else
-                    return unallowList;
+                    return _invalidChar;
             }
             set
             {
                 if (value == null)
                     return;
                 else
-                    unallowList = value;
+                    _invalidChar = value;
             }
         }
 
         public PasswordTextBox()
         {
-            InitializeComponent();
-        }
-        public PasswordTextBox(IContainer container)
-        {
-            container.Add(this);
             InitializeComponent();
         }
 
@@ -53,7 +48,7 @@ namespace hwj.UserControls.Other
         }
         protected override void OnKeyPress(System.Windows.Forms.KeyPressEventArgs e)
         {
-            if (UnallowList.Contains(e.KeyChar))
+            if (InvalidChar.Contains(e.KeyChar))
             {
                 //hwj.UserControls.Common.ShowToolTipInfo(this, "Not allow input \"" + ((e.KeyChar == ' ') ? "SPACE" : e.KeyChar.ToString()) + "\" into password");
                 hwj.UserControls.Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidPassword, ((e.KeyChar == ' ') ? Properties.Resources.Space : e.KeyChar.ToString())));

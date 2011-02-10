@@ -133,12 +133,6 @@
     <Compile Include="Other\MaskedDateTimePicker.Designer.cs">
       <DependentUpon>MaskedDateTimePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="Other\PasswordTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Other\PasswordTextBox.designer.cs">
-      <DependentUpon>PasswordTextBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Other\xSplitContainer.cs">
       <SubType>Component</SubType>
     </Compile>
