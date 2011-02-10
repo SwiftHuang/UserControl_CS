@@ -55,6 +55,11 @@
               Looks up a localized string similar to [{0}]为无效的数字格式.
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Properties.Resources.InvalidPassword">
+            <summary>
+              Looks up a localized string similar to 密码中不能含有 &quot;{0}&quot; 字符.
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.Properties.Resources.NoRecord">
             <summary>
               Looks up a localized string similar to 当前找不到你所需要的记录.
@@ -84,6 +89,11 @@
         <member name="P:hwj.UserControls.Properties.Resources.ReturnRecord">
             <summary>
               Looks up a localized string similar to {0}条记录.
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Properties.Resources.Space">
+            <summary>
+              Looks up a localized string similar to 空格.
             </summary>
         </member>
         <member name="P:hwj.UserControls.Interface.IValueChanged.ValueChangedEnabled">
@@ -153,48 +163,6 @@
         <member name="P:hwj.UserControls.CommonControls.xRadioButton.ValueChangedEnabled">
             <summary>
             获取或设置ValueChanged事件的IsChanged属性
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.IsRequired">
-            <summary>
-            获取或设置为必填控件
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedHandle">
-            <summary>
-            设置引发hwj.UserControls.ValueChanged事件的对象
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.ShowContentError">
-            <summary>
-            "是否显示验证错误信息(只有ContentType不为None时有效)"
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.TextIsChanged">
-            <summary>
-            内容是否改变(在Validating/Validated有效)
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedEnabled">
-            <summary>
-            获取或设置ValueChanged事件的IsChanged属性
-            </summary>
-        </member>
-        <member name="F:hwj.UserControls.Other.PasswordTextBox.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:hwj.UserControls.Other.PasswordTextBox.Dispose(System.Boolean)">
-            <summary> 
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:hwj.UserControls.Other.PasswordTextBox.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
             </summary>
         </member>
         <member name="F:hwj.UserControls.Suggest.SuggestView.components">
@@ -555,6 +523,36 @@
         <member name="F:hwj.UserControls.CommonControls.ContentType.Integer">
             <summary>
             整数
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.IsRequired">
+            <summary>
+            获取或设置为必填控件
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedHandle">
+            <summary>
+            设置引发hwj.UserControls.ValueChanged事件的对象
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.ShowContentError">
+            <summary>
+            "是否显示验证错误信息(只有ContentType不为None时有效)"
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.TextIsChanged">
+            <summary>
+            内容是否改变(在Validating/Validated有效)
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.InvalidPasswordChar">
+            <summary>
+            获取或设置禁用的密码字符。
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
             </summary>
         </member>
         <member name="P:hwj.UserControls.CommonControls.xNumericUpDown.ValueChangedHandle">

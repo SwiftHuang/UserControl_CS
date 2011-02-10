@@ -51,17 +51,39 @@ namespace hwj.UserControls
             if (toolTip1 != null || control != null)
             {
                 //toolTip.IsBalloon = true;
-                if (isError)
-                {
-                    toolTip1.ToolTipIcon = ToolTipIcon.Error;
-                    toolTip1.ToolTipTitle = Properties.Resources.ErrorInfo;
-                }
-                else
-                {
-                    toolTip1.ToolTipIcon = ToolTipIcon.Info;
-                    toolTip1.ToolTipTitle = Properties.Resources.Information;
-                }
-                toolTip1.Show(text, control, 0, control.Height, 1500);
+                SetTitle(isError, ref toolTip1);
+                toolTip1.Show(text, control, 0, control.Height, 3000);
+            }
+        }
+        public static void SetToolTip(Control control, string text)
+        {
+            SetToolTip(toolTip, control, text, false);
+        }
+        public static void SetToolTip(Control control, string text, bool isError)
+        {
+            SetToolTip(toolTip, control, text, isError);
+        }
+        public static void SetToolTip(ToolTip toolTip1, Control control, string text, bool isError)
+        {
+            if (toolTip1 != null || control != null)
+            {
+                //toolTip.IsBalloon = true;
+                toolTip1.AutoPopDelay = 10000;
+                SetTitle(isError, ref toolTip1);
+                toolTip1.SetToolTip(control, text);
+            }
+        }
+        private static void SetTitle(bool isError, ref ToolTip toolTip1)
+        {
+            if (isError)
+            {
+                toolTip1.ToolTipIcon = ToolTipIcon.Error;
+                toolTip1.ToolTipTitle = Properties.Resources.ErrorInfo;
+            }
+            else
+            {
+                toolTip1.ToolTipIcon = ToolTipIcon.Info;
+                toolTip1.ToolTipTitle = Properties.Resources.Information;
             }
         }
         #endregion

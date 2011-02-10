@@ -86,6 +86,12 @@ namespace hwj.UserControls.CommonControls
 
         [DefaultValue(false), Description("当获取焦点时,自动全选")]
         public bool AutoSelectAll { get; set; }
+
+        /// <summary>
+        /// 获取或设置禁用的密码字符。
+        /// </summary>
+        [Description("获取或设置禁用的密码字符。"), DesignOnly(true), Browsable(false)]
+        public List<char> InvalidPasswordChar { get; set; }
         #endregion
 
         public xTextBox()
@@ -197,6 +203,12 @@ namespace hwj.UserControls.CommonControls
                         if (!(Char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
                             e.Handled = true;
                     }
+                }
+                if (PasswordChar != Char.MinValue && InvalidPasswordChar != null && InvalidPasswordChar.Contains(e.KeyChar))
+                {
+                    hwj.UserControls.Common.ShowToolTipError(this, string.Format(Properties.Resources.InvalidPassword, ((e.KeyChar == ' ') ? Properties.Resources.Space : e.KeyChar.ToString())));
+                    e.Handled = true;
+                    return;
                 }
             }
             base.OnKeyPress(e);
