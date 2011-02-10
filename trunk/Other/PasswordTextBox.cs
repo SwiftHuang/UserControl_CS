@@ -55,7 +55,8 @@ namespace hwj.UserControls.Other
         {
             if (UnallowList.Contains(e.KeyChar))
             {
-                hwj.UserControls.Common.ShowToolTipInfo(this, "Not allow input \"" + ((e.KeyChar == ' ') ? "SPACE" : e.KeyChar.ToString()) + "\" into password");
+                //hwj.UserControls.Common.ShowToolTipInfo(this, "Not allow input \"" + ((e.KeyChar == ' ') ? "SPACE" : e.KeyChar.ToString()) + "\" into password");
+                hwj.UserControls.Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidPassword, ((e.KeyChar == ' ') ? Properties.Resources.Space : e.KeyChar.ToString())));
                 e.Handled = true;
                 return;
             }

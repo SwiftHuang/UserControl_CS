@@ -166,4 +166,10 @@
   <data name="RequiredInfo" xml:space="preserve">
     <value>提交数据前,请将资料填写完整</value>
   </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>密码中不能含有 "{0}" 字符</value>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>空格</value>
+  </data>
 </root>
