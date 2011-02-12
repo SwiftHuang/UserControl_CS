@@ -241,17 +241,18 @@ namespace hwj.UserControls.Suggest
 
         protected override void OnCreateControl()
         {
-            #region Set Width
-            Size MinSize = new Size(this.Width, 150);
-            tsDropDown.MinimumSize = MinSize;
-            ListControl.MinimumSize = MinSize;
+            SetListBoxWidth();
+            //#region Set Width
+            //Size MinSize = new Size(this.Width, 150);
+            //tsDropDown.MinimumSize = MinSize;
+            //ListControl.MinimumSize = MinSize;
 
-            if (ListWidth != 0)
-            {
-                tsDropDown.Width = ListWidth;
-                ListControl.Width = ListWidth;
-            }
-            #endregion
+            //if (ListWidth != 0)
+            //{
+            //    tsDropDown.Width = ListWidth;
+            //    ListControl.Width = ListWidth;
+            //}
+            //#endregion
 
             //btnSelect.Visible = ButtonVisible;
             txtValue.MaxLength = MaxLength;
@@ -530,9 +531,25 @@ namespace hwj.UserControls.Suggest
         #endregion
 
         #region Private Functions
+        private void SetListBoxWidth()
+        {
+            Size MinSize = new Size(this.Width, 150);
+            tsDropDown.MinimumSize = MinSize;
+            ListControl.MinimumSize = MinSize;
+            tsDropDown.Size = MinSize;
+            ListControl.Size = MinSize;
+            if (ListWidth != 0)
+            {
+                tsDropDown.Width = ListWidth;
+                ListControl.Width = ListWidth;
+            }
+        }
         private void ShowList(object sender, EventArgs e)
         {
             if (ReadOnly) return;
+
+            SetListBoxWidth();
+
             DataBind(sender, e);
             selectIndex = 0;
             if (RecordCount > 0)
