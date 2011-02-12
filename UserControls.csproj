@@ -108,6 +108,7 @@
     <Compile Include="DataList\xDataGridViewTextBoxColumn.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Function\LanguageHelper.cs" />
     <Compile Include="Function\Verify\IRequiredHandle.cs" />
     <Compile Include="Function\Verify\RequiredHandle.cs" />
     <Compile Include="Function\Verify\RequiredInfo.cs" />
