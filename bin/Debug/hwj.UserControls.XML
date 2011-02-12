@@ -419,6 +419,28 @@
             获取或设置触发搜索的字符最小长度
             </summary>
         </member>
+        <member name="M:hwj.UserControls.Function.LanguageHelper.SetLang(System.String,System.Windows.Forms.Form,System.Type)">
+            <summary>
+            设置当前程序的界面语言
+            </summary>
+            <param name="lang">language:zh-CN, en-US</param>
+            <param name="form">窗体实例</param>
+            <param name="formType">窗体类型</param>
+        </member>
+        <member name="M:hwj.UserControls.Function.LanguageHelper.AppLang(System.Windows.Forms.Control,System.ComponentModel.ComponentResourceManager)">
+            <summary>
+            遍历窗体所有控件，针对其设置当前界面语言
+            </summary>
+            <param name="control"></param>
+            <param name="resources"></param>
+        </member>
+        <member name="M:hwj.UserControls.Function.LanguageHelper.AppLang(System.Windows.Forms.ToolStripMenuItem,System.ComponentModel.ComponentResourceManager)">
+            <summary>
+            遍历菜单
+            </summary>
+            <param name="item"></param>
+            <param name="resources"></param>
+        </member>
         <member name="M:hwj.UserControls.DataList.xDataGridView.RefreshRowFooter">
             <summary>
             刷新行尾
@@ -564,28 +586,6 @@
             <summary>
             获取或设置ValueChanged事件的IsChanged属性
             </summary>
-        </member>
-        <member name="M:hwj.UserControls.Function.LanguageHelper.SetLang(System.String,System.Windows.Forms.Form,System.Type)">
-            <summary>
-            设置当前程序的界面语言
-            </summary>
-            <param name="lang">language:zh-CN, en-US</param>
-            <param name="form">窗体实例</param>
-            <param name="formType">窗体类型</param>
-        </member>
-        <member name="M:hwj.UserControls.Function.LanguageHelper.AppLang(System.Windows.Forms.Control,System.ComponentModel.ComponentResourceManager)">
-            <summary>
-            遍历窗体所有控件，针对其设置当前界面语言
-            </summary>
-            <param name="control"></param>
-            <param name="resources"></param>
-        </member>
-        <member name="M:hwj.UserControls.Function.LanguageHelper.AppLang(System.Windows.Forms.ToolStripMenuItem,System.ComponentModel.ComponentResourceManager)">
-            <summary>
-            遍历菜单
-            </summary>
-            <param name="item"></param>
-            <param name="resources"></param>
         </member>
     </members>
 </doc>
