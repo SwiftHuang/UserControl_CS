@@ -50,7 +50,6 @@ namespace hwj.UserControls
         {
             if (toolTip1 != null || control != null)
             {
-                //toolTip.IsBalloon = true;
                 SetTitle(isError, ref toolTip1);
                 toolTip1.Show(text, control, 0, control.Height, 3000);
             }

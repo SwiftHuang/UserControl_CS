@@ -4,6 +4,11 @@
         <name>hwj.CommonLibrary</name>
     </assembly>
     <members>
+        <member name="M:hwj.CommonLibrary.Object.MemoryHelper.ReleaseMemory">
+            <summary>
+            释放物理内存
+            </summary>
+        </member>
         <member name="M:hwj.CommonLibrary.Object.NetHelper.GetHostName">
             <summary>
             获取本机名称
@@ -215,7 +220,7 @@
             <param name="obj">要缓存的对象</param>
             <param name="xmlPath">缓存的依赖项xml文件的路径（绝对路径）</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:hwj.CommonLibrary.WebSite.WebCache.Insert(System.String,System.Object,System.Int32,System.Web.Caching.CacheItemPriority)" -->
+        <!-- 对于成员“M:hwj.CommonLibrary.WebSite.WebCache.Insert(System.String,System.Object,System.Int32,System.Web.Caching.CacheItemPriority)”忽略有格式错误的 XML 注释 -->
         <member name="M:hwj.CommonLibrary.WebSite.WebCache.Insert(System.String,System.Object,System.Web.Caching.CacheDependency,System.Int32)">
             <summary>
             缓存实例插入
@@ -562,11 +567,6 @@
             <param name="MaxSeqNum">最大序号</param>
             <param name="top">返回个数</param>
             <returns></returns>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.MemoryHelper.ReleaseMemory">
-            <summary>
-            释放物理内存
-            </summary>
         </member>
     </members>
 </doc>
