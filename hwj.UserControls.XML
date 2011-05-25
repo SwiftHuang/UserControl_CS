@@ -597,12 +597,12 @@
             获取或设置ValueChanged事件的IsChanged属性
             </summary>
         </member>
-        <member name="P:hwj.UserControls.CommonControls.xMaskTextBox.ValueChangedHandle">
+        <member name="P:hwj.UserControls.CommonControls.xMaskedTextBox.ValueChangedHandle">
             <summary>
             设置引发hwj.UserControls.ValueChanged事件的对象
             </summary>
         </member>
-        <member name="P:hwj.UserControls.CommonControls.xMaskTextBox.ValueChangedEnabled">
+        <member name="P:hwj.UserControls.CommonControls.xMaskedTextBox.ValueChangedEnabled">
             <summary>
             获取或设置ValueChanged事件的IsChanged属性
             </summary>

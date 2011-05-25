@@ -68,7 +68,7 @@
     <Compile Include="CommonControls\xCheckedListBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CommonControls\xMaskTextBox.cs">
+    <Compile Include="CommonControls\xMaskedTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CommonControls\xNumericUpDown.cs">
