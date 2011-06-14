@@ -24,9 +24,33 @@ namespace hwj.UserControls.CommonControls
 
     public class xTextBox : TextBox, IEnterEqualTab, IValueChanged
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public enum EmailspliterEnum : byte
+        {
+
+            /// <summary>
+            ///真没有 
+            /// </summary>
+            None = 0,
+            /// <summary>
+            ///逗号 
+            /// </summary>
+            Period = 0x2C,
+            /// <summary>
+            /// 分号
+            /// </summary>
+            Semicolon = 0x3B,
+
+        }
+
         #region Property
+        [DefaultValue(EmailspliterEnum.None)]
+        public EmailspliterEnum EmailSpliter { get; set; }
+
         private bool isFirstFocus = false;
-        [DefaultValue(true)]
+        [DefaultValue(true), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
         public bool EnterEqualTab { get; set; }
 
         private bool _IsRequired = false;
@@ -245,11 +269,11 @@ namespace hwj.UserControls.CommonControls
                 case ContentType.None:
                     break;
                 case ContentType.Email:
-                    if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
+                    if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, Convert.ToChar(EmailSpliter).ToString()))
                     {
                         if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
-                        this.Text = string.Empty;
+                        //this.Text = string.Empty;
                         isInvaildText = true;
                     }
                     break;
@@ -292,6 +316,10 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnEnter(EventArgs e)
         {
+            if (string.IsNullOrEmpty(Text) && ContentType == ContentType.Email && EmailSpliter != EmailspliterEnum.None)
+            {
+                Common.ShowToolTipInfo(this, string.Format(Properties.Resources.EamilTips, Convert.ToChar(EmailSpliter).ToString()));
+            }
             if (DesignMode)
                 return;
             base.OnEnter(e);
@@ -339,6 +367,59 @@ namespace hwj.UserControls.CommonControls
             isFirstFocus = false;
         }
         #endregion
+        public bool CheckData()
+        {
+            string err = string.Empty;
+            return CheckData(out err);
+        }
+
+        public bool CheckData(out string errmsg)
+        {
+            errmsg = string.Empty;
+            if (DesignMode)
+                return true;
+            bool isVaildText = true;
+
+            switch (ContentType)
+            {
+                case ContentType.None:
+                    break;
+                case ContentType.Email:
+                    if (!CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, Convert.ToChar(EmailSpliter).ToString()))
+                    {
+                        errmsg = string.Format(Properties.Resources.InvalidEmail, this.Text);
+                        isVaildText = false;
+                    }
+                    break;
+                case ContentType.Numberic:
+                    decimal v = 0;
+                    if (!decimal.TryParse(this.Text, out v))
+                    {
+                        errmsg = string.Format(Properties.Resources.InvalidNumberic, this.Text);
+                        isVaildText = false;
+                    }
+                    if (!string.IsNullOrEmpty(Format))
+                        this.Text = v.ToString(Format);
+                    break;
+                case ContentType.Integer:
+                    int i = 0;
+                    if (!int.TryParse(this.Text, out i))
+                    {
+                        errmsg = string.Format(Properties.Resources.InvalidNumberic, this.Text);
+                        isVaildText = false;
+                    }
+                    if (!string.IsNullOrEmpty(Format))
+                        this.Text = i.ToString(Format);
+                    else
+                        this.Text = i.ToString();
+                    break;
+                default:
+                    break;
+            }
+
+            return isVaildText;
+
+        }
 
         public void SetRequiredStatus()
         {

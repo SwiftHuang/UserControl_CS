@@ -172,4 +172,7 @@
   <data name="Space" xml:space="preserve">
     <value>空格</value>
   </data>
+  <data name="EamilTips" xml:space="preserve">
+    <value>填写多个Email地址,请用 "{0}" 分隔</value>
+  </data>
 </root>
