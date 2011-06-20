@@ -48,7 +48,23 @@ namespace hwj.UserControls.CommonControls
         #region Property
         [DefaultValue(EmailspliterEnum.None), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
         public EmailspliterEnum EmailSpliter { get; set; }
+        private string emailSplitChar = string.Empty;
 
+        [Browsable(false)]
+        public string EmailSplitChar
+        {
+            get
+            {
+                if (emailSplitChar == Convert.ToChar(EmailspliterEnum.None).ToString())
+                    return string.Empty;
+                else
+                    return emailSplitChar;
+            }
+            set
+            {
+                emailSplitChar = Convert.ToChar(EmailSpliter).ToString();
+            }
+        }
         private bool isFirstFocus = false;
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
@@ -269,7 +285,7 @@ namespace hwj.UserControls.CommonControls
                 case ContentType.None:
                     break;
                 case ContentType.Email:
-                    if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, Convert.ToChar(EmailSpliter).ToString()))
+                    if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, emailSplitChar))
                     {
                         if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
@@ -318,7 +334,7 @@ namespace hwj.UserControls.CommonControls
         {
             if (string.IsNullOrEmpty(Text) && ContentType == ContentType.Email && EmailSpliter != EmailspliterEnum.None)
             {
-                Common.ShowToolTipInfo(this, string.Format(Properties.Resources.EamilTips, Convert.ToChar(EmailSpliter).ToString()));
+                Common.ShowToolTipInfo(this, string.Format(Properties.Resources.EamilTips, emailSplitChar));
             }
             if (DesignMode)
                 return;
