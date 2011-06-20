@@ -42,29 +42,39 @@ namespace hwj.UserControls.CommonControls
             /// 分号
             /// </summary>
             Semicolon = 0x3B,
-
+            /// <summary>
+            /// 换行
+            /// </summary>
+            Enter = 0x0D,
+            /// <summary>
+            /// 自定义
+            /// </summary>
+            Custom,
         }
 
         #region Property
         [DefaultValue(EmailspliterEnum.None), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
         public EmailspliterEnum EmailSpliter { get; set; }
-        private string emailSplitChar = string.Empty;
 
         [Browsable(false)]
-        public string EmailSplitChar
+        private string emailSplitChar
         {
             get
             {
-                if (emailSplitChar == Convert.ToChar(EmailspliterEnum.None).ToString())
+                if (EmailSpliter == EmailspliterEnum.None)
                     return string.Empty;
+                else if (EmailSpliter == EmailspliterEnum.Enter)
+                    return "\r\n";
+                else if (EmailSpliter != EmailspliterEnum.Custom)
+                    return Convert.ToChar(EmailSpliter).ToString();
                 else
-                    return emailSplitChar;
-            }
-            set
-            {
-                emailSplitChar = Convert.ToChar(EmailSpliter).ToString();
+                    return CustomEmailSplitString;
             }
         }
+
+        public string CustomEmailSplitString { get; set; }
+
+
         private bool isFirstFocus = false;
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
