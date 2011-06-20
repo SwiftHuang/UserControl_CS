@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2545D533-9E25-4895-AFD1-CA59A72BA2B9}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -64,7 +64,7 @@
     <Compile Include="CommonControls\xCheckedListBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Other\EmailBox.cs">
+    <Compile Include="Other\EmailTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CommonControls\xMaskedTextBox.cs">

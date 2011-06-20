@@ -9,14 +9,13 @@ using hwj.UserControls.CommonControls;
 
 namespace hwj.UserControls.Other
 {
-    public class EmailBox : xTextBox
+    public class EmailTextBox : xTextBox
     {
         /// <summary>
         /// 
         /// </summary>
         public enum EmailspliterEnum : byte
         {
-
             /// <summary>
             ///真没有 
             /// </summary>
@@ -38,11 +37,6 @@ namespace hwj.UserControls.Other
             /// </summary>
             Custom,
         }
-
-        [DefaultValue(EmailspliterEnum.None), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
-        public EmailspliterEnum EmailSpliter { get; set; }
-
-        [Browsable(false)]
         private string emailSplitChar
         {
             get
@@ -58,10 +52,14 @@ namespace hwj.UserControls.Other
             }
         }
 
+        [DefaultValue(EmailspliterEnum.None), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
+        public EmailspliterEnum EmailSpliter { get; set; }
+
         public string CustomEmailSplitString { get; set; }
+        [Browsable(false)]
+        public ContentType ContentType { get; set; }
 
-
-        public EmailBox()
+        public EmailTextBox()
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;
@@ -72,16 +70,19 @@ namespace hwj.UserControls.Other
             EnterEqualTab = true;
             SetValueToControl = null;
             ValueChangedEnabled = true;
+            ContentType = ContentType.None;
         }
 
-
+        #region Override Function
         protected override void OnValidating(CancelEventArgs e)
         {
             if (DesignMode)
                 return;
+
             bool isInvaildText = false;
             List<string> errList = new List<string>();
-            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, emailSplitChar, out errList))
+
+            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, emailSplitChar, out errList))
             {
                 if (ShowContentError)
                 {
@@ -118,14 +119,14 @@ namespace hwj.UserControls.Other
             base.OnEnter(e);
             TextIsChanged = false;
         }
+        #endregion
 
-
+        #region Public Function
         public bool CheckData()
         {
             string err = string.Empty;
             return CheckData(out err);
         }
-
         public bool CheckData(out string errmsg)
         {
             errmsg = string.Empty;
@@ -133,7 +134,7 @@ namespace hwj.UserControls.Other
                 return true;
             bool isVaildText = true;
             List<string> errList = new List<string>();
-            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, Convert.ToChar(EmailSpliter).ToString(), out errList))
+            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, Convert.ToChar(EmailSpliter).ToString(), out errList))
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine(string.Format(Properties.Resources.InvalidEmail, string.Empty));
@@ -148,5 +149,6 @@ namespace hwj.UserControls.Other
             return isVaildText;
 
         }
+        #endregion
     }
 }
