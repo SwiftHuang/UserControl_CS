@@ -137,7 +137,8 @@
     <value>Invalid date.</value>
   </data>
   <data name="InvalidEmail" xml:space="preserve">
-    <value>An invalid e-mail format [{0}]</value>
+    <value>The spelling of this address seem to be wrong.
+ {0}</value>
     <comment>为无效的电子邮箱格式</comment>
   </data>
   <data name="InvalidInputString" xml:space="preserve">

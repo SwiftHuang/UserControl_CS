@@ -24,57 +24,9 @@ namespace hwj.UserControls.CommonControls
 
     public class xTextBox : TextBox, IEnterEqualTab, IValueChanged
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public enum EmailspliterEnum : byte
-        {
-
-            /// <summary>
-            ///真没有 
-            /// </summary>
-            None = 0,
-            /// <summary>
-            ///逗号 
-            /// </summary>
-            Comma = 0x2C,
-            /// <summary>
-            /// 分号
-            /// </summary>
-            Semicolon = 0x3B,
-            /// <summary>
-            /// 换行
-            /// </summary>
-            Enter = 0x0D,
-            /// <summary>
-            /// 自定义
-            /// </summary>
-            Custom,
-        }
-
+       
         #region Property
-        [DefaultValue(EmailspliterEnum.None), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
-        public EmailspliterEnum EmailSpliter { get; set; }
-
-        [Browsable(false)]
-        private string emailSplitChar
-        {
-            get
-            {
-                if (EmailSpliter == EmailspliterEnum.None)
-                    return string.Empty;
-                else if (EmailSpliter == EmailspliterEnum.Enter)
-                    return "\r\n";
-                else if (EmailSpliter != EmailspliterEnum.Custom)
-                    return Convert.ToChar(EmailSpliter).ToString();
-                else
-                    return CustomEmailSplitString;
-            }
-        }
-
-        public string CustomEmailSplitString { get; set; }
-
-
+   
         private bool isFirstFocus = false;
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
@@ -295,7 +247,7 @@ namespace hwj.UserControls.CommonControls
                 case ContentType.None:
                     break;
                 case ContentType.Email:
-                    if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, emailSplitChar))
+                    if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
                     {
                         if (ShowContentError)
                             Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
@@ -342,9 +294,9 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnEnter(EventArgs e)
         {
-            if (string.IsNullOrEmpty(Text) && ContentType == ContentType.Email && EmailSpliter != EmailspliterEnum.None)
+            if (string.IsNullOrEmpty(Text) && ContentType == ContentType.Email)
             {
-                Common.ShowToolTipInfo(this, string.Format(Properties.Resources.EamilTips, emailSplitChar));
+                Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, Text));
             }
             if (DesignMode)
                 return;
@@ -411,7 +363,7 @@ namespace hwj.UserControls.CommonControls
                 case ContentType.None:
                     break;
                 case ContentType.Email:
-                    if (!CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, Convert.ToChar(EmailSpliter).ToString()))
+                    if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
                     {
                         errmsg = string.Format(Properties.Resources.InvalidEmail, this.Text);
                         isVaildText = false;

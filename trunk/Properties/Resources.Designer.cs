@@ -113,7 +113,7 @@ namespace hwj.UserControls.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [{0}]为无效的电子邮箱格式.
+        ///   Looks up a localized string similar to  {0} 此地址似乎拼写有误.
         /// </summary>
         internal static string InvalidEmail {
             get {
