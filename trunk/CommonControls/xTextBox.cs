@@ -37,7 +37,7 @@ namespace hwj.UserControls.CommonControls
             /// <summary>
             ///逗号 
             /// </summary>
-            Period = 0x2C,
+            Comma = 0x2C,
             /// <summary>
             /// 分号
             /// </summary>
@@ -46,11 +46,11 @@ namespace hwj.UserControls.CommonControls
         }
 
         #region Property
-        [DefaultValue(EmailspliterEnum.None)]
+        [DefaultValue(EmailspliterEnum.None), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
         public EmailspliterEnum EmailSpliter { get; set; }
 
         private bool isFirstFocus = false;
-        [DefaultValue(true), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
+        [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
 
         private bool _IsRequired = false;
