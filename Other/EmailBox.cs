@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using hwj.UserControls.Interface;
+using hwj.UserControls.CommonControls;
 
 namespace hwj.UserControls.Other
 {
-    public class EmailBox : TextBox, IEnterEqualTab, IValueChanged
+    public class EmailBox : xTextBox
     {
         /// <summary>
         /// 
@@ -38,7 +39,6 @@ namespace hwj.UserControls.Other
             Custom,
         }
 
-        #region Property
         [DefaultValue(EmailspliterEnum.None), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
         public EmailspliterEnum EmailSpliter { get; set; }
 
@@ -61,69 +61,11 @@ namespace hwj.UserControls.Other
         public string CustomEmailSplitString { get; set; }
 
 
-        private bool isFirstFocus = false;
-        [DefaultValue(true)]
-        public bool EnterEqualTab { get; set; }
-
-        private bool _IsRequired = false;
-        /// <summary>
-        /// 获取或设置为必填控件
-        /// </summary>
-        [DefaultValue(false), Description("获取或设置为必填控件")]
-        public bool IsRequired
-        {
-            get { return _IsRequired; }
-            set
-            {
-                _IsRequired = value;
-                SetRequiredStatus();
-            }
-        }
-
-        [Browsable(false)]
-        public System.Drawing.Color OldBackColor { get; set; }
-
-        /// <summary>
-        /// 设置引发hwj.UserControls.ValueChanged事件的对象
-        /// </summary>
-        [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
-        protected internal Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
-        Function.Verify.RequiredHandle _RequiredHandle = null;
-        public Function.Verify.RequiredHandle RequiredHandle
-        {
-            get { return _RequiredHandle; }
-            set
-            {
-                _RequiredHandle = value;
-                SetRequiredStatus();
-            }
-        }
-
-        /// <summary>
-        /// "是否显示验证错误信息"
-        /// </summary>
-        [DefaultValue(true), Description("是否显示验证错误信息")]
-        public bool ShowContentError { get; set; }
-
-        /// <summary>
-        /// 内容是否改变(在Validating/Validated有效)
-        /// </summary>
-        [Browsable(false)]
-        public bool TextIsChanged { get; set; }
-
-        [Description("当值改变时,同时赋值给指定的控件")]
-        public EmailBox SetValueToControl { get; set; }
-
-        [DefaultValue(false), Description("当获取焦点时,自动全选")]
-        public bool AutoSelectAll { get; set; }
-        #endregion
-
         public EmailBox()
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;
 
-            this.Disposed += new EventHandler(xEmailBox_Disposed);
             TextIsChanged = false;
             OldBackColor = this.BackColor;
             IsRequired = false;
@@ -132,24 +74,7 @@ namespace hwj.UserControls.Other
             ValueChangedEnabled = true;
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            if (DesignMode)
-                return;
-            if (EnterEqualTab && e.KeyCode == Keys.Enter)
-                if (e.KeyData != (Keys.Control | Keys.Enter))
-                    SendKeys.Send("{Tab}");
-            base.OnKeyDown(e);
-        }
-        protected override void OnClick(EventArgs e)
-        {
-            if (DesignMode)
-                return;
-            if (AutoSelectAll && isFirstFocus)
-                this.SelectAll();
-            isFirstFocus = false;
-            base.OnClick(e);
-        }
+
         protected override void OnValidating(CancelEventArgs e)
         {
             if (DesignMode)
@@ -177,7 +102,7 @@ namespace hwj.UserControls.Other
                 e.Cancel = true;
                 TextIsChanged = true;
             }
-            SetRequiredStatus();
+            base.SetRequiredStatus();
             if (SetValueToControl != null)
                 SetValueToControl.Text = this.Text;
             base.OnValidating(e);
@@ -193,47 +118,7 @@ namespace hwj.UserControls.Other
             base.OnEnter(e);
             TextIsChanged = false;
         }
-        protected override void OnTextChanged(EventArgs e)
-        {
-            if (DesignMode)
-                return;
-            TextIsChanged = true;
-            if (ValueChangedEnabled && this.Focused && ValueChangedHandle != null)
-                ValueChangedHandle.IsChanged = true;
-            base.OnTextChanged(e);
-            SetRequiredStatus();
-        }
-        protected override void OnValidated(EventArgs e)
-        {
-            if (DesignMode)
-                return;
-            base.OnValidated(e);
-            TextIsChanged = false;
-        }
-        protected override void OnEnabledChanged(EventArgs e)
-        {
-            if (DesignMode)
-                return;
-            base.OnEnabledChanged(e);
-            SetRequiredStatus();
-        }
-        protected override void OnReadOnlyChanged(EventArgs e)
-        {
-            if (DesignMode)
-                return;
-            base.OnReadOnlyChanged(e);
-            SetRequiredStatus();
-        }
-        protected override void OnGotFocus(EventArgs e)
-        {
-            isFirstFocus = true;
-            base.OnGotFocus(e);
-        }
-        protected override void OnLostFocus(EventArgs e)
-        {
-            base.OnLostFocus(e);
-            isFirstFocus = false;
-        }
+
 
         public bool CheckData()
         {
@@ -248,7 +133,7 @@ namespace hwj.UserControls.Other
                 return true;
             bool isVaildText = true;
             List<string> errList = new List<string>();
-            if (!CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, Convert.ToChar(EmailSpliter).ToString(), out errList))
+            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmails(this.Text, Convert.ToChar(EmailSpliter).ToString(), out errList))
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine(string.Format(Properties.Resources.InvalidEmail, string.Empty));
@@ -263,61 +148,5 @@ namespace hwj.UserControls.Other
             return isVaildText;
 
         }
-        void xEmailBox_Disposed(object sender, EventArgs e)
-        {
-            Common.HideToolTip();
-        }
-
-        public void SetRequiredStatus()
-        {
-            if (DesignMode) return;
-
-            bool tmpReadOnly = ReadOnly;
-            Suggest.SuggestBox sg = null;
-
-            if (RequiredHandle != null)
-            {
-                sg = this.Parent as Suggest.SuggestBox;
-                if (sg != null && sg.DropDownStyle == hwj.UserControls.Suggest.SuggestBox.SuggextBoxStyle.DropDownList)
-                {
-                    tmpReadOnly = false;
-                }
-            }
-
-            if (IsRequired && string.IsNullOrEmpty(this.Text) && Enabled && !tmpReadOnly)
-            {
-                if (RequiredHandle != null)
-                {
-                    sg = this.Parent as Suggest.SuggestBox;
-                    if (sg != null)
-                        RequiredHandle.Add(this.Parent);
-                    else
-                        RequiredHandle.Add(this);
-                }
-                this.BackColor = Common.RequiredBackColor;
-            }
-            else
-            {
-                if (RequiredHandle != null)
-                {
-                    sg = this.Parent as Suggest.SuggestBox;
-                    if (sg != null)
-                        RequiredHandle.Remove(this.Parent);
-                    else
-                        RequiredHandle.Remove(this);
-                }
-                this.BackColor = this.OldBackColor;
-            }
-        }
-
-        #region IValueChanged Members
-
-        /// <summary>
-        /// 获取或设置ValueChanged事件的IsChanged属性
-        /// </summary>
-        [DefaultValue(true), Description("获取或设置ValueChanged事件的IsChanged属性")]
-        public bool ValueChangedEnabled { get; set; }
-
-        #endregion
     }
 }
