@@ -6,9 +6,9 @@ using System.Threading;
 using System.Windows.Forms;
 using hwj.UserControls.Interface;
 
-namespace hwj.UserControls.CommonControls
+namespace hwj.UserControls.Other
 {
-    public class xEmailBox : TextBox, IEnterEqualTab, IValueChanged
+    public class EmailBox : TextBox, IEnterEqualTab, IValueChanged
     {
         /// <summary>
         /// 
@@ -112,13 +112,13 @@ namespace hwj.UserControls.CommonControls
         public bool TextIsChanged { get; set; }
 
         [Description("当值改变时,同时赋值给指定的控件")]
-        public xTextBox SetValueToControl { get; set; }
+        public EmailBox SetValueToControl { get; set; }
 
         [DefaultValue(false), Description("当获取焦点时,自动全选")]
         public bool AutoSelectAll { get; set; }
         #endregion
 
-        public xEmailBox()
+        public EmailBox()
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;

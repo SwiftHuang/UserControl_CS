@@ -294,10 +294,6 @@ namespace hwj.UserControls.CommonControls
         }
         protected override void OnEnter(EventArgs e)
         {
-            if (string.IsNullOrEmpty(Text) && ContentType == ContentType.Email)
-            {
-                Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, Text));
-            }
             if (DesignMode)
                 return;
             base.OnEnter(e);
