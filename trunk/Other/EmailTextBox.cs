@@ -70,23 +70,20 @@ namespace hwj.UserControls.Other
 
             List<string> errList = new List<string>();
 
-            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, GetEmailSplitString(), out errList))
+            if (ShowContentError && HasInvalidData(out errList))
             {
-                if (ShowContentError)
+                if (EmailSpliter == EmailspliterEnum.Single)
                 {
-                    if (EmailSpliter == EmailspliterEnum.Single)
+                    Common.ShowToolTipInfo(this, Properties.Resources.InvalidEmail);
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    foreach (string str in errList)
                     {
-                        Common.ShowToolTipInfo(this, Properties.Resources.InvalidEmail);
+                        sb.AppendLine(" - " + str);
                     }
-                    else
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        foreach (string str in errList)
-                        {
-                            sb.AppendLine(" - " + str);
-                        }
-                        Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmails, sb.ToString()));
-                    }
+                    Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmails, sb.ToString()));
                 }
             }
 
@@ -107,16 +104,16 @@ namespace hwj.UserControls.Other
         #endregion
 
         #region Public Function
-        public bool CheckData()
+        public bool HasInvalidData()
         {
             List<string> invalidList = new List<string>();
-            return CheckData(out invalidList);
+            return HasInvalidData(out invalidList);
         }
-        public bool CheckData(out List<string> invalidList)
+        public bool HasInvalidData(out List<string> invalidList)
         {
             invalidList = new List<string>();
 
-            return hwj.CommonLibrary.Object.EmailHelper.isValidEmail(Text, Convert.ToChar(EmailSpliter).ToString(), out invalidList);
+            return !hwj.CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, GetEmailSplitString(), out invalidList);
         }
         #endregion
 
