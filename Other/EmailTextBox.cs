@@ -19,7 +19,7 @@ namespace hwj.UserControls.Other
             /// <summary>
             ///真没有 
             /// </summary>
-            None = 0,
+            Single = 0,
             /// <summary>
             ///逗号 
             /// </summary>
@@ -37,39 +37,28 @@ namespace hwj.UserControls.Other
             /// </summary>
             Custom,
         }
-        private string emailSplitChar
-        {
-            get
-            {
-                if (EmailSpliter == EmailspliterEnum.None)
-                    return string.Empty;
-                else if (EmailSpliter == EmailspliterEnum.Enter)
-                    return "\r\n";
-                else if (EmailSpliter != EmailspliterEnum.Custom)
-                    return Convert.ToChar(EmailSpliter).ToString();
-                else
-                    return CustomEmailSplitString;
-            }
-        }
 
-        [DefaultValue(EmailspliterEnum.None), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
+        #region Property
+        /// <summary>
+        /// 设置输入多个Email地址时的分隔符,None为单个Email地址
+        /// </summary>
+        [DefaultValue(EmailspliterEnum.Single), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
         public EmailspliterEnum EmailSpliter { get; set; }
-
+        /// <summary>
+        /// 获取或设置自定义分隔字符
+        /// </summary>
+        [Description("获取或设置自定义分隔字符")]
         public string CustomEmailSplitString { get; set; }
+
         [Browsable(false)]
         public ContentType ContentType { get; set; }
+        [Browsable(false)]
+        public string Format { get; set; }
+        #endregion
 
         public EmailTextBox()
+            : base()
         {
-            Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
-            ShowContentError = true;
-
-            TextIsChanged = false;
-            OldBackColor = this.BackColor;
-            IsRequired = false;
-            EnterEqualTab = true;
-            SetValueToControl = null;
-            ValueChangedEnabled = true;
             ContentType = ContentType.None;
         }
 
@@ -79,75 +68,69 @@ namespace hwj.UserControls.Other
             if (DesignMode)
                 return;
 
-            bool isInvaildText = false;
             List<string> errList = new List<string>();
 
-            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, emailSplitChar, out errList))
+            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, GetEmailSplitString(), out errList))
             {
                 if (ShowContentError)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    sb.AppendLine(string.Format(Properties.Resources.InvalidEmail, string.Empty));
-                    foreach (string str in errList)
+                    if (EmailSpliter == EmailspliterEnum.Single)
                     {
-                        sb.AppendLine("-" + str);
+                        Common.ShowToolTipInfo(this, Properties.Resources.InvalidEmail);
                     }
-                    Common.ShowToolTipInfo(this, sb.ToString());
+                    else
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        foreach (string str in errList)
+                        {
+                            sb.AppendLine(" - " + str);
+                        }
+                        Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmails, sb.ToString()));
+                    }
                 }
-                //this.Text = string.Empty;
-                isInvaildText = true;
             }
 
-            if (isInvaildText && IsRequired)
-            {
-                e.Cancel = true;
-                TextIsChanged = true;
-            }
-            base.SetRequiredStatus();
-            if (SetValueToControl != null)
-                SetValueToControl.Text = this.Text;
             base.OnValidating(e);
         }
         protected override void OnEnter(EventArgs e)
         {
-            if (string.IsNullOrEmpty(Text) && EmailSpliter != EmailspliterEnum.None)
-            {
-                Common.ShowToolTipInfo(this, string.Format(Properties.Resources.EamilTips, emailSplitChar == "\r\n" ? "Enter" : emailSplitChar));
-            }
             if (DesignMode)
                 return;
+
+            if (string.IsNullOrEmpty(Text) && EmailSpliter != EmailspliterEnum.Single)
+            {
+                Common.ShowToolTipInfo(this, string.Format(Properties.Resources.EamilTips, EmailSpliter == EmailspliterEnum.Enter ? Properties.Resources.Enter : GetEmailSplitString()));
+            }
+
             base.OnEnter(e);
-            TextIsChanged = false;
         }
         #endregion
 
         #region Public Function
         public bool CheckData()
         {
-            string err = string.Empty;
-            return CheckData(out err);
+            List<string> invalidList = new List<string>();
+            return CheckData(out invalidList);
         }
-        public bool CheckData(out string errmsg)
+        public bool CheckData(out List<string> invalidList)
         {
-            errmsg = string.Empty;
-            if (DesignMode)
-                return true;
-            bool isVaildText = true;
-            List<string> errList = new List<string>();
-            if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, Convert.ToChar(EmailSpliter).ToString(), out errList))
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine(string.Format(Properties.Resources.InvalidEmail, string.Empty));
-                foreach (string str in errList)
-                {
-                    sb.AppendLine("-" + str);
-                }
-                errmsg = sb.ToString();
-                isVaildText = false;
-            }
+            invalidList = new List<string>();
 
-            return isVaildText;
+            return hwj.CommonLibrary.Object.EmailHelper.isValidEmail(Text, Convert.ToChar(EmailSpliter).ToString(), out invalidList);
+        }
+        #endregion
 
+        #region Private Function
+        private string GetEmailSplitString()
+        {
+            if (EmailSpliter == EmailspliterEnum.Single)
+                return string.Empty;
+            else if (EmailSpliter == EmailspliterEnum.Enter)
+                return "\r\n";
+            else if (EmailSpliter != EmailspliterEnum.Custom)
+                return Convert.ToChar(EmailSpliter).ToString();
+            else
+                return CustomEmailSplitString;
         }
         #endregion
     }

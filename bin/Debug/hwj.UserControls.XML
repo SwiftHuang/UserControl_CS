@@ -30,6 +30,11 @@
               Looks up a localized string similar to 填写多个Email地址,请用 &quot;{0}&quot; 分隔.
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Properties.Resources.Enter">
+            <summary>
+              Looks up a localized string similar to 回车.
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.Properties.Resources.ErrorInfo">
             <summary>
               Looks up a localized string similar to 错误信息.
@@ -47,8 +52,14 @@
         </member>
         <member name="P:hwj.UserControls.Properties.Resources.InvalidEmail">
             <summary>
-              Looks up a localized string similar to  {0} 此地址似乎拼写有误.
+              Looks up a localized string similar to 此地址似乎拼写有误.
             </summary>
+        </member>
+        <member name="P:hwj.UserControls.Properties.Resources.InvalidEmails">
+             <summary>
+               Looks up a localized string similar to 以下地址似乎拼写有误:
+            {0}.
+             </summary>
         </member>
         <member name="P:hwj.UserControls.Properties.Resources.InvalidInputString">
             <summary>
@@ -178,6 +189,97 @@
         <member name="P:hwj.UserControls.CommonControls.xRadioButton.ValueChangedEnabled">
             <summary>
             获取或设置ValueChanged事件的IsChanged属性
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.CommonControls.xTextBox.HasInvalidData">
+            <summary>
+            是否存在无效的数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.UserControls.CommonControls.xTextBox.HasInvalidData(System.String@)">
+            <summary>
+            是否存在无效的数据
+            </summary>
+            <param name="error">返回错误信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.UserControls.CommonControls.xTextBox.HasInvalidData(System.String@,System.String@)">
+            <summary>
+            是否存在无效的数据
+            </summary>
+            <param name="value"></param>
+            <param name="error"></param>
+            <returns></returns>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.IsRequired">
+            <summary>
+            获取或设置为必填控件
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedHandle">
+            <summary>
+            设置引发hwj.UserControls.ValueChanged事件的对象
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.ShowContentError">
+            <summary>
+            "是否显示验证错误信息(只有ContentType不为None时有效)"
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.TextIsChanged">
+            <summary>
+            内容是否改变(在Validating/Validated有效)
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.InvalidPasswordChar">
+            <summary>
+            获取或设置禁用的密码字符。
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedEnabled">
+            <summary>
+            获取或设置ValueChanged事件的IsChanged属性
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Other.EmailTextBox.EmailSpliter">
+            <summary>
+            设置输入多个Email地址时的分隔符,None为单个Email地址
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Other.EmailTextBox.CustomEmailSplitString">
+            <summary>
+            获取或设置自定义分隔字符
+            </summary>
+        </member>
+        <member name="T:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Single">
+             <summary>
+            真没有 
+             </summary>
+        </member>
+        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Comma">
+             <summary>
+            逗号 
+             </summary>
+        </member>
+        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Semicolon">
+            <summary>
+            分号
+            </summary>
+        </member>
+        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Enter">
+            <summary>
+            换行
+            </summary>
+        </member>
+        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Custom">
+            <summary>
+            自定义
             </summary>
         </member>
         <member name="F:hwj.UserControls.Suggest.SuggestView.components">
@@ -572,36 +674,6 @@
             整数
             </summary>
         </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.IsRequired">
-            <summary>
-            获取或设置为必填控件
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedHandle">
-            <summary>
-            设置引发hwj.UserControls.ValueChanged事件的对象
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.ShowContentError">
-            <summary>
-            "是否显示验证错误信息(只有ContentType不为None时有效)"
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.TextIsChanged">
-            <summary>
-            内容是否改变(在Validating/Validated有效)
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.InvalidPasswordChar">
-            <summary>
-            获取或设置禁用的密码字符。
-            </summary>
-        </member>
-        <member name="P:hwj.UserControls.CommonControls.xTextBox.ValueChangedEnabled">
-            <summary>
-            获取或设置ValueChanged事件的IsChanged属性
-            </summary>
-        </member>
         <member name="P:hwj.UserControls.CommonControls.xNumericUpDown.ValueChangedHandle">
             <summary>
             设置引发hwj.UserControls.ValueChanged事件的对象
@@ -610,36 +682,6 @@
         <member name="P:hwj.UserControls.CommonControls.xNumericUpDown.ValueChangedEnabled">
             <summary>
             获取或设置ValueChanged事件的IsChanged属性
-            </summary>
-        </member>
-        <member name="T:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.None">
-             <summary>
-            真没有 
-             </summary>
-        </member>
-        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Comma">
-             <summary>
-            逗号 
-             </summary>
-        </member>
-        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Semicolon">
-            <summary>
-            分号
-            </summary>
-        </member>
-        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Enter">
-            <summary>
-            换行
-            </summary>
-        </member>
-        <member name="F:hwj.UserControls.Other.EmailTextBox.EmailspliterEnum.Custom">
-            <summary>
-            自定义
             </summary>
         </member>
     </members>

@@ -125,6 +125,9 @@
     <value>Please Seperate Emails with "{0}" </value>
     <comment>填写多个Email地址,请用 "{0}" 分隔</comment>
   </data>
+  <data name="Enter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
   <data name="ErrorInfo" xml:space="preserve">
     <value>Error Message</value>
     <comment>错误信息</comment>
@@ -137,9 +140,12 @@
     <value>Invalid date.</value>
   </data>
   <data name="InvalidEmail" xml:space="preserve">
-    <value>The spelling of this address seem to be wrong.
- {0}</value>
-    <comment>为无效的电子邮箱格式</comment>
+    <value>The spelling of this email seem to be wrong.</value>
+    <comment>此地址似乎拼写有误</comment>
+  </data>
+  <data name="InvalidEmails" xml:space="preserve">
+    <value>The spelling of this email seem to be wrong:
+{0}</value>
   </data>
   <data name="InvalidInputString" xml:space="preserve">
     <value>Please enter {0} characters or more.</value>
