@@ -24,9 +24,9 @@ namespace hwj.UserControls.CommonControls
 
     public class xTextBox : TextBox, IEnterEqualTab, IValueChanged
     {
-       
+
         #region Property
-   
+
         private bool isFirstFocus = false;
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
@@ -241,55 +241,34 @@ namespace hwj.UserControls.CommonControls
         {
             if (DesignMode)
                 return;
-            bool isInvaildText = false;
-            switch (ContentType)
+
+            string error = string.Empty;
+            string value = string.Empty;
+            bool isInvaildText = HasInvalidData(out value, out error);
+            this.Text = value;
+
+            if (isInvaildText && ShowContentError)
             {
-                case ContentType.None:
-                    break;
-                case ContentType.Email:
-                    if (!string.IsNullOrEmpty(Text) && !CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
-                    {
-                        if (ShowContentError)
-                            Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidEmail, this.Text));
-                        //this.Text = string.Empty;
-                        isInvaildText = true;
-                    }
-                    break;
-                case ContentType.Numberic:
-                    decimal v = 0;
-                    if (!decimal.TryParse(this.Text, out v))
-                    {
-                        if (ShowContentError)
-                            Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
-                        isInvaildText = true;
-                    }
-                    if (!string.IsNullOrEmpty(Format))
-                        this.Text = v.ToString(Format);
-                    break;
-                case ContentType.Integer:
-                    int i = 0;
-                    if (!int.TryParse(this.Text, out i))
-                    {
-                        if (ShowContentError)
-                            Common.ShowToolTipInfo(this, string.Format(Properties.Resources.InvalidNumberic, this.Text));
-                        isInvaildText = true;
-                    }
-                    if (!string.IsNullOrEmpty(Format))
-                        this.Text = i.ToString(Format);
-                    else
-                        this.Text = i.ToString();
-                    break;
-                default:
-                    break;
+                Common.ShowToolTipInfo(this, error);
             }
+
+            if (isInvaildText && ContentType == ContentType.Email)
+            {
+                isInvaildText = false;
+            }
+
             if (isInvaildText && IsRequired)
             {
                 e.Cancel = true;
                 TextIsChanged = true;
             }
+
             SetRequiredStatus();
             if (SetValueToControl != null)
+            {
                 SetValueToControl.Text = this.Text;
+            }
+
             base.OnValidating(e);
         }
         protected override void OnEnter(EventArgs e)
@@ -341,58 +320,28 @@ namespace hwj.UserControls.CommonControls
             isFirstFocus = false;
         }
         #endregion
-        public bool CheckData()
+
+        #region Public Function
+        /// <summary>
+        /// 是否存在无效的数据
+        /// </summary>
+        /// <returns></returns>
+        public bool HasInvalidData()
         {
-            string err = string.Empty;
-            return CheckData(out err);
+            string error = string.Empty;
+            string value = this.Text;
+            return HasInvalidData(out value, out error);
         }
-
-        public bool CheckData(out string errmsg)
+        /// <summary>
+        /// 是否存在无效的数据
+        /// </summary>
+        /// <param name="error">返回错误信息</param>
+        /// <returns></returns>
+        public bool HasInvalidData(out string error)
         {
-            errmsg = string.Empty;
-            if (DesignMode)
-                return true;
-            bool isVaildText = true;
-
-            switch (ContentType)
-            {
-                case ContentType.None:
-                    break;
-                case ContentType.Email:
-                    if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
-                    {
-                        errmsg = string.Format(Properties.Resources.InvalidEmail, this.Text);
-                        isVaildText = false;
-                    }
-                    break;
-                case ContentType.Numberic:
-                    decimal v = 0;
-                    if (!decimal.TryParse(this.Text, out v))
-                    {
-                        errmsg = string.Format(Properties.Resources.InvalidNumberic, this.Text);
-                        isVaildText = false;
-                    }
-                    if (!string.IsNullOrEmpty(Format))
-                        this.Text = v.ToString(Format);
-                    break;
-                case ContentType.Integer:
-                    int i = 0;
-                    if (!int.TryParse(this.Text, out i))
-                    {
-                        errmsg = string.Format(Properties.Resources.InvalidNumberic, this.Text);
-                        isVaildText = false;
-                    }
-                    if (!string.IsNullOrEmpty(Format))
-                        this.Text = i.ToString(Format);
-                    else
-                        this.Text = i.ToString();
-                    break;
-                default:
-                    break;
-            }
-
-            return isVaildText;
-
+            error = string.Empty;
+            string value = this.Text;
+            return HasInvalidData(out value, out error);
         }
 
         public void SetRequiredStatus()
@@ -436,6 +385,66 @@ namespace hwj.UserControls.CommonControls
                 this.BackColor = this.OldBackColor;
             }
         }
+        #endregion
+
+        #region Private Function
+        /// <summary>
+        /// 是否存在无效的数据
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="error"></param>
+        /// <returns></returns>
+        private bool HasInvalidData(out string value, out string error)
+        {
+            error = string.Empty;
+            value = this.Text;
+
+            switch (ContentType)
+            {
+                case ContentType.None:
+                    break;
+                case ContentType.Email:
+                    if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
+                    {
+                        error = string.Format(Properties.Resources.InvalidEmail, this.Text);
+                        return true;
+                    }
+                    break;
+                case ContentType.Numberic:
+                    decimal v = 0;
+                    if (!decimal.TryParse(this.Text, out v))
+                    {
+                        error = string.Format(Properties.Resources.InvalidNumberic, this.Text);
+                        return true;
+                    }
+                    if (!string.IsNullOrEmpty(Format))
+                    {
+                        value = v.ToString(Format);
+                    }
+                    break;
+                case ContentType.Integer:
+                    int i = 0;
+                    if (!int.TryParse(this.Text, out i))
+                    {
+                        error = string.Format(Properties.Resources.InvalidNumberic, this.Text);
+                        return true;
+                    }
+                    if (!string.IsNullOrEmpty(Format))
+                    {
+                        value = i.ToString(Format);
+                    }
+                    else
+                    {
+                        value = i.ToString();
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return false;
+
+        }
         private bool IsNegatives()
         {
             if (ContentType == ContentType.Numberic && this.Text.IndexOf('-') != -1)
@@ -443,6 +452,7 @@ namespace hwj.UserControls.CommonControls
             else
                 return false;
         }
+        #endregion
 
         #region IValueChanged Members
 
