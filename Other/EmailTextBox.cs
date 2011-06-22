@@ -39,15 +39,18 @@ namespace hwj.UserControls.Other
         }
 
         #region Property
+
+        [DefaultValue(true), Description("是否显示验证错误信息")]
+        public bool ShowContentError { get; set; }
         /// <summary>
         /// 设置输入多个Email地址时的分隔符,None为单个Email地址
         /// </summary>
-        [DefaultValue(EmailspliterEnum.Single), Description("设置输入多个Email地址时的分隔符,None为单个Email地址")]
+        [DefaultValue(EmailspliterEnum.Single), Description("设置输入多个Email地址时的分隔符,Single为单个Email地址")]
         public EmailspliterEnum EmailSpliter { get; set; }
         /// <summary>
         /// 获取或设置自定义分隔字符
         /// </summary>
-        [Description("获取或设置自定义分隔字符")]
+        [Description("获取或设置自定义分隔字符(仅当EmailSpliter为Custom时生效)")]
         public string CustomEmailSplitString { get; set; }
 
         [Browsable(false)]
