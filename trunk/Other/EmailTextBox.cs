@@ -41,7 +41,14 @@ namespace hwj.UserControls.Other
         #region Property
 
         [DefaultValue(true), Description("是否显示验证错误信息")]
-        public bool ShowContentError { get; set; }
+        public bool ShowContentError
+        {
+            get { return base.ShowContentError; }
+            set
+            {
+                base.ShowContentError = value;
+            }
+        }
         /// <summary>
         /// 设置输入多个Email地址时的分隔符,None为单个Email地址
         /// </summary>
@@ -115,8 +122,10 @@ namespace hwj.UserControls.Other
         public bool HasInvalidData(out List<string> invalidList)
         {
             invalidList = new List<string>();
-
-            return !hwj.CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, GetEmailSplitString(), out invalidList);
+            if (!string.IsNullOrEmpty(Text))
+                return !hwj.CommonLibrary.Object.EmailHelper.isValidEmail(this.Text, GetEmailSplitString(), out invalidList);
+            else
+                return false;
         }
         #endregion
 
