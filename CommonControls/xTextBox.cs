@@ -398,7 +398,7 @@ namespace hwj.UserControls.CommonControls
         {
             error = string.Empty;
             value = this.Text;
-
+            bool result = false;
             switch (ContentType)
             {
                 case ContentType.None:
@@ -407,7 +407,7 @@ namespace hwj.UserControls.CommonControls
                     if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
                     {
                         error = string.Format(Properties.Resources.InvalidEmail, this.Text);
-                        return true;
+                        result = true;
                     }
                     break;
                 case ContentType.Numberic:
@@ -415,11 +415,15 @@ namespace hwj.UserControls.CommonControls
                     if (!decimal.TryParse(this.Text, out v))
                     {
                         error = string.Format(Properties.Resources.InvalidNumberic, this.Text);
-                        return true;
+                        result = true;
                     }
                     if (!string.IsNullOrEmpty(Format))
                     {
                         value = v.ToString(Format);
+                    }
+                    else
+                    {
+                        value = v.ToString();
                     }
                     break;
                 case ContentType.Integer:
@@ -427,7 +431,7 @@ namespace hwj.UserControls.CommonControls
                     if (!int.TryParse(this.Text, out i))
                     {
                         error = string.Format(Properties.Resources.InvalidNumberic, this.Text);
-                        return true;
+                        result = true;
                     }
                     if (!string.IsNullOrEmpty(Format))
                     {
@@ -442,7 +446,7 @@ namespace hwj.UserControls.CommonControls
                     break;
             }
 
-            return false;
+            return result;
 
         }
         private bool IsNegatives()
