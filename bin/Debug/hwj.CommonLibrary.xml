@@ -216,12 +216,6 @@
             获取或设置SMTP服务器列表
             </summary>
         </member>
-        <member name="M:hwj.CommonLibrary.Object.LogHelper.GetOSVersion">
-            <summary>
-            获取当前系统、版本、版本号
-            </summary>
-            <returns></returns>
-        </member>
         <member name="F:hwj.CommonLibrary.DataStructure.AdjacencyList`1.items">
             <summary>
             图的顶点集合
@@ -435,15 +429,51 @@
             <param name="isWindowsVerification"></param>
             <returns></returns>
         </member>
-        <member name="M:hwj.CommonLibrary.Object.FileHelper.StreamToBytes(System.IO.Stream)">
+        <member name="M:hwj.CommonLibrary.Object.StringHelper.GetOSVersion">
             <summary>
-            将 Stream 转成 byte[]
+            获取当前系统、版本、版本号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:hwj.CommonLibrary.Object.FileHelper">
+            <summary>
+            文件类
             </summary>
         </member>
-        <member name="M:hwj.CommonLibrary.Object.FileHelper.BytesToStream(System.Byte[])">
+        <member name="M:hwj.CommonLibrary.Object.FileHelper.CreateFile(System.String)">
             <summary>
-            将 byte[] 转成 Stream
+            创建文件
             </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.FileHelper.CreateFile(System.String,System.String)">
+            <summary>
+            创建文件
+            </summary>
+            <param name="fileName"></param>
+            <param name="text"></param>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.FileHelper.CopyFolder(System.String,System.String)">
+            <summary>
+            复制文件夹
+            </summary>
+            <param name="sourceFolder">源文件夹</param>
+            <param name="targetFolder">目标文件夹</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.FileHelper.DeleteFolder(System.String)">
+            <summary>
+            删除文件夹
+            </summary>
+            <param name="folder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.FileHelper.DeleteFolder(System.IO.DirectoryInfo)">
+            <summary>
+            删除文件夹
+            </summary>
+            <param name="directory"></param>
+            <returns></returns>
         </member>
         <member name="M:hwj.CommonLibrary.Object.FileHelper.StreamToFile(System.IO.Stream,System.String)">
             <summary>
@@ -741,6 +771,66 @@
             <param name="user"></param>
             <param name="password"></param>
             <param name="fileName">文件名(不含路径)</param>
+            <returns></returns>
+        </member>
+        <member name="T:hwj.CommonLibrary.Object.TextHelper">
+            <summary>
+            文本类
+            </summary>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToBytes(System.IO.Stream)">
+            <summary>
+            将 Stream 转成 byte[]
+            </summary>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToStream(System.Byte[])">
+            <summary>
+            将 byte[] 转成 Stream
+            </summary>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToMemoryStream(System.IO.Stream)">
+            <summary>
+            
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToMemoryStream(System.IO.Stream,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="stream"></param>
+            <param name="useGZip">使用GZip压缩</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StringToMemoryStream(System.String)">
+            <summary>
+            字符串转为流(用Encoding.UTF8)
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StringToMemoryStream(System.String,System.Boolean)">
+            <summary>
+            字符串转为流(用Encoding.UTF8)
+            </summary>
+            <param name="data"></param>
+            <param name="useGZip">使用GZip压缩</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToMemoryStream(System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToMemoryStream(System.Byte[],System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="useGZip">使用GZip压缩</param>
             <returns></returns>
         </member>
     </members>
