@@ -25,6 +25,11 @@
               Looks up a localized string similar to 清空记录.
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Properties.Resources.ConnectionSetting">
+            <summary>
+              Looks up a localized string similar to 数据库连接设置.
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.Properties.Resources.EamilTips">
             <summary>
               Looks up a localized string similar to 填写多个Email地址,请用 &quot;{0}&quot; 分隔.
@@ -110,6 +115,11 @@
         <member name="P:hwj.UserControls.Properties.Resources.Space">
             <summary>
               Looks up a localized string similar to 空格.
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Properties.Resources.TestConnectionSucceeded">
+            <summary>
+              Looks up a localized string similar to 数据库连接测试成功!.
             </summary>
         </member>
         <member name="P:hwj.UserControls.Interface.IValueChanged.ValueChangedEnabled">

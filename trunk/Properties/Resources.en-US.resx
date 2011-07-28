@@ -121,6 +121,9 @@
     <value>Clear History</value>
     <comment>清空记录</comment>
   </data>
+  <data name="ConnectionSetting" xml:space="preserve">
+    <value>Connection Setting</value>
+  </data>
   <data name="EamilTips" xml:space="preserve">
     <value>Please Seperate Emails with "{0}" </value>
     <comment>填写多个Email地址,请用 "{0}" 分隔</comment>
@@ -184,5 +187,8 @@
   </data>
   <data name="Space" xml:space="preserve">
     <value>SPACE</value>
+  </data>
+  <data name="TestConnectionSucceeded" xml:space="preserve">
+    <value>Test connection succeeded.</value>
   </data>
 </root>

@@ -127,18 +127,11 @@
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 28</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
   <data name="label5.Text" xml:space="preserve">
     <value>ServiceType:</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 28</value>
-  </data>
-  <data name="label6.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>Authentication:</value>
@@ -146,88 +139,58 @@
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 28</value>
   </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
   <data name="label7.Text" xml:space="preserve">
     <value>UserName:</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 28</value>
   </data>
-  <data name="label8.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
   <data name="label8.Text" xml:space="preserve">
     <value>Password:</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 28</value>
-  </data>
-  <data name="label9.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>95, 30</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>Database:</value>
   </data>
-  <data name="btnRefreshDB.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="btnRefreshDB.Text" xml:space="preserve">
-    <value>Refresh</value>
+  <data name="btnTestDB.Text" xml:space="preserve">
+    <value>Test</value>
   </data>
   <data name="cboDatabase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 144</value>
+    <value>104, 145</value>
   </data>
   <data name="cboDatabase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>234, 20</value>
-  </data>
-  <data name="cboDatabase.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>244, 20</value>
   </data>
   <data name="txtDataSource.Location" type="System.Drawing.Point, System.Drawing">
     <value>104, 3</value>
   </data>
   <data name="txtDataSource.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 21</value>
-  </data>
-  <data name="txtDataSource.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>320, 21</value>
   </data>
   <data name="cboServerType.Location" type="System.Drawing.Point, System.Drawing">
     <value>104, 32</value>
   </data>
   <data name="cboServerType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 20</value>
-  </data>
-  <data name="cboServerType.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>320, 20</value>
   </data>
   <data name="cboVerificationType.Location" type="System.Drawing.Point, System.Drawing">
     <value>104, 60</value>
   </data>
   <data name="cboVerificationType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 20</value>
-  </data>
-  <data name="cboVerificationType.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>320, 20</value>
   </data>
   <data name="txtUser.Location" type="System.Drawing.Point, System.Drawing">
     <value>104, 87</value>
   </data>
   <data name="txtUser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 21</value>
+    <value>320, 21</value>
   </data>
   <data name="txtPassword.Location" type="System.Drawing.Point, System.Drawing">
     <value>104, 115</value>
   </data>
   <data name="txtPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 21</value>
-  </data>
-  <data name="txtPassword.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="tableLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>320, 21</value>
   </data>
 </root>

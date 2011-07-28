@@ -182,4 +182,10 @@
   <data name="Enter" xml:space="preserve">
     <value>回车</value>
   </data>
+  <data name="ConnectionSetting" xml:space="preserve">
+    <value>数据库连接设置</value>
+  </data>
+  <data name="TestConnectionSucceeded" xml:space="preserve">
+    <value>数据库连接测试成功!</value>
+  </data>
 </root>

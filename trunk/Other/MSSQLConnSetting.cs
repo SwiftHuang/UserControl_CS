@@ -19,7 +19,7 @@ namespace hwj.UserControls.Other
         {
             get
             {
-                return GetConnectionString();
+                return GetConnectionString(false, 0);
                 //return _connectionString;
             }
             //set
@@ -48,7 +48,11 @@ namespace hwj.UserControls.Other
         #region Event Function
         private void cboDatabase_Click(object sender, EventArgs e)
         {
-            btnRefreshDB.PerformClick();
+
+        }
+        private void cboDatabase_DropDown(object sender, EventArgs e)
+        {
+            SetDatabaseList(cboDatabase.Text);
         }
         private void cboVerificationType_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -67,13 +71,18 @@ namespace hwj.UserControls.Other
         {
             if ((txtUser.Enabled && string.IsNullOrEmpty(txtUser.Text)) || (txtPassword.Enabled && string.IsNullOrEmpty(txtPassword.Text)) || string.IsNullOrEmpty(txtDataSource.Text))
             {
-                MessageBox.Show(Properties.Resources.RequiredInfo, "Connection Setting", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Properties.Resources.RequiredInfo, Properties.Resources.ConnectionSetting, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            if (!string.IsNullOrEmpty(ConnectionString))
+            string error = string.Empty;
+            if (IsValidConnectionString(true, out error))
             {
-                SetDatabaseDataSource(ConnectionString);
+                MessageBox.Show(Properties.Resources.TestConnectionSucceeded, Properties.Resources.ConnectionSetting, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(error, Properties.Resources.ConnectionSetting, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         #endregion
@@ -90,10 +99,11 @@ namespace hwj.UserControls.Other
 
                 if (SqlConnStringBuilder != null)
                 {
-                    SetDatabaseDataSource(connectionString);
+                    //SetDatabaseDataSource(connectionString);
 
                     txtDataSource.Text = SqlConnStringBuilder.DataSource;
-                    cboDatabase.SelectedValue = SqlConnStringBuilder.InitialCatalog;
+
+                    cboDatabase.Text = SqlConnStringBuilder.InitialCatalog;
 
                     if (SqlConnStringBuilder.IntegratedSecurity == false)
                     {
@@ -115,7 +125,7 @@ namespace hwj.UserControls.Other
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Connection Setting", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, Properties.Resources.ConnectionSetting, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public bool IsValidConnectionString()
@@ -125,13 +135,19 @@ namespace hwj.UserControls.Other
         }
         public bool IsValidConnectionString(out string error)
         {
+            return IsValidConnectionString(false, out error);
+        }
+        private bool IsValidConnectionString(bool ignoreDatabase, out string error)
+        {
             error = string.Empty;
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            string connStr = GetConnectionString(ignoreDatabase, 3);
+            using (SqlConnection conn = new SqlConnection(connStr))
             {
                 try
                 {
                     conn.Open();
                     DataTable tb1 = conn.GetSchema("Databases");
+
                 }
                 catch (Exception ex)
                 {
@@ -148,16 +164,23 @@ namespace hwj.UserControls.Other
         #endregion
 
         #region Private Function
-        private string GetConnectionString()
+        private string GetConnectionString(bool ignoreDatabase, int timeOut)
         {
             try
             {
                 string db = string.Empty;
-                if (cboDatabase.SelectedValue != null)
-                    db = cboDatabase.SelectedValue.ToString();
+                if (!ignoreDatabase)
+                {
+                    db = cboDatabase.Text;
+                }
 
                 SqlConnStringBuilder = hwj.CommonLibrary.Function.ConnectionString.GetMSSQLConnectionStringBuilder(txtDataSource.Text, db,
                     txtUser.Enabled ? txtUser.Text : string.Empty, txtPassword.Enabled ? txtPassword.Text : string.Empty, cboVerificationType.SelectedIndex == 1);
+
+                if (timeOut > 0)
+                {
+                    SqlConnStringBuilder.ConnectTimeout = timeOut;
+                }
 
                 if (SqlConnStringBuilder != null)
                     return SqlConnStringBuilder.ToString();
@@ -166,15 +189,16 @@ namespace hwj.UserControls.Other
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Connection Setting", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, Properties.Resources.ConnectionSetting, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return string.Empty;
             }
         }
-        private bool SetDatabaseDataSource(string ConnectionString)
+        private bool SetDatabaseList(string currentDatabase)
         {
-            if (!string.IsNullOrEmpty(ConnectionString))
+            string connStr = GetConnectionString(true, 3);
+            if (!string.IsNullOrEmpty(connStr))
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     try
                     {
@@ -185,6 +209,7 @@ namespace hwj.UserControls.Other
                         cboDatabase.DisplayMember = "database_name";
                         cboDatabase.ValueMember = "database_name";
                         cboDatabase.DataSource = dv;
+                        cboDatabase.SelectedValue = currentDatabase;
 
                         if (!string.IsNullOrEmpty(conn.ServerVersion))
                         {
@@ -201,7 +226,7 @@ namespace hwj.UserControls.Other
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Connection Setting", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(ex.Message, Properties.Resources.ConnectionSetting, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     finally
