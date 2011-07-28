@@ -77,6 +77,15 @@ namespace hwj.UserControls.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 数据库连接设置.
+        /// </summary>
+        internal static string ConnectionSetting {
+            get {
+                return ResourceManager.GetString("ConnectionSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 填写多个Email地址,请用 &quot;{0}&quot; 分隔.
         /// </summary>
         internal static string EamilTips {
@@ -235,6 +244,15 @@ namespace hwj.UserControls.Properties {
         internal static string Space {
             get {
                 return ResourceManager.GetString("Space", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 数据库连接测试成功!.
+        /// </summary>
+        internal static string TestConnectionSucceeded {
+            get {
+                return ResourceManager.GetString("TestConnectionSucceeded", resourceCulture);
             }
         }
     }
