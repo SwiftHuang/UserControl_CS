@@ -100,7 +100,6 @@ namespace hwj.UserControls.CommonControls
         {
             Properties.Resources.Culture = Thread.CurrentThread.CurrentUICulture;
             ShowContentError = true;
-
             this.Disposed += new EventHandler(xTextBox_Disposed);
             TextIsChanged = false;
             OldBackColor = this.BackColor;
@@ -132,6 +131,7 @@ namespace hwj.UserControls.CommonControls
                 TextAlign = HorizontalAlignment.Right;
             }
             base.OnCreateControl();
+
             if (RequiredHandle == null)
                 RequiredHandle = Common.Required;
             ValueChangedHandle = Common.ValueChanged;
@@ -382,7 +382,10 @@ namespace hwj.UserControls.CommonControls
                     else
                         RequiredHandle.Remove(this);
                 }
-                this.BackColor = this.OldBackColor;
+                if (!tmpReadOnly)
+                {
+                    this.BackColor = this.OldBackColor;
+                }
             }
         }
         #endregion
