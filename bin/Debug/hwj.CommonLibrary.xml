@@ -4,6 +4,43 @@
         <name>hwj.CommonLibrary</name>
     </assembly>
     <members>
+        <member name="M:hwj.CommonLibrary.Object.SerializationHelper.CompareObject(System.Object,System.Object)">
+            <summary>
+            比较两个对象之间的属性值(支持子类,但子类对边没有使用ignorePropertys)
+            </summary>
+            <param name="obj1">对象1</param>
+            <param name="obj2">对象2</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.SerializationHelper.CompareObject(System.Object,System.Object,System.Collections.Generic.List{System.String}@)">
+            <summary>
+            比较两个对象之间的属性值(支持子类,但子类对边没有使用ignorePropertys)
+            </summary>
+            <param name="obj1">对象1</param>
+            <param name="obj2">对象2</param>
+            <param name="mismatchingList">返回属性值不一致的属性名列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.SerializationHelper.CompareObjectIgnorePropertys(System.Object,System.Object,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String}@)">
+            <summary>
+            比较两个对象之间的属性值(支持子类,但子类对边没有使用ignorePropertys)
+            </summary>
+            <param name="obj1">对象1</param>
+            <param name="obj2">对象2</param>
+            <param name="ignorePropertys">忽略的属性列表</param>
+            <param name="mismatchingList">返回属性值不一致的属性名列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.SerializationHelper.CompareObject(System.Object,System.Object,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String}@)">
+            <summary>
+            比较两个对象之间的属性值(支持子类,但子类对边没有使用CheckPropertys)
+            </summary>
+            <param name="obj1">对象1</param>
+            <param name="obj2">对象2</param>
+            <param name="CheckPropertys">对比属性列表</param>
+            <param name="mismatchingList">返回属性值不一致的属性名列表</param>
+            <returns></returns>
+        </member>
         <member name="M:hwj.CommonLibrary.Object.MemoryHelper.ReleaseMemory">
             <summary>
             释放物理内存
@@ -632,6 +669,66 @@
             分页页码
             </summary>
         </member>
+        <member name="T:hwj.CommonLibrary.Object.TextHelper">
+            <summary>
+            文本类
+            </summary>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToBytes(System.IO.Stream)">
+            <summary>
+            将 Stream 转成 byte[]
+            </summary>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToStream(System.Byte[])">
+            <summary>
+            将 byte[] 转成 Stream
+            </summary>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToMemoryStream(System.IO.Stream)">
+            <summary>
+            
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToMemoryStream(System.IO.Stream,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="stream"></param>
+            <param name="useGZip">使用GZip压缩</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StringToMemoryStream(System.String)">
+            <summary>
+            字符串转为流(用Encoding.UTF8)
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.StringToMemoryStream(System.String,System.Boolean)">
+            <summary>
+            字符串转为流(用Encoding.UTF8)
+            </summary>
+            <param name="data"></param>
+            <param name="useGZip">使用GZip压缩</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToMemoryStream(System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToMemoryStream(System.Byte[],System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="useGZip">使用GZip压缩</param>
+            <returns></returns>
+        </member>
         <member name="M:hwj.CommonLibrary.Object.NumberHelper.IsNumeric(System.String)">
             <summary>
             是否数字(建议使用TryParse)
@@ -771,66 +868,6 @@
             <param name="user"></param>
             <param name="password"></param>
             <param name="fileName">文件名(不含路径)</param>
-            <returns></returns>
-        </member>
-        <member name="T:hwj.CommonLibrary.Object.TextHelper">
-            <summary>
-            文本类
-            </summary>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToBytes(System.IO.Stream)">
-            <summary>
-            将 Stream 转成 byte[]
-            </summary>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToStream(System.Byte[])">
-            <summary>
-            将 byte[] 转成 Stream
-            </summary>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToMemoryStream(System.IO.Stream)">
-            <summary>
-            
-            </summary>
-            <param name="stream"></param>
-            <returns></returns>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.TextHelper.StreamToMemoryStream(System.IO.Stream,System.Boolean)">
-            <summary>
-            
-            </summary>
-            <param name="stream"></param>
-            <param name="useGZip">使用GZip压缩</param>
-            <returns></returns>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.TextHelper.StringToMemoryStream(System.String)">
-            <summary>
-            字符串转为流(用Encoding.UTF8)
-            </summary>
-            <param name="data"></param>
-            <returns></returns>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.TextHelper.StringToMemoryStream(System.String,System.Boolean)">
-            <summary>
-            字符串转为流(用Encoding.UTF8)
-            </summary>
-            <param name="data"></param>
-            <param name="useGZip">使用GZip压缩</param>
-            <returns></returns>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToMemoryStream(System.Byte[])">
-            <summary>
-            
-            </summary>
-            <param name="buffer"></param>
-            <returns></returns>
-        </member>
-        <member name="M:hwj.CommonLibrary.Object.TextHelper.BytesToMemoryStream(System.Byte[],System.Boolean)">
-            <summary>
-            
-            </summary>
-            <param name="buffer"></param>
-            <param name="useGZip">使用GZip压缩</param>
             <returns></returns>
         </member>
     </members>
