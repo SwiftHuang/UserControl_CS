@@ -127,8 +127,16 @@ namespace hwj.UserControls.DataList
         }
         protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
         {
-            if (RowSeqVisible && this.Rows[e.RowIndex].Cells[ColSeqName].Value == null)
-                this.Rows[e.RowIndex].Cells[ColSeqName].Value = e.RowIndex + 1;
+            if (RowSeqVisible && this.Columns[ColSeqName] != null)
+            {
+                DataGridViewCell cell = this.Rows[e.RowIndex].Cells[ColSeqName];
+                if (cell.Value == null)
+                {
+                    cell.Value = e.RowIndex + 1;
+                }
+                //this.Rows[e.RowIndex].Cells[ColSeqName].Value = e.RowIndex + 1;
+            }
+
             base.OnRowPostPaint(e);
         }
         protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e)
