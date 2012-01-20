@@ -620,6 +620,11 @@
             设置ValueChangedHandle的IsChanged属性
             </summary>
         </member>
+        <member name="P:hwj.UserControls.DataList.xDataGridView.CellReadonlyBackColor">
+            <summary>
+            获取或设置单元格只读时的颜色
+            </summary>
+        </member>
         <member name="E:hwj.UserControls.DataList.xDataGridView.DataBinding">
             <summary>
             为DataGridView绑定数据
