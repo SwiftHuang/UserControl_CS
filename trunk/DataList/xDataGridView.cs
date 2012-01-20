@@ -64,6 +64,12 @@ namespace hwj.UserControls.DataList
                     ValueChangedHandle.IsChanged = value;
             }
         }
+
+        /// <summary>
+        /// 获取或设置单元格只读时的颜色
+        /// </summary>
+        [DefaultValue(typeof(System.Drawing.Color), "System.Drawing.Color.Empty"), Description("获取或设置单元格只读时的颜色")]
+        public Color CellReadonlyBackColor { get; set; }
         #endregion
 
         public xDataGridView()
@@ -76,6 +82,10 @@ namespace hwj.UserControls.DataList
             ValueChangedHandle = Common.ValueChanged;
             EnterEqualTab = true;
             ValueChangedEnabled = true;
+            if (CellReadonlyBackColor == null || CellReadonlyBackColor == System.Drawing.Color.Empty)
+            {
+                CellReadonlyBackColor = Common.DataGridViewCellReadonlyBackColor;
+            }
         }
 
         public delegate void RowFooterValueChangedHandler(DataGridViewColumn column, string value);
@@ -208,7 +218,7 @@ namespace hwj.UserControls.DataList
             if (e.StateChanged == DataGridViewElementStates.ReadOnly)
             {
                 if (e.Cell.ReadOnly)
-                    e.Cell.Style.BackColor = Common.DataGridViewCellReadonlyBackColor;
+                    e.Cell.Style.BackColor = CellReadonlyBackColor;
                 else
                     e.Cell.Style.BackColor = this.DefaultCellStyle.BackColor;
             }
@@ -235,7 +245,7 @@ namespace hwj.UserControls.DataList
             if (e.StateChanged == DataGridViewElementStates.ReadOnly && e.Column.Name != ColSeqName)
             {
                 if (e.Column.ReadOnly)
-                    e.Column.DefaultCellStyle.BackColor = Common.DataGridViewCellReadonlyBackColor;
+                    e.Column.DefaultCellStyle.BackColor = CellReadonlyBackColor;
                 else
                     e.Column.DefaultCellStyle.BackColor = this.DefaultCellStyle.BackColor;
             }
