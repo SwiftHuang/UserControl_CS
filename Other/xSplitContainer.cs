@@ -71,7 +71,13 @@ namespace hwj.UserControls.Other
             get { return splitterMinValue; }
             set { splitterMinValue = value; }
         }
-
+        private bool fullCollapsed = false;
+        [Description("完全收缩栏"), Category("Extension"), DefaultValue(false)]
+        public bool FullCollapsed
+        {
+            get { return fullCollapsed; }
+            set { fullCollapsed = value; }
+        }
         private bool splitterCollapesd = false;
         [Description("获取或设置收缩分栏"), Category("Extension"), DefaultValue(false)]
         public bool SplitterCollapesd
@@ -107,8 +113,28 @@ namespace hwj.UserControls.Other
                 }
                 else
                 {
-                    this.SplitterDistance = this.splitterLine;
+                    if (fullCollapsed)
+                    {
+                        switch (this.splitterDirection)
+                        {
+                            case SplitterDirection.Left:
+                                this.SplitterDistance = this.Width - this.SplitterWidth;
+                                break;
+                            case SplitterDirection.Up:
+                                this.SplitterDistance = this.Height - this.SplitterWidth;
+                                break;
+                            case SplitterDirection.Right:
+                            case SplitterDirection.Bottom:
+                                this.SplitterDistance = 0;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        this.SplitterDistance = this.splitterLine;
+                    }
                     this.IsSplitterFixed = false;
+
                 }
                 //setDirectionString();
 
@@ -313,7 +339,55 @@ namespace hwj.UserControls.Other
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+            if (splitterCollapesd)
+            {
+                this.splitterLine = this.SplitterDistance;
+                switch (this.splitterDirection)
+                {
+                    case SplitterDirection.Right:
+                        this.SplitterDistance = this.Width - this.SplitterWidth;
+                        break;
+                    case SplitterDirection.Bottom:
+                        this.SplitterDistance = this.Height - this.SplitterWidth;
+                        break;
+                    case SplitterDirection.Left:
+                    case SplitterDirection.Up:
+                        this.SplitterDistance = 0;
+                        break;
+                }
+                this.IsSplitterFixed = true;
+            }
+            else
+            {
+                if (fullCollapsed)
+                {
+                    switch (this.splitterDirection)
+                    {
+                        case SplitterDirection.Left:
+                            this.SplitterDistance = this.Width - this.SplitterWidth;
+                            break;
+                        case SplitterDirection.Up:
+                            this.SplitterDistance = this.Height - this.SplitterWidth;
+                            break;
+                        case SplitterDirection.Right:
+                        case SplitterDirection.Bottom:
+                            this.SplitterDistance = 0;
+                            break;
+                    }
+                }
+                else
+                {
+                    this.SplitterDistance = this.splitterLine;
+                }
+                this.IsSplitterFixed = false;
+
+            }
+            //setDirectionString();
+
+            Panel1.Refresh();
+            Panel2.Refresh();
             this.Refresh();
+
         }
         void xSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {
