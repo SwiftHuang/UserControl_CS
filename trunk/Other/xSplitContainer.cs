@@ -99,10 +99,10 @@ namespace hwj.UserControls.Other
                     switch (this.splitterDirection)
                     {
                         case SplitterDirection.Right:
-                            this.SplitterDistance = this.Width - this.SplitterWidth;
+                            this.SplitterDistance = NoLessThenZero(this.Width - this.SplitterWidth);
                             break;
                         case SplitterDirection.Bottom:
-                            this.SplitterDistance = this.Height - this.SplitterWidth;
+                            this.SplitterDistance = NoLessThenZero(this.Height - this.SplitterWidth);
                             break;
                         case SplitterDirection.Left:
                         case SplitterDirection.Up:
@@ -118,10 +118,10 @@ namespace hwj.UserControls.Other
                         switch (this.splitterDirection)
                         {
                             case SplitterDirection.Left:
-                                this.SplitterDistance = this.Width - this.SplitterWidth;
+                                this.SplitterDistance = NoLessThenZero(this.Width - this.SplitterWidth);
                                 break;
                             case SplitterDirection.Up:
-                                this.SplitterDistance = this.Height - this.SplitterWidth;
+                                this.SplitterDistance = NoLessThenZero(this.Height - this.SplitterWidth);
                                 break;
                             case SplitterDirection.Right:
                             case SplitterDirection.Bottom:
@@ -205,6 +205,14 @@ namespace hwj.UserControls.Other
         }
 
         #region Private Function
+        private int NoLessThenZero(int value)
+        {
+            if (value < 0)
+                return 0;
+            else
+                return value;
+        }
+
         private void SetSplitterButtonRectangle()
         {
             if (this.Orientation == Orientation.Vertical)
@@ -345,10 +353,10 @@ namespace hwj.UserControls.Other
                 switch (this.splitterDirection)
                 {
                     case SplitterDirection.Right:
-                        this.SplitterDistance = this.Width - this.SplitterWidth;
+                        this.SplitterDistance = NoLessThenZero(this.Width - this.SplitterWidth);
                         break;
                     case SplitterDirection.Bottom:
-                        this.SplitterDistance = this.Height - this.SplitterWidth;
+                        this.SplitterDistance =NoLessThenZero( this.Height - this.SplitterWidth);
                         break;
                     case SplitterDirection.Left:
                     case SplitterDirection.Up:
@@ -364,10 +372,10 @@ namespace hwj.UserControls.Other
                     switch (this.splitterDirection)
                     {
                         case SplitterDirection.Left:
-                            this.SplitterDistance = this.Width - this.SplitterWidth;
+                            this.SplitterDistance = NoLessThenZero(this.Width - this.SplitterWidth);
                             break;
                         case SplitterDirection.Up:
-                            this.SplitterDistance = this.Height - this.SplitterWidth;
+                            this.SplitterDistance = NoLessThenZero(this.Height - this.SplitterWidth);
                             break;
                         case SplitterDirection.Right:
                         case SplitterDirection.Bottom:
