@@ -13,6 +13,14 @@ namespace hwj.UserControls.Other
 {
     public partial class MaskedDateTimePicker : UserControl, IEnterEqualTab, IValueChanged
     {
+        public enum DataTimeConditions
+        {
+            Always,
+            WhenNull,
+            WhenGreater,
+            WhenLess,
+        }
+
         private bool isFirstFocus = false;
         private ToolStripDropDown tsDropDown = null;
         private ToolStripControlHost tsCtrlHost = null;
@@ -134,6 +142,8 @@ namespace hwj.UserControls.Other
 
         [Description("当值改变时,同时赋值给指定的控件")]
         public MaskedDateTimePicker SetValueToControl { get; set; }
+        [Description("当值改变时,同时赋值给指定的控件的条件")]
+        public DataTimeConditions SetValueToControlCondition { get; set; }
 
         private bool _IsRequired = false;
         /// <summary>
@@ -442,13 +452,34 @@ namespace hwj.UserControls.Other
         {
             if (SetValueToControl != null)
             {
-                if (SetValueToControl.ShowCheckBox)
+                switch (SetValueToControlCondition)
                 {
-                    SetValueToControl.ShowCheckBox = this.ShowCheckBox;
-                    SetValueToControl.Checked = this.Checked;
+                    case DataTimeConditions.Always:
+                        SetBrotherValue();
+                        break;
+                    case DataTimeConditions.WhenGreater:
+                        if (this.Value.CompareTo(SetValueToControl.Value) > 0)
+                            SetBrotherValue();
+                        break;
+                    case DataTimeConditions.WhenLess:
+                        if (this.Value.CompareTo(SetValueToControl.Value) < 0)
+                            SetBrotherValue();
+                        break;
+                    case DataTimeConditions.WhenNull:
+                        if (SetValueToControl.Value == DateTime.MinValue)
+                            SetBrotherValue();
+                        break;
                 }
-                SetValueToControl.Value = _value;
             }
+        }
+        private void SetBrotherValue()
+        {
+            if (SetValueToControl.ShowCheckBox)
+            {
+                SetValueToControl.ShowCheckBox = this.ShowCheckBox;
+                SetValueToControl.Checked = this.Checked;
+            }
+            SetValueToControl.Value = _value;
         }
         private void SetRequiredStatus()
         {
