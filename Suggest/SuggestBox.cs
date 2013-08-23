@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using hwj.UserControls.Interface;
+using System.Collections.Generic;
 
 namespace hwj.UserControls.Suggest
 {
@@ -37,13 +38,57 @@ namespace hwj.UserControls.Suggest
 
         #region Event Object
         public delegate void SelectedValueHandler(SuggestValue e);
-        public event SelectedValueHandler OnSelected;
-        public event EventHandler SelectedValueChanged;
-        public event EventHandler OnFocus;
-        public event EventHandler DataBinding;
-        public event EventHandler DoubleClick;
-        public event EventHandler ButtonClick;
-        public event KeyEventHandler KeyDown;
+
+        private List<SelectedValueHandler> OnSelecteds = new List<SelectedValueHandler>();
+        private List<EventHandler> SelectedValueChangeds = new List<EventHandler>();
+        private List<EventHandler> OnFocuss = new List<EventHandler>();
+        private List<EventHandler> DataBindingLst = new List<EventHandler>();
+        private List<EventHandler> DoubleClicks = new List<EventHandler>();
+        private List<EventHandler> ButtonClicks = new List<EventHandler>();
+        private List<KeyEventHandler> KeyDowns = new List<KeyEventHandler>();
+
+        private event SelectedValueHandler _OnSelected;
+        public event SelectedValueHandler OnSelected
+        {
+            add { _OnSelected += value; OnSelecteds.Add(value); }
+            remove { _OnSelected -= value; OnSelecteds.Remove(value); }
+        }
+        private event EventHandler _SelectedValueChanged;
+        public event EventHandler SelectedValueChanged
+        {
+            add { _SelectedValueChanged += value; SelectedValueChangeds.Add(value); }
+            remove { _SelectedValueChanged -= value; SelectedValueChangeds.Remove(value); }
+        }
+        private event EventHandler _OnFocus;
+        public event EventHandler OnFocus
+        {
+            add { _OnFocus += value; OnFocuss.Add(value); }
+            remove { _OnFocus -= value; OnFocuss.Remove(value); }
+        }
+        private event EventHandler _DataBinding;
+        public event EventHandler DataBinding
+        {
+            add { _DataBinding += value; DataBindingLst.Add(value); }
+            remove { _DataBinding -= value; DataBindingLst.Remove(value); }
+        }
+        private event EventHandler _DoubleClick;
+        public event EventHandler DoubleClick
+        {
+            add { _DoubleClick += value; DoubleClicks.Add(value); }
+            remove { _DoubleClick -= value; DoubleClicks.Remove(value); }
+        }
+        private event EventHandler _ButtonClick;
+        public event EventHandler ButtonClick
+        {
+            add { _ButtonClick += value; ButtonClicks.Add(value); }
+            remove { _ButtonClick -= value; ButtonClicks.Remove(value); }
+        }
+        private event KeyEventHandler _KeyDown;
+        public event KeyEventHandler KeyDown
+        {
+            add { _KeyDown += value; KeyDowns.Add(value); }
+            remove { _KeyDown -= value; KeyDowns.Remove(value); }
+        }
         #endregion
 
         #region Property
@@ -238,6 +283,44 @@ namespace hwj.UserControls.Suggest
             }
 
         }
+        public void RemoveAllEvents()
+        {
+            foreach (SelectedValueHandler eh in OnSelecteds)
+            {
+                _OnSelected -= eh;
+            }
+            OnSelecteds.Clear();
+            foreach (EventHandler eh in SelectedValueChangeds)
+            {
+                _SelectedValueChanged -= eh;
+            }
+            SelectedValueChangeds.Clear();
+            foreach (EventHandler eh in OnFocuss)
+            {
+                _OnFocus -= eh;
+            }
+            OnFocuss.Clear();
+            foreach (EventHandler eh in DataBindingLst)
+            {
+                _DataBinding -= eh;
+            }
+            DataBindingLst.Clear();
+            foreach (EventHandler eh in DoubleClicks)
+            {
+                _DoubleClick -= eh;
+            }
+            DoubleClicks.Clear();
+            foreach (EventHandler eh in ButtonClicks)
+            {
+                _ButtonClick -= eh;
+            }
+            ButtonClicks.Clear();
+            foreach (KeyEventHandler eh in KeyDowns)
+            {
+                _KeyDown -= eh;
+            }
+            KeyDowns.Clear();
+        }
 
         protected override void OnCreateControl()
         {
@@ -285,20 +368,28 @@ namespace hwj.UserControls.Suggest
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
+        protected override void Dispose(bool disposing)
+        {
+            RemoveAllEvents();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
         #region Events
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            if (ButtonClick == null)
+            if (ButtonClicks.Count == 0)
             {
-                if (OnFocus != null)
-                    OnFocus(sender, e);
+                if (OnFocuss.Count != 0)
+                    _OnFocus(sender, e);
                 if (DropDownStyle == SuggextBoxStyle.Suggest)
                     Clear();
                 ShowList(sender, e);
             }
             else
-                ButtonClick(sender, e);
+                _ButtonClick(sender, e);
         }
         private void lstCtrl_SelectedValue(SuggestValue e)
         {
@@ -328,8 +419,8 @@ namespace hwj.UserControls.Suggest
 
             CloseList(true);
 
-            if (OnSelected != null)
-                OnSelected(e);
+            if (OnSelecteds.Count != 0)
+                _OnSelected(e);
         }
         private void ParentForm_Move(object sender, EventArgs e)
         {
@@ -350,8 +441,8 @@ namespace hwj.UserControls.Suggest
                 return;
             if (DropDownStyle == SuggextBoxStyle.DropDownList)
                 txtValue.SelectAll();
-            if (OnFocus != null)
-                OnFocus(sender, e);
+            if (OnFocuss.Count != 0)
+                _OnFocus(sender, e);
         }
         private void txtValue_KeyDown(object sender, KeyEventArgs e)
         {
@@ -388,8 +479,8 @@ namespace hwj.UserControls.Suggest
                     ListControl.SelectIndex(selectIndex);
                     e.Handled = true;
                 }
-                if (KeyDown != null)
-                    KeyDown(sender, e);
+                if (KeyDowns.Count != 0)
+                    _KeyDown(sender, e);
             }
             catch
             {
@@ -453,8 +544,8 @@ namespace hwj.UserControls.Suggest
             this.Cursor = Cursors.AppStarting;
             try
             {
-                if (DoubleClick != null)
-                    DoubleClick(sender, e);
+                if (DoubleClicks.Count != 0)
+                    _DoubleClick(sender, e);
             }
             catch
             {
@@ -479,9 +570,9 @@ namespace hwj.UserControls.Suggest
         private void DataBind(object sender, EventArgs e)
         {
 
-            if (DataBinding != null)
+            if (DataBindingLst.Count != 0)
             {
-                DataBinding(sender, e);
+                _DataBinding(sender, e);
                 ListControl.DataList = DataList;
             }
             else
@@ -512,10 +603,10 @@ namespace hwj.UserControls.Suggest
         /// <param name="value"></param>
         public void SetSelectedValue(string value)
         {
-            if (_SelectedValue != value && SelectedValueChanged != null)
+            if (_SelectedValue != value && SelectedValueChangeds.Count != 0)
             {
                 _SelectedValue = value;
-                SelectedValueChanged(this, new EventArgs());
+                _SelectedValueChanged(this, new EventArgs());
             }
             _SelectedValue = value;
         }
