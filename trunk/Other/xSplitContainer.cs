@@ -383,10 +383,10 @@ namespace hwj.UserControls.Other
                             break;
                     }
                 }
-                else
-                {
-                    this.SplitterDistance = this.splitterLine;
-                }
+                //else
+                //{
+                //    this.SplitterDistance = this.splitterLine;
+                //}
                 this.IsSplitterFixed = false;
 
             }

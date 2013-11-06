@@ -408,6 +408,7 @@ namespace hwj.UserControls.Other
         void mTxtValue_GotFocus(object sender, EventArgs e)
         {
             isFirstFocus = true;
+            this.mTxtValue.SelectAll();
         }
 
         void ParentForm_Move(object sender, EventArgs e)
@@ -543,5 +544,6 @@ namespace hwj.UserControls.Other
         public bool ValueChangedEnabled { get; set; }
 
         #endregion
+
     }
 }
