@@ -1,10 +1,9 @@
-﻿using System;
+﻿using hwj.UserControls.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using hwj.UserControls.Interface;
 
 namespace hwj.UserControls.CommonControls
 {
@@ -12,10 +11,12 @@ namespace hwj.UserControls.CommonControls
     {
         None,
         Email,
+
         /// <summary>
         /// 数字(含正负小数点)
         /// </summary>
         Numberic,
+
         /// <summary>
         /// 整数
         /// </summary>
@@ -24,14 +25,15 @@ namespace hwj.UserControls.CommonControls
 
     public class xTextBox : TextBox, IEnterEqualTab, IValueChanged
     {
-
         #region Property
 
         private bool isFirstFocus = false;
+
         [DefaultValue(true)]
         public bool EnterEqualTab { get; set; }
 
         private bool _IsRequired = false;
+
         /// <summary>
         /// 获取或设置为必填控件
         /// </summary>
@@ -54,7 +56,9 @@ namespace hwj.UserControls.CommonControls
         /// </summary>
         [DefaultValue(null), Description("设置引发hwj.UserControls.ValueChanged事件的对象"), Browsable(false)]
         protected internal Function.Verify.ValueChangedHandle ValueChangedHandle { get; set; }
-        Function.Verify.RequiredHandle _RequiredHandle = null;
+
+        private Function.Verify.RequiredHandle _RequiredHandle = null;
+
         public Function.Verify.RequiredHandle RequiredHandle
         {
             get { return _RequiredHandle; }
@@ -94,7 +98,8 @@ namespace hwj.UserControls.CommonControls
         /// </summary>
         [Description("获取或设置禁用的密码字符。"), DesignOnly(true), Browsable(false)]
         public List<char> InvalidPasswordChar { get; set; }
-        #endregion
+
+        #endregion Property
 
         public xTextBox()
         {
@@ -109,12 +114,13 @@ namespace hwj.UserControls.CommonControls
             ValueChangedEnabled = true;
         }
 
-        void xTextBox_Disposed(object sender, EventArgs e)
+        private void xTextBox_Disposed(object sender, EventArgs e)
         {
             Common.HideToolTip();
         }
 
         #region Override Function
+
         protected override void OnCreateControl()
         {
             if (DesignMode)
@@ -138,6 +144,7 @@ namespace hwj.UserControls.CommonControls
 
             SetRequiredStatus();
         }
+
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             if (DesignMode)
@@ -152,7 +159,6 @@ namespace hwj.UserControls.CommonControls
                 {
                     if (ContentType == ContentType.Numberic)
                     {
-
                         if (e.KeyChar == '.')
                         {
                             int index = this.Text.IndexOf(e.KeyChar);
@@ -215,6 +221,7 @@ namespace hwj.UserControls.CommonControls
             }
             base.OnKeyPress(e);
         }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (DesignMode)
@@ -226,6 +233,7 @@ namespace hwj.UserControls.CommonControls
                 e.Handled = true;
             base.OnKeyDown(e);
         }
+
         protected override void OnClick(EventArgs e)
         {
             if (DesignMode)
@@ -237,6 +245,7 @@ namespace hwj.UserControls.CommonControls
             isFirstFocus = false;
             base.OnClick(e);
         }
+
         protected override void OnValidating(CancelEventArgs e)
         {
             if (DesignMode)
@@ -271,6 +280,7 @@ namespace hwj.UserControls.CommonControls
 
             base.OnValidating(e);
         }
+
         protected override void OnEnter(EventArgs e)
         {
             if (DesignMode)
@@ -278,6 +288,7 @@ namespace hwj.UserControls.CommonControls
             base.OnEnter(e);
             TextIsChanged = false;
         }
+
         protected override void OnTextChanged(EventArgs e)
         {
             if (DesignMode)
@@ -288,6 +299,7 @@ namespace hwj.UserControls.CommonControls
             base.OnTextChanged(e);
             SetRequiredStatus();
         }
+
         protected override void OnValidated(EventArgs e)
         {
             if (DesignMode)
@@ -295,6 +307,7 @@ namespace hwj.UserControls.CommonControls
             base.OnValidated(e);
             TextIsChanged = false;
         }
+
         protected override void OnEnabledChanged(EventArgs e)
         {
             if (DesignMode)
@@ -302,6 +315,7 @@ namespace hwj.UserControls.CommonControls
             base.OnEnabledChanged(e);
             SetRequiredStatus();
         }
+
         protected override void OnReadOnlyChanged(EventArgs e)
         {
             if (DesignMode)
@@ -309,19 +323,23 @@ namespace hwj.UserControls.CommonControls
             base.OnReadOnlyChanged(e);
             SetRequiredStatus();
         }
+
         protected override void OnGotFocus(EventArgs e)
         {
             isFirstFocus = true;
             base.OnGotFocus(e);
         }
+
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
             isFirstFocus = false;
         }
-        #endregion
+
+        #endregion Override Function
 
         #region Public Function
+
         /// <summary>
         /// 是否存在无效的数据
         /// </summary>
@@ -332,6 +350,7 @@ namespace hwj.UserControls.CommonControls
             string value = this.Text;
             return HasInvalidData(out value, out error);
         }
+
         /// <summary>
         /// 是否存在无效的数据
         /// </summary>
@@ -388,9 +407,11 @@ namespace hwj.UserControls.CommonControls
                 }
             }
         }
-        #endregion
+
+        #endregion Public Function
 
         #region Private Function
+
         /// <summary>
         /// 是否存在无效的数据
         /// </summary>
@@ -406,6 +427,7 @@ namespace hwj.UserControls.CommonControls
             {
                 case ContentType.None:
                     break;
+
                 case ContentType.Email:
                     if (!CommonLibrary.Object.EmailHelper.isValidEmail(this.Text))
                     {
@@ -413,6 +435,7 @@ namespace hwj.UserControls.CommonControls
                         result = true;
                     }
                     break;
+
                 case ContentType.Numberic:
                     decimal v = 0;
                     if (!decimal.TryParse(this.Text, out v))
@@ -429,6 +452,7 @@ namespace hwj.UserControls.CommonControls
                         value = v.ToString();
                     }
                     break;
+
                 case ContentType.Integer:
                     int i = 0;
                     if (!int.TryParse(this.Text, out i))
@@ -445,13 +469,14 @@ namespace hwj.UserControls.CommonControls
                         value = i.ToString();
                     }
                     break;
+
                 default:
                     break;
             }
 
             return result;
-
         }
+
         private bool IsNegatives()
         {
             if (ContentType == ContentType.Numberic && this.Text.IndexOf('-') != -1)
@@ -459,7 +484,8 @@ namespace hwj.UserControls.CommonControls
             else
                 return false;
         }
-        #endregion
+
+        #endregion Private Function
 
         #region IValueChanged Members
 
@@ -469,7 +495,6 @@ namespace hwj.UserControls.CommonControls
         [DefaultValue(true), Description("获取或设置ValueChanged事件的IsChanged属性")]
         public bool ValueChangedEnabled { get; set; }
 
-        #endregion
+        #endregion IValueChanged Members
     }
-
 }
