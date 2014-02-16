@@ -273,10 +273,7 @@ namespace hwj.UserControls.CommonControls
             }
 
             SetRequiredStatus();
-            if (SetValueToControl != null)
-            {
-                SetValueToControl.Text = this.Text;
-            }
+
 
             base.OnValidating(e);
         }
@@ -306,6 +303,10 @@ namespace hwj.UserControls.CommonControls
                 return;
             base.OnValidated(e);
             TextIsChanged = false;
+            if (SetValueToControl != null)
+            {
+                SetValueToControl.Text = this.Text;
+            }
         }
 
         protected override void OnEnabledChanged(EventArgs e)
