@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Configuration;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace hwj.UserControls.Other
 {
     public partial class MSSQLConnSetting : UserControl
     {
         #region Property
+
         [DesignOnly(true), Browsable(false)]
         public string ConnectionString
         {
@@ -28,9 +25,11 @@ namespace hwj.UserControls.Other
             //    SetConnectionString(_connectionString);
             //}
         }
+
         [DesignOnly(true), Browsable(false)]
         public SqlConnectionStringBuilder SqlConnStringBuilder { get; set; }
-        #endregion
+
+        #endregion Property
 
         public MSSQLConnSetting()
         {
@@ -46,14 +45,16 @@ namespace hwj.UserControls.Other
         }
 
         #region Event Function
+
         private void cboDatabase_Click(object sender, EventArgs e)
         {
-
         }
+
         private void cboDatabase_DropDown(object sender, EventArgs e)
         {
             SetDatabaseList(cboDatabase.Text);
         }
+
         private void cboVerificationType_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cboVerificationType.SelectedIndex == 0)
@@ -67,6 +68,7 @@ namespace hwj.UserControls.Other
                 txtPassword.Enabled = false;
             }
         }
+
         private void btnRefreshDB_Click(object sender, EventArgs e)
         {
             if ((txtUser.Enabled && string.IsNullOrEmpty(txtUser.Text)) || (txtPassword.Enabled && string.IsNullOrEmpty(txtPassword.Text)) || string.IsNullOrEmpty(txtDataSource.Text))
@@ -85,9 +87,11 @@ namespace hwj.UserControls.Other
                 MessageBox.Show(error, Properties.Resources.ConnectionSetting, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        #endregion
+
+        #endregion Event Function
 
         #region Publice Function
+
         public void SetConnectionString(string connectionString)
         {
             if (DesignMode || string.IsNullOrEmpty(connectionString))
@@ -128,15 +132,18 @@ namespace hwj.UserControls.Other
                 MessageBox.Show(ex.Message, Properties.Resources.ConnectionSetting, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
         public bool IsValidConnectionString()
         {
             string error = string.Empty;
             return IsValidConnectionString(out error);
         }
+
         public bool IsValidConnectionString(out string error)
         {
             return IsValidConnectionString(false, out error);
         }
+
         private bool IsValidConnectionString(bool ignoreDatabase, out string error)
         {
             error = string.Empty;
@@ -147,7 +154,6 @@ namespace hwj.UserControls.Other
                 {
                     conn.Open();
                     DataTable tb1 = conn.GetSchema("Databases");
-
                 }
                 catch (Exception ex)
                 {
@@ -161,9 +167,11 @@ namespace hwj.UserControls.Other
             }
             return true;
         }
-        #endregion
+
+        #endregion Publice Function
 
         #region Private Function
+
         private string GetConnectionString(bool ignoreDatabase, int timeOut)
         {
             try
@@ -193,6 +201,7 @@ namespace hwj.UserControls.Other
                 return string.Empty;
             }
         }
+
         private bool SetDatabaseList(string currentDatabase)
         {
             string connStr = GetConnectionString(true, 3);
@@ -237,7 +246,7 @@ namespace hwj.UserControls.Other
             }
             return true;
         }
-        #endregion
 
+        #endregion Private Function
     }
 }

@@ -118,79 +118,158 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 0</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 28</value>
+    <value>143, 42</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>ServiceName:</value>
   </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 42</value>
+  </data>
+  <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 28</value>
+    <value>143, 42</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>ServiceType:</value>
   </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 84</value>
+  </data>
+  <data name="label6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 28</value>
+    <value>143, 42</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>Authentication:</value>
   </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 126</value>
+  </data>
+  <data name="label7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 28</value>
+    <value>143, 42</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>UserName:</value>
   </data>
+  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 168</value>
+  </data>
+  <data name="label8.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 28</value>
+    <value>143, 42</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>Password:</value>
   </data>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 210</value>
+  </data>
+  <data name="label9.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 30</value>
+    <value>143, 45</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>Database:</value>
+  </data>
+  <data name="btnTestDB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>530, 216</value>
+  </data>
+  <data name="btnTestDB.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="btnTestDB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 33</value>
   </data>
   <data name="btnTestDB.Text" xml:space="preserve">
     <value>Test</value>
   </data>
   <data name="cboDatabase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 145</value>
+    <value>155, 219</value>
+  </data>
+  <data name="cboDatabase.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="cboDatabase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 20</value>
+    <value>367, 26</value>
   </data>
   <data name="txtDataSource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 3</value>
+    <value>155, 7</value>
+  </data>
+  <data name="txtDataSource.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="txtDataSource.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 21</value>
+    <value>481, 28</value>
   </data>
   <data name="cboServerType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 32</value>
+    <value>155, 50</value>
+  </data>
+  <data name="cboServerType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="cboServerType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 20</value>
+    <value>481, 26</value>
   </data>
   <data name="cboVerificationType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 60</value>
+    <value>155, 92</value>
+  </data>
+  <data name="cboVerificationType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="cboVerificationType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 20</value>
+    <value>481, 26</value>
   </data>
   <data name="txtUser.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 87</value>
+    <value>155, 133</value>
+  </data>
+  <data name="txtUser.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="txtUser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 21</value>
+    <value>481, 28</value>
   </data>
   <data name="txtPassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 115</value>
+    <value>155, 175</value>
+  </data>
+  <data name="txtPassword.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="txtPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 21</value>
+    <value>481, 28</value>
+  </data>
+  <data name="tableLayoutPanel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="tableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>640, 255</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>9, 18</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>640, 255</value>
   </data>
 </root>

@@ -78,9 +78,8 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="hwj.CommonLibrary, Version=1.1.7.12, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\hwj.CommonLibrary.dll</HintPath>
+    <Reference Include="hwj.CommonLibrary">
+      <HintPath>..\CommonLibrary\bin\Debug\hwj.CommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -91,6 +90,12 @@
   <ItemGroup>
     <Compile Include="CommonControls\xCheckedListBox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Other\CommonConnSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Other\CommonConnSetting.Designer.cs">
+      <DependentUpon>CommonConnSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\DraggableTabControl.cs">
       <SubType>Component</SubType>
@@ -222,6 +227,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataList\DataListPage.resx">
       <DependentUpon>DataListPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\CommonConnSetting.en-US.resx">
+      <DependentUpon>CommonConnSetting.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\CommonConnSetting.resx">
+      <DependentUpon>CommonConnSetting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Other\MSSQLConnSetting.en-US.resx">
