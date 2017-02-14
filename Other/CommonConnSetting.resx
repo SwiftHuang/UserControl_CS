@@ -217,7 +217,7 @@
     <value>NoControl</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 45</value>
+    <value>4, 46</value>
   </data>
   <data name="label7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -256,7 +256,7 @@
     <value>Left, Right</value>
   </data>
   <data name="txtUser.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 40</value>
+    <value>119, 41</value>
   </data>
   <data name="txtUser.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -292,7 +292,7 @@
     <value>NoControl</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 82</value>
+    <value>4, 83</value>
   </data>
   <data name="label9.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -334,7 +334,7 @@
     <value>On</value>
   </data>
   <data name="txtDatabase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 77</value>
+    <value>119, 78</value>
   </data>
   <data name="txtDatabase.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -343,7 +343,7 @@
     <value>248, 28</value>
   </data>
   <data name="txtDatabase.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;txtDatabase.Name" xml:space="preserve">
     <value>txtDatabase</value>
@@ -448,7 +448,7 @@
     <value>On</value>
   </data>
   <data name="txtPassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>472, 40</value>
+    <value>472, 41</value>
   </data>
   <data name="txtPassword.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -487,7 +487,7 @@
     <value>NoControl</value>
   </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>375, 45</value>
+    <value>375, 46</value>
   </data>
   <data name="label8.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -529,7 +529,7 @@
     <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>375, 82</value>
+    <value>375, 83</value>
   </data>
   <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -538,7 +538,7 @@
     <value>89, 18</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>超时时间:</value>
@@ -568,7 +568,7 @@
     <value>Left, Right</value>
   </data>
   <data name="txtTimeout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>472, 77</value>
+    <value>472, 78</value>
   </data>
   <data name="txtTimeout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -577,7 +577,7 @@
     <value>164, 28</value>
   </data>
   <data name="txtTimeout.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>11</value>
   </data>
   <data name="txtTimeout.Text" xml:space="preserve">
     <value>30</value>

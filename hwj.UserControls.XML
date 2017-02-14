@@ -19,6 +19,28 @@
             获取或设置ValueChanged事件的IsChanged属性
             </summary>
         </member>
+        <member name="F:hwj.UserControls.Other.CommonConnSetting.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:hwj.UserControls.Other.CommonConnSetting.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:hwj.UserControls.Other.CommonConnSetting.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:hwj.UserControls.Other.CommonConnSetting.DbConnStringBuilder">
+             <summary>
+            
+             </summary>
+        </member>
         <member name="F:hwj.UserControls.Other.DraggableTabControl.beDraged">
             <summary>
             
