@@ -31,16 +31,19 @@ namespace hwj.UserControls.Suggest
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtValue.Format = null;
             this.txtValue.Location = new System.Drawing.Point(0, 0);
+            this.txtValue.Margin = new System.Windows.Forms.Padding(4);
             this.txtValue.Name = "txtValue";
             this.txtValue.OldBackColor = System.Drawing.SystemColors.Window;
-            this.txtValue.Size = new System.Drawing.Size(97, 21);
+            this.txtValue.RequiredHandle = null;
+            this.txtValue.SetValueToControl = null;
+            this.txtValue.Size = new System.Drawing.Size(158, 28);
             this.txtValue.TabIndex = 0;
             this.txtValue.TextIsChanged = false;
-            this.txtValue.DoubleClick += new System.EventHandler(this.txtValue_DoubleClick);
-            this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
             this.txtValue.Click += new System.EventHandler(this.txtValue_Click);
-            this.txtValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtValue_KeyDown);
+            this.txtValue.TextChanged += new System.EventHandler(this.txtValue_TextChanged);
+            this.txtValue.DoubleClick += new System.EventHandler(this.txtValue_DoubleClick);
             this.txtValue.Enter += new System.EventHandler(this.txtValue_Enter);
+            this.txtValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtValue_KeyDown);
             this.txtValue.Validating += new System.ComponentModel.CancelEventHandler(this.txtValue_Validating);
             // 
             // btnSelect
@@ -50,12 +53,12 @@ namespace hwj.UserControls.Suggest
             this.btnSelect.CursorFromClick = System.Windows.Forms.Cursors.WaitCursor;
             this.btnSelect.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSelect.Image = global::hwj.UserControls.Properties.Resources.page_search;
-            this.btnSelect.Location = new System.Drawing.Point(97, 0);
+            this.btnSelect.Location = new System.Drawing.Point(158, 0);
             this.btnSelect.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSelect.MaximumSize = new System.Drawing.Size(23, 21);
-            this.btnSelect.MinimumSize = new System.Drawing.Size(23, 21);
+            this.btnSelect.MaximumSize = new System.Drawing.Size(34, 30);
+            this.btnSelect.MinimumSize = new System.Drawing.Size(34, 30);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(23, 21);
+            this.btnSelect.Size = new System.Drawing.Size(34, 30);
             this.btnSelect.TabIndex = 1;
             this.btnSelect.TabStop = false;
             this.btnSelect.UseVisualStyleBackColor = true;
@@ -63,13 +66,14 @@ namespace hwj.UserControls.Suggest
             // 
             // SuggestBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.btnSelect);
-            this.MinimumSize = new System.Drawing.Size(0, 21);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(0, 32);
             this.Name = "SuggestBox";
-            this.Size = new System.Drawing.Size(120, 21);
+            this.Size = new System.Drawing.Size(192, 32);
             this.ResumeLayout(false);
             this.PerformLayout();
 
