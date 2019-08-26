@@ -131,9 +131,7 @@
     <Compile Include="DataList\xDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DataList\xDataGridViewCalendarColumn.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="DataList\xDataGridViewCalendarColumn.cs" />
     <Compile Include="DataList\xDataGridViewNumbericColumn.cs">
     </Compile>
     <Compile Include="CommonControls\xDateTimePicker.cs">
@@ -146,9 +144,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Common.cs" />
-    <Compile Include="DataList\xDataGridViewTextBoxColumn.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="DataList\xDataGridViewTextBoxColumn.cs" />
     <Compile Include="Function\LanguageHelper.cs" />
     <Compile Include="Function\Verify\IRequiredHandle.cs" />
     <Compile Include="Function\Verify\RequiredHandle.cs" />

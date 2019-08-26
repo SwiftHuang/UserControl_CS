@@ -26,7 +26,7 @@ namespace hwj.UserControls.Suggest
         private ToolStripDropDown tsDropDown = null;
         private ToolStripControlHost tsCH = null;
         private SuggestView ListControl = null;
-
+        private SuggestList sourceList { get; set; }
         private int RecordCount
         {
             get
@@ -146,8 +146,24 @@ namespace hwj.UserControls.Suggest
             set { txtValue.BackColor = value; }
         }
 
+        private SuggestList _DataList;
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]//Hidden = 0
-        public SuggestList DataList { get; set; }
+        public SuggestList DataList
+        {
+            get { return _DataList; }
+            set
+            {
+                if (sourceList == null || sourceList.Count == 0)
+                {
+                    sourceList = value;
+                }
+                _DataList = value;
+            }
+        }
+
+        
+       
 
         public bool SecondColumnMode
         {
@@ -181,12 +197,22 @@ namespace hwj.UserControls.Suggest
             }
             set
             {
-                if (DataList != null)
+                string text = string.Empty;
+                if (TryGetMatchText(value, out text))
                 {
-                    _SelectedText = GetMatchText(value);
-                    txtValue.Text = _SelectedText;
+                    SetSelectedText(text);
+                    SetSelectedValue(value);
                 }
-                SetSelectedValue(value);
+                else if (FreeInput)
+                {
+                    SetSelectedText(value);
+                    SetSelectedValue(value);
+                }
+                else
+                {
+                    SetSelectedText(text);
+                    SetSelectedValue(text);
+                }
             }
         }
 
@@ -198,9 +224,22 @@ namespace hwj.UserControls.Suggest
             get { return _SelectedText; }
             set
             {
-                if (DataList != null)
-                    SetSelectedValue(GetMatchValue(value));
-                SetSelectedText(value);
+                string key = string.Empty;
+                if (TryGetMatchValue(value, out key))
+                {
+                    SetSelectedValue(key);
+                    SetSelectedText(value);
+                }
+                else if (FreeInput)
+                {
+                    SetSelectedText(value);
+                    SetSelectedValue(value);
+                }
+                else
+                {
+                    SetSelectedText(key);
+                    SetSelectedValue(key);
+                }
             }
         }
 
@@ -283,6 +322,21 @@ namespace hwj.UserControls.Suggest
         /// </summary>
         [Description("获取或设置触发搜索的字符最小长度"), DefaultValue(0)]
         public int SearchMinLength { get; set; }
+
+        private bool _FreeInput = false;
+
+        /// <summary>
+        /// 不限制录入的值.
+        /// </summary>
+        [DefaultValue(false)]
+        public bool FreeInput
+        {
+            get { return _FreeInput; }
+            set
+            {
+                _FreeInput = value;
+            }
+        }
 
         #endregion Property
 
@@ -728,8 +782,15 @@ namespace hwj.UserControls.Suggest
             else
             {
                 CloseList(true);
+                if (FreeInput)
+                {
+                    SetSelectedText(txtValue.Text);
+                    SetSelectedValue(txtValue.Text);
+                }
                 if (ShowToolTip)
+                {
                     Common.ShowToolTipInfo(this, Properties.Resources.NoRecord);
+                }
             }
         }
 
@@ -761,33 +822,51 @@ namespace hwj.UserControls.Suggest
             return lst;
         }
 
-        private string GetMatchText(string value)
+        private bool TryGetMatchText(string value, out string text)
         {
-            foreach (SuggestValue s in DataList)
+            text = string.Empty;
+            SuggestList tmpData = sourceList == null || sourceList.Count == 0 ? DataList : sourceList;
+            if (tmpData != null)
             {
-                if (s.Key == value)
+                SuggestValue tmp = tmpData.Find(c => c.Key == value);
+                if (tmp != null)
                 {
-                    SelectedItem = s.Item;
                     if (DisplayMember == DisplayMemberType.Primary)
-                        return s.PrimaryValue;
+                    {
+                        text = tmp.PrimaryValue;
+                    }
                     else if (DisplayMember == DisplayMemberType.Second)
-                        return s.SecondValue;
+                    {
+                        text = tmp.SecondValue;
+                    }
+                    return true;
                 }
             }
-            return string.Empty;
+            return false;
         }
 
-        private string GetMatchValue(string text)
+        private bool TryGetMatchValue(string text, out string value)
         {
-            foreach (SuggestValue s in DataList)
+            value = string.Empty;
+            SuggestList tmpData = sourceList == null || sourceList.Count == 0 ? DataList : sourceList;
+            if (tmpData != null)
             {
-                SelectedItem = s.Item;
-                if (DisplayMember == DisplayMemberType.Primary && s.PrimaryValue == text)
-                    return s.Key;
-                else if (DisplayMember == DisplayMemberType.Second && s.SecondValue == text)
-                    return s.Key;
+                SuggestValue tmp = null;
+                if (DisplayMember == DisplayMemberType.Primary)
+                {
+                    tmp = tmpData.Find(c => c.PrimaryValue == text);
+                }
+                else if (DisplayMember == DisplayMemberType.Second)
+                {
+                    tmp = tmpData.Find(c => c.SecondValue == text);
+                }
+                if (tmp != null)
+                {
+                    value = tmp.Key;
+                    return true;
+                }
             }
-            return string.Empty;
+            return false;
         }
 
         #endregion Private Functions

@@ -524,6 +524,11 @@
             获取或设置触发搜索的字符最小长度
             </summary>
         </member>
+        <member name="P:hwj.UserControls.Suggest.SuggestBox.FreeInput">
+            <summary>
+            不限制录入的值.
+            </summary>
+        </member>
         <member name="P:hwj.UserControls.Suggest.SuggestBox.ValueChangedEnabled">
             <summary>
             获取或设置ValueChanged事件的IsChanged属性

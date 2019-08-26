@@ -91,9 +91,9 @@
             </summary>
             <param name="value"></param>
         </member>
-        <member name="F:hwj.CommonLibrary.Function.DecimalToChinese.EndOfInt">
+        <member name="T:hwj.CommonLibrary.Function.DecimalToChinese.NumLevel">
             <summary>
-            整(当没有 角分 时)
+            数位
             </summary>
         </member>
         <member name="F:hwj.CommonLibrary.Function.DecimalToChinese.NumLevelExponent">
@@ -109,6 +109,11 @@
         <member name="F:hwj.CommonLibrary.Function.DecimalToChinese.NumChineseCharacter">
             <summary>
             大写字符
+            </summary>
+        </member>
+        <member name="F:hwj.CommonLibrary.Function.DecimalToChinese.EndOfInt">
+            <summary>
+            整(当没有 角分 时)
             </summary>
         </member>
         <member name="M:hwj.CommonLibrary.Function.DecimalToChinese.IsValidated``1(``0)">
@@ -168,11 +173,6 @@
             </summary>
             <param name="Num"></param>
             <returns></returns>
-        </member>
-        <member name="T:hwj.CommonLibrary.Function.DecimalToChinese.NumLevel">
-            <summary>
-            数位
-            </summary>
         </member>
         <member name="M:hwj.CommonLibrary.Object.EmailHelper.Send(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
             <summary>
@@ -276,13 +276,6 @@
             <param name="smtpInfos">SMTP服务器集合</param>
             <returns></returns>
         </member>
-        <member name="M:hwj.CommonLibrary.Object.Email.SmtpInfoList.#ctor(System.String)">
-            <summary>
-            Format:Smtp Server/User/Password|Smtp Server/User/Password|
-            eg.smtp.163.com/user@163.com/163163|smtp.163.com/user@163.com/163163
-            </summary>
-            <param name="value"></param>
-        </member>
         <member name="P:hwj.CommonLibrary.Object.Email.SmtpInfoList.LastSuccess">
             <summary>
             获取最后一次成功发送的SMTP配置。
@@ -292,6 +285,13 @@
             <summary>
             获取或设置SMTP配置发送失败后，间隔几多分钟后重新使用。
             </summary>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Email.SmtpInfoList.#ctor(System.String)">
+            <summary>
+            Format:Smtp Server/User/Password|Smtp Server/User/Password|
+            eg.smtp.163.com/user@163.com/163163|smtp.163.com/user@163.com/163163
+            </summary>
+            <param name="value"></param>
         </member>
         <member name="M:hwj.CommonLibrary.Object.EntityHelper.EntityToString(System.Object,System.String,System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
@@ -335,6 +335,95 @@
             <param name="genClassName">生成代码的类名</param>
             <param name="genFunName">生成代码的方法名</param>
             <param name="genFunReturnType">生成代码的方法的返回类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.ExcelHelper.GetExcelSheetNames(System.String,System.Boolean,System.Int32)">
+            <summary>
+            获取Excel中的Sheet.
+            </summary>
+            <param name="excelFile">文件完整路径</param>
+            <param name="hdrIsNo">HDR=Yes，这代表第一行是标题，不做为数据使用 ，如果用HDR=NO，则表示第一行不是标题，做为数据来使用。系统默认的是YES</param>
+            <param name="IMEX">0 ---输出模式;1---输入模式;2----链接模式(完全更新能力)</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.ExcelHelper.ExcelToDataTable(System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            获取Excel中指定Sheet的内容
+            </summary>
+            <param name="excelFile">文件完整路径</param>
+            <param name="sheetName">指定获取的Sheet名</param>
+            <param name="hdrIsNo">HDR=Yes，这代表第一行是标题，不做为数据使用 ，如果用HDR=NO，则表示第一行不是标题，做为数据来使用。系统默认的是YES</param>
+            <param name="IMEX">0 ---输出模式;1---输入模式;2----链接模式(完全更新能力)</param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExDecimalHelper.Median(System.Collections.Generic.IList{System.Decimal})">
+            <summary>
+            计算中位数
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExDecimalHelper.Median(System.Decimal[])">
+            <summary>
+            计算中位数
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExDoubleHelper.Median(System.Collections.Generic.IList{System.Double})">
+            <summary>
+            计算中位数
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExDoubleHelper.Median(System.Double[])">
+            <summary>
+            计算中位数
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExStringHelper.ToUpperTrim(System.String)">
+            <summary>
+            从当前 System.String 对象的开始和末尾移除所有空白字符并转大写，如Null则返回Null。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExStringHelper.ToUpperTrimEmpty(System.String)">
+            <summary>
+            从当前 System.String 对象的开始和末尾移除所有空白字符并转大写，如Null则返回string.Empty。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExStringHelper.ToLowerTrim(System.String)">
+            <summary>
+            从当前 System.String 对象的开始和末尾移除所有空白字符并转小写，如Null则返回Null。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExStringHelper.ToLowerTrimEmpty(System.String)">
+            <summary>
+            从当前 System.String 对象的开始和末尾移除所有空白字符并转小写，如Null则返回string.Empty。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExStringHelper.TryTrim(System.String)">
+            <summary>
+            从当前 System.String 对象的开始和末尾移除所有空白字符，如Null则返回Null。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:hwj.CommonLibrary.Object.Extensions.ExStringHelper.TryTrimEmpty(System.String)">
+            <summary>
+            从当前 System.String 对象的开始和末尾移除所有空白字符，如Null则返回string.Empty。
+            </summary>
+            <param name="str"></param>
             <returns></returns>
         </member>
         <member name="T:hwj.CommonLibrary.Object.HttpHelper">
@@ -387,31 +476,6 @@
             获取IP地址
             </summary>
             <returns></returns>
-        </member>
-        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.ShowInvalidSmtpError">
-            <summary>
-            是否抛出SmtpList异常
-            </summary>
-        </member>
-        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.EmailTo">
-            <summary>
-            多个收件人请用逗号分隔
-            </summary>
-        </member>
-        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.EmailCC">
-            <summary>
-            多个抄送人请用逗号分隔
-            </summary>
-        </member>
-        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.MultSmtpEnabled">
-            <summary>
-            获取或设置是否使用多个SMTP服务器的模式
-            </summary>
-        </member>
-        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.SmtpList">
-            <summary>
-            获取或设置SMTP服务器列表
-            </summary>
         </member>
         <member name="P:hwj.CommonLibrary.Object.ReturnObject.IsError">
             <summary>
@@ -519,6 +583,31 @@
         <member name="M:hwj.CommonLibrary.Object.FileHelper.FileToStream(System.String)">
             <summary>
             从文件读取 Stream
+            </summary>
+        </member>
+        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.ShowInvalidSmtpError">
+            <summary>
+            是否抛出SmtpList异常
+            </summary>
+        </member>
+        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.EmailTo">
+            <summary>
+            多个收件人请用逗号分隔
+            </summary>
+        </member>
+        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.EmailCC">
+            <summary>
+            多个抄送人请用逗号分隔
+            </summary>
+        </member>
+        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.MultSmtpEnabled">
+            <summary>
+            获取或设置是否使用多个SMTP服务器的模式
+            </summary>
+        </member>
+        <member name="P:hwj.CommonLibrary.Object.Base.LogHelper.SmtpList">
+            <summary>
+            获取或设置SMTP服务器列表
             </summary>
         </member>
         <member name="M:hwj.CommonLibrary.Object.FTPHelper.Upload(System.String,System.String,System.String,System.String)">
